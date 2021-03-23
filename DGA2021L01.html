@@ -1,0 +1,215 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL01</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L01/Lecture1.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 01</h4>
+				
+				</section>
+				<section>
+				<h4 align="center">Manifolds : the origins</h4>
+				<img src="L01/riemquotefade.png" align="center" style="width:60vw; height:auto">
+				<p style="text-align:right">Bernhard Riemann, <em>Habilitation Lecture</em>, University of Gottingen, (1867)</p>
+				<br>
+				<h5 style="font-size:0.7em">On the Hypotheses which lie at the Base of Geometry</h5> 
+				<p  style="font-size:0.5em; text-align:center">(translated by W. Clifford)</p>
+				<p align="justify" style="font-size:0.55em">§ 1. Magnitude-notions are only possible where there is an antecedent general notion which admits of different specialisations. According as there exists among these specialisations a continuous path from one to another or not, they form a continuous or discrete manifoldness; the individual specialisations are called in the first case points, in the second case elements, of the manifoldness. Notions...</p>
+				</section>
+				<section>
+				<section>
+				<h4 align="center">Twofold approach</h4>
+				<div class="row">
+					<div class="column" >
+						<h5>As a graph</h5>
+						<p align="justify">The set of points for which some coordinates depend explicity on the others, via a given function.</p>
+						<div class="mate">$$h:\mathbb{R}^n\to\mathbb{R}^k$$
+						$$M=\{(x,h(x))\in\mathbb{R}^n\times\mathbb{R}^k\ :\ x\in\mathbb{R}^n\}$$</div>
+						<img src="L01/grafico.jpg" style="height:38%">
+					</div>
+					<div class="column" >
+						<h5>As a zero</h5>
+						<p align="justify">The set of points whose coordinates satisfy a set of relations, given as equations.</p>
+						<div class="mate">$$F:\mathbb{R}^n\to\mathbb{R}^k,\ \ c\in\mathbb{R}^k$$
+						$$M=\{x\in\mathbb{R}^n\ :\ F(x)=c\}$$</div>
+					<img src="L01/equazione.jpg">
+					</div>
+					
+				</div></section>
+				<section>
+				<h5>Doubts</h5>
+				<p><ul>
+				<li><u>Regularity?</u> The functions involved ($h$ and $F$) can be chosen in various functions spaces ($\mathcal{C}^k$ smooth, real analytic, Lipschitz, ...)</li>
+				<li><u>Too vague?</u> Given $K\subseteq\mathbb{R}^n$ closed, there is a $\mathcal{C}^\infty$ function $f:\mathbb{R}^n\to\mathbb{R}$ such that 
+				$$K=\{x\in\mathbb{R}^n\ :\ f(x)=0\}$$</li>
+				<li><u>Too restrictive?</u> A graph of a function $h:\mathbb{R}^n\to\mathbb{R}^k$ intersects every set $\{x_0\}\times\mathbb{R}^k$ at most in one point.</li>
+				<li><u>Global or local?</u> Being locally a zero set is equivalent to being globally a zero set? Being locally a graph is equivalent to being globally a graph?</li>
+				<li><u>Equivalence?</u> Under which hypotheses are the two approaches equivalent?</li>
+				</ul>
+				</p>
+				
+				</section>
+				<section>
+				<h5>Equivalence</h5>
+				<p>In linear algebra, the equivalence between the parametric and the cartesian description of a subspace is algorithmically obtained by means of the Gaussian Elimination.</p>
+				<p>We may think of performing a nonlinear (smooth) Gaussian Elimination on the Jacobian matrix $DF$ (i.e. the matrix of first derivatives) of $F$. </p>
+				<p>Supposing that the last $k$ columns of $DF$ are linearly independent, we can express the associated variables in terms of the remaining ones. Thus we obtain a function $h:U\to\mathbb{R}^k$, with $U\subset\mathbb{R}^{n-k}$ such that <em>locally</em> the zero set of $F$ is the graph of $h$.</p>
+				
+				<img src="L01/IFTfade.png" style="width:60%; heigth:auto">
+				<p style="text-align:center;"><b>Implicit Function Theorem</b></p>
+				</section>
+				
+				
+				</section>
+				<section>
+				
+				<section>
+				<h4>Formal definition</h4>
+				<blockquote>A subset $M\subseteq\mathbb{R}^n$ is a (smooth) $k$-dimensional <strong>embedded submanifold</strong> of $\mathbb{R}^n$ if, for every $p\in M$, there exist an open neighborhood $U\subseteq\mathbb{R}^n$ and a smooth function $F:U\to\mathbb{R}^{n-k}$ such that $p\in U$ and 
+				$$U\cap M=\{x\in\ U\ :\ F(x)=0\}\qquad \mathrm{rk}DF_x=n-k\quad\forall\,x\in U\;.$$
+				</blockquote>
+				
+				<div class="row">
+				<div class="column">
+				<img src="L01/submfd.jpg" style="width:90%; height:auto">
+				</div>
+				<div class="column">
+				<br>
+				<h5>Features</h5>
+				<ul>
+				<li>Smoothness</li>
+				<li>Local</li>
+				<li>Submersion</li>
+				<li>Locally a graph</li>
+				</ul>
+				</div>
+				</div>
+				</section>
+				<section>
+				
+				<div class="row">
+				<div class="column">
+				<h5>Examples and nonexamples</h5>
+				<ul>
+				<li style="list-style-image:url(L01/Vtmp.png)">Affine subspaces</li>
+				<li style="list-style-image:url(L01/Vtmp.png)">Spheres</li>
+				<li style="list-style-image:url(L01/Vtmp.png)">Orthogonal group</li>
+				<li style="list-style-image:url(L01/Vtmp.png)">Special linear group</li>
+				<li style="list-style-image:url(L01/Xtmp.png)">Axes</li>
+				<li style="list-style-image:url(L01/Xtmp.png)">Cusp</li>
+				<li style="list-style-image:url(L01/Xtmp.png)">Tangent circles</li>
+				</ul>
+				</div>
+				<div class="column">
+				<h5>Curiosities</h5>
+				<ul>
+				<li style="text-align:justify">Submanifold $M$ of $\mathbb{R}^n$ of dimension $k$ such that we cannot find an open neighborhood $V$ of $M$ and a submersion $F:V\to\mathbb{R}^{n-k}$ so that $M=\{x\in V\ :\ F(x)=0\}$.</li><!--Any non-orientable manifold, i.e. RP^2 in R^4-->
+				<li style="text-align:justify">Submanfiold $M$ of $\mathbb{R}^n$ of dimension $k$ such that we can find $V$ and $F$ as above, but $F$ cannot be extended to the whole of $\mathbb{R}^n$.</li><!--Akbulut-King, Submanifolds and homology of nonsingular real algebraic varieties, Am J Math 107 45 (1985), Theorem 5.8-->
+				</ul>
+				</div>
+				
+				
+				</section>
+				<section>
+				<h5>Smooth maps</h5>
+				<p style="margin-bottom:1em">Given $M\subset\mathbb{R}^n$ a $k$-dimensional manifold and $N\subset\mathbb{R}^m$ a $h$-dimensional manifold, a function $F:M\to N$ is $\mathcal{C}^r$ smooth if for every $p\in M$ there exist an open neighborhood $U$ of $p$ in $\mathbb{R}^n$ and a $\mathcal{C}^r$ smooth function $\tilde{F}:U\to\mathbb{R}^m$ such that $\tilde{F}(x)=F(x)$ for all $x\in M\cap U$.</p>
+				<p>A diffeomorphism is a bijective function $F:M\to N$ such that both $F$ and its inverse are smooth.</p>
+				<h5>Examples</h5>
+				<ul>
+				<li style="font-size:0.6em">$M=\{x\in\mathbb{R}^3\ :\ \|x\|<\pi\}$, $F:M\to SO(3)$, with $F(x)$ the positive rotation around $x/\|x\|$ of an angle $\|x\|$.</li>
+				<li style="font-size:0.6em">$F:\mathbb{S}^{n-1}\to\mathrm{Sym}_{n}(\mathbb{R})$ given by $F(x)=xx^t$</li>
+				<li style="font-size:0.6em">$F:\mathbb{S}^1\times\mathbb{S}^1\to\mathbb{S}^2$ s.t. $F(e^{i\alpha},e^{i\beta})=(\cos(\alpha),\cos(\beta)\sin(\alpha),\sin(\beta)\sin(\alpha))$</li>
+				</ul>
+				<p><strong>Note:</strong> A map $F:M\to N$ is smooth iff the above property holds with $U$ an open neighborhood of $M$ in $\mathbb{R}^n$.</p>
+				
+				</section></section>
+				<section>
+				<section>
+				<h4>Linearization</h4>
+				<p>A lesser known consequence of the inverse function theorem is the following.</p>
+				<img src="L01/Linear.png" style="width:90%; height:auto">
+				<p>Clearly $F(a)=0$ iff $AH^{-1}(a)+\phi(AH^{-1}(a))=0$ iff $AH^{-1}(a)=0$. So 
+				$$\{a\in U\ :\ F(a)=0\}=H(\ker A\cap V)\;.$$
+				</p>
+				</section>
+				<section>
+				<h5>Characterization of submanifolds</h5>
+				<blockquote>$M\subseteq\mathbb{R}^n$ is a $k$-dimensional submanifold if and only if for every $p\in M$ we find two open sets $U,\ V\subseteq\mathbb{R}^n$, an affine $k$-dimensional subspace $L$ and a diffeomorphism $H:U\to V$ such that $p\in U$, $U\cap M$ is connected and $H(M\cap U)=L\cap V$.</blockquote>
+				<img src="L01/local.png" style="width:70%; height:auto">
+				</section>
+				<section>
+				<h5>Local structure of a submanifold</h5>
+				<p style="margin-bottom:1em">If $M\subseteq\mathbb{R}^n$ is a $k$-dimensional submanifold, for every point $p\in M$ we can find an open neighborhood $U$ of $p$ in $\mathbb{R}^n$ such that $U\cap M$ is diffeomorphic to an open set of $\mathbb{R}^k$. Such a diffeomorphism is called <em>coodinate chart</em> of $M$ around $p$.</p>
+				<p>A function $F:M\to N$ is $\mathcal{C}^r$ smooth if and only if for any $p\in M$ and any coordinate charts $\phi:U_1\cap M\to V_1\subseteq\mathbb{R}^k$ of $M$ around $p$ and $\psi:U_2\cap N\to V_2\subseteq\mathbb{R}^h$ of $N$ around $F(p)$ such that $F(U_1\cap M)\subseteq U_2\cap N$, the map $\psi\circ F\circ \phi^{-1}$ is $\mathcal{C}^r$ smooth from $V_1$ to $V_2$.</p>
+				<img src="L01/localdiff.png" style="width:50%; height:auto">
+				</section>
+				</section>
+				
+				
+				
+				
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				math: {
+					mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS-MML_HTMLorMML'
+				},
+
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+		boardmarkerWidth: 3,
+		chalkWidth: 4,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+		color: [ 'rgba(153,0,0,1)', 'rgba(255,255,255,0.5)' ],
+	}, 
+			});
+		</script>
+		
+	</body>
+</html>

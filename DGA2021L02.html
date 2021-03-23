@@ -1,0 +1,190 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL02</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L01/Lecture1.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 02</h4>
+				
+				</section>
+				<section>
+				<section>
+				<h4>Calculus on submanifolds</h4>
+				<p style="margin-bottom:1em">Let $M$ be a $k$-dimensional submanifold of $\mathbb{R}^n$ and let $f:M\to\mathbb{R}$ be a $\mathcal{C}^1$-smooth function. We want to define the <em>gradient of $f$</em>.</p>
+				<p style="bottom-margin:1em">As a starting point, we generalize the directional derivatives. However, we do not have straight lines on $M$ along which computing such derivatives, so the fist attempt could be to define the directional derivative <em>along a curve</em>.</p>
+				<p>A curve (in $M$) through $p$ is, for us, a smooth map $\gamma:(-1,1)\to M$ such that $\gamma(0)=p$. There are a lot of curves! Before diving into such complexity, we may try something easier:</p>
+				<blockquote>The <strong>tangent space</strong> to $M$ at $p$ is the set of all tangent vectors at $p$ to all the curves in $M$ through $p$.</blockquote>
+				<p>$$T_pM=\{\dot{\gamma}(0)\ \vert\ \gamma:(-1,1)\to M \textrm{ smooth, }\gamma(0)=p\}\;.$$</p>
+				</section>
+				<section>
+				<h5>The tangent space</h5>
+				<ul>
+				<li> $T_p\mathbb{R}^n=\mathbb{R}^n$ (and the same is true for an affine subspace)
+				<li> By the local characterization of submanifolds, $T_pM=\mathbb{R}^k$ for all $p\in M$.
+				<li> If $F:\mathbb{R}^n\to\mathbb{R}^{n-k}$ is a defining function for $M$, then $T_pM=\ker DF_p$.
+				</ul>
+				<p>Given $v\in T_pM$, the directional derivative of $f$ along $v$ is
+				$$\frac{\partial f}{\partial v}(p)=\frac{d}{dt}(f(\gamma(t)))\vert_{t=0}$$
+				for any $\gamma:(-1,1)\to M$ such that $\gamma(0)=p$, $\dot{\gamma}(0)=v$.</p>
+				</section>
+				<section>
+				<h5>Gradient of a function</h5>
+				<p style="margin-bottom:1em">We consider the map
+				$$v\mapsto \frac{\partial f}{\partial v}(p)$$
+				it can easily seen to be linear (via local characterization, for example). Therefore, by Riesz theorem, there exists an element $\nabla^Mf_p\in T_pM$ (an Euclidean subspace of $\mathbb{R}^n$) such that 
+				$$\frac{\partial f}{\partial v}(p)=\langle \nabla^Mf_p, v\rangle\;.$$
+				We call such vector the <strong>gradient of $f$ (along $M$)</strong>.</p>
+				<p>For each $p\in M$, we consider the orthogonal projection $\mathrm{Pr}_p:\mathbb{R}^n\to\mathbb{R}^n$ whose image is $T_pM$. It is easy to see that
+				$$\nabla^Mf_p=\mathrm{Pr}_p\nabla f_p$$
+				where $\nabla$ is the usual gradient in $\mathbb{R}^n$ and we extended $f$ to a neighborhood of $M$ in $\mathbb{R}^n$.</p>
+				</section>
+				<section>
+				<h5>Extremal points</h5>
+				<p>Exactly as in $\mathbb{R}^n$, the search for maximum and mimimum points of a function(al) on $M$ means to look for singular points, critical points and boundary points. In particular, critical points are $p\in M$ such that $\nabla^Mf_p=0$. If $F:\mathbb{R}^n\to\mathbb{R}^{n-k}$ is a local defining function for $M$ near $p$,
+				$$\nabla^Mf_p=0\Leftrightarrow \nabla f_p\perp T_pM\Leftrightarrow \nabla f_p\perp\ker DF_p\Leftrightarrow \nabla f_p\in \mathrm{Im} (DF_p^T)\;.$$
+				which is exactly the condition on the gradients in the Lagrange multipliers system.
+				</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>The tangent bundle</h4>
+				<p>The collection of all the tangent spaces to a manifold is itself a manifold.</p>
+				<blockquote>Given $M\subset\mathbb{R}^n$ a $k$-dimensional submanifold, its <strong>tangent bundle</strong> is
+				$$TM=\{(p,v)\in\mathbb{R}^n\times\mathbb{R}^n\ :\ p\in M,\ v\in T_pM\}$$
+				together with the map $\pi:TM\to M$, which is the natural projection.</blockquote>
+				<p>If $F:\mathbb{R}^n\to\mathbb{R}^{n-k}$ is a local defining function for $M$, then $G:\mathbb{R}^n\times\mathbb{R}^n\to\mathbb{R}^{n-k}\times\mathbb{R}^{n-k}$ given by $G(x,y)=(F(x), DF_x[y])$ is a local defining function for $TM$, which is a $2k$-dimensional manifold in $\mathbb{R}^{2n}$.</p>
+				<ul>
+				<li>$T\mathbb{S}^1=\mathbb{R}^2\setminus\{0\}$
+				<li>$T\mathbb{S}^2=\{(z_0,z_1,z_2,z_3)\in\mathbb{C}^4\ :\ z_0^2+z_1^2+z_2^2+z_3^2=1\}$
+				</ul>
+				</section>
+				<section>
+				<h5>The normal bundle</h5>
+				<p>Another natural object to consider is the so called <em>normal bundle</em>, i.e.
+				$$NM=\{(p,v)\in\mathbb{R}^n\times\mathbb{R}^n\ :\ p\in M,\ v\perp T_pM\}\;.$$
+				Again, we have a natural projection on $M$.</p>
+				<p>Obviously, $N_pM$ (i.e. the fiber of such projection over $p\in M$) is the orthogonal complement of $T_pM$ in $\mathbb{R}^n$.</p>
+				<ul>
+				<li>$N\mathbb{S}^1=T\mathbb{S}^1$
+				<li>$N\mathbb{S}^2=\mathbb{R}^3\setminus\{0\}$
+				</ul>
+				</section>
+				<section>
+				<h5>Submersions and sections</h5>
+				<p>If $\pi:E\to M$ is a submersion between submanifolds and if $U\subset M$ is an open set, then a <em>section</em> of $\pi:E\to M$ over $U$ is a function $\sigma:U\to E$ such that $\pi(\sigma(p))=p$ for all $p\in U$.</p>
+				
+				<blockquote>A <strong>tangent vector-field</strong> on $M$ is a section of $\pi:TM\to M$; similarly, a normal vector field on $M$ is a section of $\pi:NM\to M$.</blockquote>
+				<p>Usually, we are interested in sections with some regularity conditions.</p>
+				<img src="L02\hairyball.png" style="width:80%; height:auto">
+				</section>
+				<section>
+				<h5>The gradient vector-field</h5>
+				<p>Given a smooth function $f:M\to\mathbb{R}$, we can extend it to a neighborhood $U$ of $M$.
+				<ul>
+				<li>$p\mapsto \nabla f_p$ is a smooth map from $U$ to $\mathbb{R}^n$
+				<li>$p\mapsto\mathrm{Pr}_p$ is a smooth map from $M$ to $\mathrm{GL}_n(\mathbb{R})$
+				<li>$p\mapsto\mathrm{Pr}_p(\nabla f_p)=\nabla^Mf_p$ is a smooth map from $M$ to $TM$
+				</ul>
+				<p>i.e. $\nabla^Mf$ is a smooth section of $TM$, that is, a tangent vector-field.</p>
+				</section>
+			
+				
+				</section>
+				
+				<section>
+				<section>
+				<h4>The differential of a smooth map</h4>
+				<p>Given two submanifolds $M\subseteq\mathbb{R}^m$ and $N\subseteq\mathbb{R}^n$ and a smooth map $F:M\to N$, for any $\gamma:(-1,1)\to M$, smooth curve through $p\in M$, the composition $\eta=F\circ\gamma$ gives a curve through $F(p)\in N$.</p>
+				<blockquote>The <strong>differential of $F$ at $p$</strong> is the linear map
+				$$dF_p:T_pM\to T_{F(p)}N$$
+				such that
+				$$dF_p[\dot{\gamma}(0)]=\dot{\eta}(0)\;.$$
+				</blockquote>
+				<p>$dF$ is a smooth map from $TM$ to $TN$.</p>
+				<p>If $dF_p$ is injective, the map $F$ is an <strong>immersion</strong> at $p$, if it is surjective, the map $F$ is a <strong>submersion</strong> at $p$. A map $F$ is a diffeomorphism if and only if $F$ is bijective and its differential is invertible at all points.</p>
+				</section>
+				
+				<section>
+				<h5>The differential of the gradient</h5>
+				<p>Given $f:M\to\mathbb{R}$, the gradient $\nabla^Mf$ is a smooth map from $M$ to $TM$, whose differential has rank $k$ at all points, because $\pi\circ\nabla^Mf=\mathrm{Id}_M$ (where $\pi:TM\to M$ is the natural projection). Its differential is, in principle, a map from $TM\to T(TM)$; we note that $T_{(p,v)}TM=T_pM\times T_v(T_pM)$ and, because $T_pM$ is linear subspace of $\mathbb{R}^n$, $T_v(T_pM)=T_pM$.
+				With respect to this splitting, $d\nabla^Mf$ acts as the identity from $T_pM$ to the first factor $T_pM$, so we only consider the "second component", i.e. the map $D\nabla^Mf:T_pM\to T_{\nabla^Mf_p}(T_pM)$.</p>
+				</section>
+				<section>
+				<h5>The Hessian and the second fundamental form</h5>
+				<p>The bilinear form $D^2f_p:T_pM\times T_pM\to\mathbb{R}$ given by
+				$$D^2_Mf_p(v,w)=\langle v,D\nabla^Mf_p[w]\rangle$$
+				is symmetric and it is called the <strong>Hessian</strong> of $f$ on $M$.</p>
+				<p>If $D^2f$ is the usual Hessian of (an extestion of) $f$ in $\mathbb{R}^n$, then the symmetric bilinear form on $T_pM$ given by
+				$$(v,w)\mapsto D^2_Mf_p(v,w)-D^2f_p(v,w)$$
+				can be seen as a linear function of $\nabla f_p$, i.e. there exists a bilinear map $H_p:T_pM\times T_pM\to N_pM$ such that
+				$$\langle H_p(v,w), \nabla f_p\rangle=D^2_Mf_p(v,w)-D^2f_p(v,w)$$
+				such map $H:TM\times TM\to NM$ is called second fundamental form of $M$.
+				</p>
+				</section>
+				</section>
+				
+				</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				math: {
+					mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS-MML_HTMLorMML'
+				},
+
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+		boardmarkerWidth: 3,
+		chalkWidth: 4,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+		</script>
+		
+	</body>
+</html>
