@@ -80,5 +80,42 @@ padding: 10px 20px 10px 20px
   color: crimson
 }
 
+.listalect ol {
+  list-style: none;
+  counter-reset: my-awesome-counter;
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 40px;
+  font-weight: normal;
+  link-color: #e7ad52;
+}
+.listalect ol li {
+  counter-increment: my-awesome-counter;
+  font-size: 0.65em;
+  margin-bottom: 0.6em;
+  margin-top: 0.6em;
+  link-color: #e7ad52;
+}
+.listalect ol li::before {
+  content: "Lecture " counter(my-awesome-counter) ":";
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-right: 0.5rem;
+  font-family: 'Squada One', cursive;
+  line-height: 1;
+  color: gray;
+}
+a{
+	target-name: new;
+	target-new: tab;
+}
+a:link{
+	color: #e7ad52;
+}
+
+a:visited{
+	color: #e7ad52;
+}
 
 
