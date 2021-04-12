@@ -4,8 +4,8 @@
 	<head>
 		<meta charset="utf-8">
 		
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<title>reveal.js</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Prova</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
@@ -24,7 +24,7 @@
 			
 				<section >
 				
-					
+				<h4>Prova</h4>	
 				</section>
 				
 				
@@ -55,16 +55,13 @@
 				},
 
 				
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
-				 chalkboard: {
-		boardmarkerWidth: 3,
-		chalkWidth: 4,
-		grid: false,
-		toggleChalkboardButton: false,
-		toggleNotesButton: false,
-		background:['rgba(127,127,127,0.1)','rgba(17,17,17,0'],
-		},
-				 
+				
+				 chalkboard: { // font-awesome.min.css must be available
+					src: "prova\cb.json", 
+					toggleChalkboardButton: { left: "80px" },
+					toggleNotesButton: { left: "130px" },
+				},
+				 plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
 			});
 		</script>
 	</body>

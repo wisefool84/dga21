@@ -141,9 +141,9 @@
 				<p>A diffeomorphism is a bijective function $F:M\to N$ such that both $F$ and its inverse are smooth.</p>
 				<h5>Examples</h5>
 				<ul>
-				<li style="font-size:0.6em">$M=\{x\in\mathbb{R}^3\ :\ \|x\|<\pi\}$, $F:M\to SO(3)$, with $F(x)$ the positive rotation around $x/\|x\|$ of an angle $\|x\|$.</li>
-				<li style="font-size:0.6em">$F:\mathbb{S}^{n-1}\to\mathrm{Sym}_{n}(\mathbb{R})$ given by $F(x)=xx^t$</li>
-				<li style="font-size:0.6em">$F:\mathbb{S}^1\times\mathbb{S}^1\to\mathbb{S}^2$ s.t. $F(e^{i\alpha},e^{i\beta})=(\cos(\alpha),\cos(\beta)\sin(\alpha),\sin(\beta)\sin(\alpha))$</li>
+				<li>$M=\{x\in\mathbb{R}^3\ :\ \|x\|<\pi\}$, $F:M\to SO(3)$, with $F(x)$ the positive rotation around $x/\|x\|$ of an angle $\|x\|$.</li>
+				<li >$F:\mathbb{S}^{n-1}\to\mathrm{Sym}_{n}(\mathbb{R})$ given by $F(x)=xx^t$</li>
+				<li >$F:\mathbb{S}^1\times\mathbb{S}^1\to\mathbb{S}^2$ s.t. $F(e^{i\alpha},e^{i\beta})=(\cos(\alpha),\cos(\beta)\sin(\alpha),\sin(\beta)\sin(\alpha))$</li>
 				</ul>
 				<p><strong>Note:</strong> A map $F:M\to N$ is smooth iff the above property holds with $U$ an open neighborhood of $M$ in $\mathbb{R}^n$.</p>
 				
@@ -195,7 +195,11 @@
 				transition: 'convex',
 				math: {
 					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
-					config: 'TeX-AMS-MML_HTMLorMML'
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					// TeX: { Macros: { RR: "{\bf R}" } , equationNumbers: { autoNumber: "AMS" }},
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
 				},
 
 				
@@ -209,7 +213,13 @@
 		color: [ 'rgba(153,0,0,1)', 'rgba(255,255,255,0.5)' ],
 	}, 
 			});
+			
 		</script>
+		<script type="text/x-mathjax-config"> 
+    MathJax.Hub.Config({ 
+        "CommonHTML": { scale: 80 }, 
+        });
+</script>
 		
 	</body>
 </html>

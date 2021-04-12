@@ -181,9 +181,12 @@
 				transition: 'convex',
 				math: {
 					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
-					config: 'TeX-AMS-MML_HTMLorMML'
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					// TeX: { Macros: { RR: "{\bf R}" } , equationNumbers: { autoNumber: "AMS" }},
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
 				},
-
 				
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard, 
 				//RunInBrowser 
@@ -198,6 +201,11 @@
 				
 			});
 		</script>
+		<script type="text/x-mathjax-config"> 
+    MathJax.Hub.Config({ 
+        "CommonHTML": { scale: 80 }, 
+        });
+</script>
 		
 	</body>
 </html>

@@ -1,0 +1,178 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL05</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L01/Lecture1.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 05</h4>
+				
+				</section>
+				<section>
+				<section>
+				<h4>Abstract manifolds</h4>
+				<p>We already saw as $k$-dimensional submanifolds of $\mathbb{R}^n$ can be characterized as subsets that are locally diffeomorphic to $\mathbb{R}^k$. </p>
+				<p>This makes sense in $\mathbb{R}^n$ because we already have a notion of smooth map. Now, let $M$ be a generic set. </p>
+				<blockquote>A <em>coordinate chart</em> for $M$ is the pair $(U,\phi)$ where $U\subset M$ and $\phi$ is a bijection between $U$ and an open set $V$ of $\mathbb{R}^k$.</blockquote>
+				<p>Two charts $(U_1,\phi_1)$ and $(U_2,\phi_2)$ for $M$ are <em>compatible</em> if either $U_1\cap U_2=\emptyset$ or</p> 
+				<ol>
+				<li>$U_1\cap U_2\neq\emptyset$
+				<li>$\phi_1(U_1\cap U_2)$ and $\phi_2(U_1\cap U_2)$ are open sets in $\mathbb{R}^k$
+				<li>$\phi_2\circ\phi_1^{-1}:\phi_1(U_1\cap U_2)\to\phi_2(U_1\cap U_2)$ is a diffeomorphism.
+				</ol>
+				
+				
+				</section>
+				<section>
+				<h5>Smooth structure</h5>
+				<p>An <em>atlas</em> for $M$ is a collection of compatible charts $\{(U_j, \phi_j)\}_{j\in J}$ such that the sets $U_j$ cover all of $M$ for $j\in J$. Two atlases are compatible if their union is again an atlas</p>
+				<p style="margin-bottom:1em">A <em>smooth structure</em> on $M$ is a maximal atlas. A smooth $k$-dimensional manifold is a set $M$ endowed with a smooth structure whose charts take values in $\mathbb{R}^k$.</p>
+				<blockquote>Given two manifolds $M$, $N$, a map $F:M\to N$ is smooth if, for any $p\in M$ and any two charts $(U,\phi)$ and $(W,\psi)$ on $M$ and $N$ respectively, such that $p\in U$ and $F(p)\in W$, the map
+				$$\psi\circ F\circ \phi^{-1}:\phi(U)\to \psi(W)$$
+				is smooth as a map between open sets in the Euclidean space.</blockquote>
+				
+				</section>
+				<section>
+				<h5>Technicalities</h5>
+				<ul>
+				<li>On $\mathbb{R}^n$ there are infinitely many smooth structures (how many?).
+				<li>All these structures are diffeomorphic, if $n\neq 4$.
+				<li>On $\mathbb{R}^4$ there are smooth structures which are not diffeomorphic...
+				<li>A smooth structure on a set $M$ gives also a topology on it, which is the unique topology such that, if $(U,\phi)$ is a chart, then $U$ is open in $M$ and $\phi$ is continuous.
+				</ul>
+				</section>
+				
+				</section>
+				<section>
+				<section>
+				<h4>Tangent vectors</h4>
+				<p>We draw inspiration from the parallel between tangent vectors and directional derivatives for submanifolds of $\mathbb{R}^n$. Let $M$ be a smooth manifold and $p\in M$ a point; we denote by $\mathcal{C}^\infty(M)$ the ring of smooth maps from $M$ to $\mathbb{R}$.</p>
+				<blockquote> A <strong>tangent vector</strong> to $M$ at $p$ is a linear functional $X_p:\mathcal{C}^\infty(M)\to\mathbb{R}$ such that
+				$$X_p(fg)=f(p)X_p(g)+g(p)X_p(f)\;.$$
+				Such a functional is usually called a <em>derivation</em> on $\mathcal{C}^\infty(M)$ at $p$.</blockquote>
+				<p>We denote by $T_pM$ the vector space of all the tangent vectors to $M$ at $p$.</p>
+				</section>
+				<section>
+				<h5>What happens in a chart?</h5>
+				<p>Let $(U,\phi)$ be a chart around $p$, with $\phi(p)=0\in\mathbb{R}^k$. Given $u\in\mathcal{C}^\infty(M)$, we define
+				$$(\phi_*X_p)(u)=X_p(\phi^*u)=X_p(u\circ\phi)$$
+				and we obtain a derivation on $\mathcal{C}^\infty(\mathbb{R}^k)$ at $0$. Therefore
+				$$(\phi_*X_p)(u)=\frac{\partial u}{\partial v}(0)$$
+				for some $v\in\mathbb{R}^k$.</p>
+				<p>It is easy to check that $\phi_*$ gives an isomorphism between $T_pM$ and $\mathbb{R}^k$.</p>
+				</section>
+				<section>
+				<h5>The tangent bundle</h5>
+				<p>The set
+				$$TM=\{(p,X_p)\ :\ p\in M,\ X_p\in T_pM\}$$
+				can be given a natural smooth structure with charts of the form $(U\times\mathbb{R}^k, (\phi,\phi_*))$, where $(U,\phi)$ is a chart for $M$. The projection $\pi:TM\to M$ is a smooth map (a submersion).</p>
+				<blockquote>A <strong>tangent vector-field</strong> on $M$ is a smooth section for $\pi$, i.e. a smooth map $X:M\to TM$ such that $X(p)=X_p\in T_pM$ for all $p\in M$.</blockquote>
+				<p>Given a smooth map $F:M\to N$ between manifolds, we define $d_pF:T_pM\to T_pN$ as
+				$$(F_*X_p)(f)=(X_p\circ F^*)(f)=X_p(f\circ F)$$
+				for all $f\in\mathcal{C}^\infty(N)$. The map $dF:TM\to TN$ (also denoted by $F_*$) is smooth and it is called <em>differential of $F$</em> (or tangent map or pushforward).</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>The differential of a scalar function</h4>
+				<p>Let $f\in\mathcal{C}^\infty(M)$, then $df_p$ is a linear functional from $T_pM$ to $\mathbb{R}$, i.e. an element of the dual space $T_p^*M$, which is called <em>cotangent space</em>; its elements are called <em>cotangent vectors</em>. The collection of cotangent spaces is $$T^*M=\{(p, \alpha_p)\ :\ p\in M,\ \alpha_p\in T^*_pM\}$$
+				it is called <em>cotangent bundle</em>, with the natural projection $\pi:T^*M\to M$.</p>
+				<blockquote>A <strong>differential $1$-form</strong> on $M$ is a section of the cotangent bundle, i.e. a smooth map $\alpha:M\to T^*M$ such that $\alpha(p)=\alpha_p\in T_p^*M$ for all $p\in M$.</blockquote>
+				
+				</section>
+				<section>
+				<h5>Pullback</h5>
+				<p>Given a smooth map $F:M\to N$ between manifolds, we define the pullback
+				$$F^*:T^*_{F(p)}N\to T^*_pM$$
+				as the dual of the pushforward $F_*$, so, given $\alpha_{F(p)}\in T^*_{F(p)}N$,
+				$$F^*(\alpha_{F(p)})(X_p)=\alpha_{F(p)}(F_*X_p)$$
+				for every $X_p\in T_pM$.</p>
+				<p>If $\alpha$ is a differential $1$-form on $N$, then $F^*\alpha$ is the differential $1$-form on $M$ defined by
+				$$(F^*\alpha)_p=F^*(\alpha_{F(p)})\;.$$
+				</p>
+				
+				</section>
+				<section>
+				<h5>Integration on curves</h5>
+				<p>Let $I=[0,1]$ and $\gamma:I\to M$ be a smooth map. Given $\alpha$ a differential $1$-form on $M$, we define
+				$$\int_\gamma \alpha=\int_{0}^1\gamma^*\alpha=\int_0^1\alpha(\dot{\gamma}(t))dt\;.$$
+				We note that, if $u$ is another coordinate on $[0,1]$ (i.e. $u(t)$ is a reparametrization of $\gamma$), then the integral above is equal to
+				$$\int_0^1\alpha(\dot{\gamma}(u))du\;.$$
+				In particular, 
+				$$\int_\gamma df=f(\gamma(1))-f(\gamma(0))\;.$$
+				</p>
+				
+				</section>
+				</section>
+				
+				</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard, 
+				//RunInBrowser 
+				],
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					// TeX: { Macros: { RR: "{\bf R}" } , equationNumbers: { autoNumber: "AMS" }},
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				
+				chalkboard: {
+					boardmarkerWidth: 3,
+					chalkWidth: 4,
+					grid: false,
+					toggleChalkboardButton: false,
+					toggleNotesButton: false,
+				},
+				
+			});
+		</script>
+	</body>
+</html>	

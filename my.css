@@ -26,6 +26,12 @@
   
 .reveal h5 {
   font-size: 0.7em; }
+.reveal h6 {
+  font-size: 0.65em;
+  font-weight bold;
+  text-decoration: underline;
+  margin-top:1em;
+  }
 .mate {
 font-size:0.55em;
 margin-top:10px;
@@ -35,12 +41,15 @@ margin-bottom:10px;
 .reveal p {
 font-size:0.6em;
 text-align: justify;
+margin-bottom:0.3em;
 }
 .reveal blockquote {
 font-size:0.6em;
 text-align:justify;
 padding: 10px 20px 10px 20px 
 }
+
+
 .reveal ul li {
 	font-size: 0.6em;
 	margin-bottom:20px;
@@ -56,6 +65,24 @@ padding: 10px 20px 10px 20px
 	
 }
 
+.reveal blockquote ol{
+	margin-top:0.4em;
+}
+.reveal blockquote ol li{
+	margin-left:1em;
+	margin-bottom:0.4em;
+	font-size:1em;
+	
+}
+.reveal blockquote ul{
+	margin-top:0.4em;
+}
+.reveal blockquote ul li{
+	margin-left:1em;
+	margin-bottom:0.4em;
+	font-size:1em;
+	
+}
 @import url('https://fonts.googleapis.com/css2?family=Squada+One&display=swap');
 
 .assump ol {
@@ -119,3 +146,4 @@ a:visited{
 }
 
 
+			
