@@ -1,3 +1,10 @@
+@media print {
+    .slide-background {
+        background-color: #111 !important;
+        -webkit-print-color-adjust: exact; 
+    }
+}
+
 .row {
   display: flex;
   
