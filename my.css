@@ -1,5 +1,7 @@
 @media print {
     .slide-background {
+		color-adjust: exact;
+		print-color-adjust: exact;
         background-color: #111 !important;
         -webkit-print-color-adjust: exact; 
     }
