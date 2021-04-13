@@ -300,6 +300,7 @@ console.log("Wait for pdf pages to be created and drawings to be loaded");
 
 	var loaded = null;
 	if ( config.src != null ) {
+		//window.alert(config.src);
 		loadData( config.src );
 	}
 
@@ -324,7 +325,7 @@ console.log("Wait for pdf pages to be created and drawings to be loaded");
 					}
 				}
 				loaded = true;
-//console.log("Drawings loaded");
+//window.alert("Drawings loaded");
 			}
 			else {
 				config.readOnly = undefined;

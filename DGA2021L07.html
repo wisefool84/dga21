@@ -19,6 +19,8 @@
 		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="my.css">
+		
+		
 	</head>
 	<body>
 		<div class="reveal">
@@ -77,23 +79,88 @@
 				</section>
 				<section>
 				<section>
+				<h4>Metrics</h4>
+				<p>A <em>scalar product</em> on $T_pM$ is a bilinear symmetric positive definite form, i.e. a function from $T_pM\times T_pM$ to $\mathbb{R}$ which is bilinear, symmetric and positive definite; therefore, it is a particular element of $T_p^*M\otimes T_p^*M$ (the set of bilinear forms) which is symmetric and positive definite.</p>
+				<blockquote>A <strong>Riemannian metric</strong> on $M$ is a smooth section $g:M\to T^*M\otimes T^*M$ such that, for any $p\in M$ and $X_p,\ Y_p\in T_pM$, we have $g_p(X_p,Y_p)=g_p(Y_p,X_p)$ and $g_p(X_p,X_p)>0$ for all $X_p\in T_pM\setminus\{0\}$.
+				</blockquote>
+				<p>Given a local frame, a metric is usually given as $g=g_{ij}dx^i\otimes dx^j$, where $g_{ij}=g_{ji}$. With this notations, $g(X,Y)=g_{ij}X^iY^j$.</p>
+				</section>
+				<section>
+				<h5>Musical isomorphism</h5>
+				<p>Given a vector-field $X\in\mathfrak{X}(M)$ and a Riemannian metric $g$ on $M$, we define the $1$-form $X^\flat\in\Omega^1(M)$ by
+				$$X^\flat(Y)=g(X,Y)\qquad \forall\,Y\in\mathfrak{X}(M)\;.$$
+				In coordinates, $X^\flat=X^ig_{ij}dx^j$. This is called <strong>lowering the index</strong> or <strong>contraction</strong> of $g$ with $X$.
+				</p>
+				<p>So, we have a map $\phantom{A}^\flat:TM\to T^*M$ which is an isomorphism of bundles (because $g$ is positive definite).</p>
+				<p>The inverse map is denoted by $\phantom{A}^\sharp:T^*M\to TM$ and will be given by a section of $TM\otimes TM$, again symmetric and positive definite, which we write, in a local frame, as $g^{ij}\partial_i\otimes\partial_j$. Therefore
+				$$\alpha^\sharp=\alpha_ig^{ij}\partial_j$$
+				(this is obviously called <strong>raising the index</strong>) and $(X^\flat)^\sharp=X$, so $g^{ij}g_{ij}=\delta^i_j$.</p>
+				</section>
+				<section>
+				<h5>The gradient of a function</h5>
+				<p>A smooth $k$-dimensional manifold $M$ endowed with a Riemannian metric $g$ is called <em>Riemannian manifold</em>.</p>
+				<blockquote>If $(M,g)$ is a Riemannian manifold and $f:M\to\mathbb{R}$ is a smooth function, then the <strong>gradient of $f$</strong> is the vector-field
+				$$\mathrm{grad}f=(df)^\sharp$$
+				i.e. with respect to a local frame
+				$$\mathrm{grad}f=g^{ij}(\partial_i f) \partial_j\;.$$
+				</blockquote>
+				</section>
+				</section>
+				<section>
+				<section>
 				<h4>Tensors</h4>
+				<p>A covariant $m$-tensor on $T_pM$ is a real-valued multilinear function
+				$$R_p:\underbrace{T_pM\times\ldots\times T_pM}{\textrm{$m$ times}}\to\mathbb{R}$$
+				and the set of all covariant $m$-tensors is denoted by $T^m(T_pM)$ and can be written as the tensor product
+				$$\underbrace{T_p^*M\otimes\ldots\otimes T_p^*M}_{\textrm{$m$ times}}\;.$$
+				The bunlde $T^mM$ is defined by
+				$$\{(p,R_p)\ :\ p\in M,\ R_p\in T^m(T_pM)\}$$
+				and its sections are called <strong>covariant $m$-tensor fields</strong> (usually "fields" is omitted).</p>
+				<p>Differential $m$-forms are a special kind of covariant $m$-tensors (alternating or skew-symmetric) as well as metrics, which are symmetric covariant $2$-tensors.</p>
+				</section>
+				<section>
+				<h5>Contravariant tensors</h5>
+				<p>A contravariant $h$-tensor on $T_pM$ is a real-valued multilinear function
+				$$S_p:\underbrace{T_p^*M\times\ldots\times T_p^*M}_{\textrm{$h$ times}}\to\mathbb{R}$$
+				and the set of all contravariant $h$-tensors is denoted by $T_h(T_pM)$ and can be written as the tensor product
+				$$\underbrace{T_pM\otimes\ldots\otimes T_pM}_{\textrm{$h$ times}}\;.$$
+				The bundle $T_h(M)$ is defined by
+				$$\{(p,S_p)\ :\ p\in M,\ S_p\in T_h(T_pM)\}$$
+				and its sections are called <strong>contravariant $h$-tensor fields</strong> (usually "fields" is omitted).</p>
+				<p>The "inverse" metric $g^{ij}$ is a contravariant $2$-tensor.</p>
+				</section>
+				<section>
+				<h5>Mixed tensors</h5>
+				<p>The space of mixed tensors of type $(m,h)$ is
+				$$T_h^m(T_pM)=\underbrace{T_p^*M\otimes \ldots\otimes T_p^*M}_{\textrm{$m$ times}}\otimes\underbrace{T_pM\otimes\ldots\otimes T_pM}_{\textrm{$h$ times}}$$
+				and the bunlde $T_h^m(M)$ and its sections are defined accordingly.</p>
+				<p><strong>Example:</strong> given a vector space $V$, an endomorphism $L:V\to V$ is naturally an element of $T_1^1(V)$.</p>
+				<p>A mixed tensor of type $(m,h)$, in coordinates, will be written as
+				$$A^{i_1,\ldots, i_h}_{j_1,\ldots, j_m}dx^{j_1}\otimes\cdots\otimes dx^{j_m}\otimes \partial_{i_1}\otimes\cdots\otimes\partial_{i_h}$$
+				</p>
+				</section>
+				<section>
+				<h5>Nomima nuda tenemus</h5>
+				<p>In modern terminology, a map $F:M\to N$ induces a covariant transformation (functor) from $TM$ to $TM$, i.e. the pushforward $F_*$, which acts on contravariant tensors; whereas it induces a contravariant transformation (functor) from $T^*N$ to $T^*M$, i.e. the pullback $F^*$, which acts on covariant tensors.</p>
+				<p>The names co- and contra-variant related to transformations denote their direction (along the original $F$ or in the opposite direction); the same names applied to vectors  or tensors refers to the way their coordinates change when a map is applied to the vector space.</p>
+				<p>Some glorious day, a golden hero will rewrite all differential geometry books to adapt their terminology; until then, we endure the pain.</p>
 				</section>
 				</section>
 				
 				</div>
 		</div>
 
-		<script src="dist/reveal.js"></script>
-		<script src="plugin/notes/notes.js"></script>
+		
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+<script src="dist/reveal.js"></script>
+		<!--<script src="plugin/notes/notes.js"></script>-->
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
 		<script src="plugin/zoom/zoom.js"></script>
 		<script src="plugin/math/math.js"></script>
 		<script src="plugin/chalkboard/plugin.js"></script>
 		<script src="plugin/pdfexport/pdfexport.js"></script>
-		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
-
+		<script src="plugin/audio-slideshow/plugin.js"></script>
 
 		<script>
 			// More info about initialization & config:
@@ -103,6 +170,7 @@
 				hash: true,
 				controls: false,
 				transition: 'convex',
+				history:true,
 				
 				math: {
 					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
@@ -115,7 +183,7 @@
 				
 				
 				chalkboard: {
-					src: "prova.json",
+					src: null,
 					readOnly: false,
 					boardmarkerWidth: 3,
 					chalkWidth: 4,
@@ -124,7 +192,7 @@
 					toggleNotesButton: false,
 					
 				},
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard, PdfExport,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealZoom, RevealMath, RevealChalkboard, PdfExport,
 				//RunInBrowser 
 				],
 			});
