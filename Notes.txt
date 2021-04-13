@@ -1,0 +1,7 @@
+**NOTES for the USE of VIDEO RECORDINGS of the LECTURES**
+
+1) In order to be able to play the .avi files of the avi folder, you can use whatever program you prefer as long as the TSCC codec is installed (you can download the codec from here https://www.techsmith.com/codecs.html ).
+
+2) These recordings are "live" recordings, so absolutely not free from errors, mistakes, glitches and flaws, both aesthetical and mathematical.
+
+3) You can reproduce these video freely for your private use - if you need to employ them in any other way, please contact me first.
