@@ -52,7 +52,7 @@
 						<p align="justify">The set of points for which some coordinates depend explicity on the others, via a given function.</p>
 						<div class="mate">$$h:\mathbb{R}^n\to\mathbb{R}^k$$
 						$$M=\{(x,h(x))\in\mathbb{R}^n\times\mathbb{R}^k\ :\ x\in\mathbb{R}^n\}$$</div>
-						<img src="L01/grafico.jpg" style="height:38%"></span>
+						<img src="L01/grafico.jpg" style="height:35%"></span>
 					</div>
 					<div class="column" >
 						<h5 class="fragment" data-fragment-index="1">As a zero</h5>
@@ -83,7 +83,7 @@
 				<p class="fragment">We may think of performing a nonlinear (smooth) Gaussian Elimination on the Jacobian matrix $DF$ (i.e. the matrix of first derivatives) of $F$. </p>
 				<p class="fragment">Supposing that the last $k$ columns of $DF$ are linearly independent, we can express the associated variables in terms of the remaining ones. Thus we obtain a function $h:U\to\mathbb{R}^k$, with $U\subset\mathbb{R}^{n-k}$ such that <em>locally</em> the zero set of $F$ is the graph of $h$.</p>
 				<span class="fragment">
-				<img src="L01/IFTfade.png" style="width:60%; heigth:auto">
+				<img src="L01/IFTfade.png" style="width:58%; heigth:auto">
 				<p style="text-align:center;"><b>Implicit Function Theorem</b></p></span>
 				</section>
 				
@@ -196,6 +196,8 @@
 			Reveal.initialize({
 				hash: true,
 				controls: false,
+				width: 960,
+				height: 800,
 				transition: 'convex',
 				math: {
 					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
@@ -219,7 +221,8 @@
 	}, 
 			});
 			
-			Reveal.configure({ pdfSeparateFragments: false, pdfMaxPagesPerSlide: 1 });
+			Reveal.configure({ pdfSeparateFragments: false//, pdfMaxPagesPerSlide: 1 
+			});
 			
 		</script>
 		
