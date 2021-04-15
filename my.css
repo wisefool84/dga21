@@ -92,28 +92,48 @@ padding: 10px 20px 10px 20px
 	font-size:1em;
 	
 }
-@import url('https://fonts.googleapis.com/css2?family=Squada+One&display=swap');
+@font-face{
+	font-family: "agency fb";
+	font-style:normal;
+	font-weight:400;
+	src:local('Agency FB'),local('AgencyFB-Regular'),url(http://allfont.net/cache/fonts/agency-fb_0b9596562659a0772f5e24c22cae921b.woff) format('woff'),url(http://allfont.net/cache/fonts/agency-fb_0b9596562659a0772f5e24c22cae921b.ttf) format('truetype')}
+
 
 .assump ol {
   list-style: none;
   counter-reset: my-awesome-counter;
-  margin: 0;
+  margin-left: 130px;
   padding: 0;
 }
 .assump ol li {
   counter-increment: my-awesome-counter;
   font-size: 0.6em;
-  margin-bottom: 0.6em;
+  margin-bottom: 1em;
   margin-top: 0.6em;
+  position: relative;
+  text-align:justify;
+  
 }
 .assump ol li::before {
-  content: "A" counter(my-awesome-counter);
+  content: "Assump. " counter(my-awesome-counter);
+  font-size: 1.5em;
+  border: 0;
+  display:inline-flex;
+  align-items:center;
+  justify-content: center;
+  width: 130px;
+  height:45px;
+  border-left: 10px solid #b14;
   font-weight: bold;
-  font-size: 1.1em;
   margin-right: 0.5rem;
-  font-family: 'Squada One', cursive;
-  line-height: 1;
-  color: crimson
+  padding-left: 0.5rem;
+  font-family: "agency fb", arial;
+  /*line-height: 1em;*/
+  background-color: #433;
+  position: absolute;
+  left: -160px;
+  top: -5px;
+  vertical-align: middle;
 }
 
 .listalect ol {
@@ -154,5 +174,81 @@ a:visited{
 	color: #e7ad52;
 }
 
+.problem blockquote {
+	background: #334;
+	border: 0;
+	border-left: 10px solid #116;
+	border-right: 10px solid #116;
+	width: 50%;
+	text-align: center;
+	
+}
+.step ol {
+  list-style: none;
+  counter-reset: my-awesome-counter;
+  margin: 0;
+  padding: 0;
+  max-width: 80%;
+}
+.step ol li {
+  counter-increment: my-awesome-counter;
+  font-size: 0.6em;
+  margin-bottom: 0.6em;
+  margin-top: 0.6em;
+  position: relative;
+  text-align:justify;
+}
+.step ol li::before {
+  content: "Step " counter(my-awesome-counter);
+  font-size: 1.5em;
+  border: 0;
+  display:inline-flex;
+  align-items:center;
+  justify-content: center;
+  width: 80px;
+  height:45px;
+  border-left: 10px solid #116;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  padding-left: 0.5rem;
+  font-family: "agency fb", arial;
+  line-height: 1;
+  background-color: #334;
+  position: absolute;
+  left: -110px;
+}
 
-			
+#personal ol {
+	list-style: none;
+  counter-reset: my-awesome-counter;
+  margin: 0;
+  padding: 0;
+  max-width: 80%;
+}
+#personal ol li {
+  counter-increment: my-awesome-counter;
+  font-size: 0.6em;
+  margin-bottom: 0.6em;
+  margin-top: 0.6em;
+  position: relative;
+  text-align:justify;
+}
+#personal ol li::before {
+  content: var(--testo) " " counter(my-awesome-counter);
+  font-size: var(--fnts);
+  border: 0;
+  display:inline-flex;
+  align-items:center;
+  justify-content: center;
+  width: var(--hor);
+  height: var(--vert);
+  border-left: 10px solid var(--barra);
+  font-weight: bold;
+  margin-right: 0.5rem;
+  padding-left: 0.5rem;
+  font-family: "agency fb", arial;
+  line-height: 1;
+  background-color: var(--sfondo);
+  position: absolute;
+  left: calc(-1 * var(--hor) - 30px);
+}

@@ -36,69 +36,70 @@
 				<section>
 				<section>
 				<h4>Taylor formula</h4>
-				<p>Taylor formula is a way to approximate functions with sums of homogeneous polynomials</p>
-				<p style="margin-bottom:1em">It relies on the fact that the n-th derivatives build up a $n$-linear form, which can be applied to the "displacement vector" from the point where we are calculating our derivatives to any other point.</p>
-				<p><strong>Problem:</strong> on a submanifold, taking the difference between two points does not give, in general, an element of the tangent space (which is where we can define, for example, the gradient).</p>
-				<p><strong>Idea:</strong> the tangent space was obtained as a quotient of the space of all curves passing through a given point, i.e. all the ways of traveling along the manifold from that point. It is enough to choose a "way back" (i.e. a local section of the quotien map).</p>
+				<p class="fragment">Taylor formula is a way to approximate functions with sums of homogeneous polynomials</p>
+				<p style="margin-bottom:1em" class="fragment">It relies on the fact that the n-th derivatives build up a $n$-linear form, which can be applied to the "displacement vector" from the point where we are calculating our derivatives to any other point.</p>
+				<p class="fragment"><strong>Problem:</strong> on a submanifold, taking the difference between two points does not give, in general, an element of the tangent space (which is where we can define, for example, the gradient).</p>
+				<p class="fragment"><strong>Idea:</strong> the tangent space was obtained as a quotient of the space of all curves passing through a given point, i.e. all the ways of traveling along the manifold from that point. It is enough to choose a "way back" (i.e. a local section of the quotien map).</p>
 				
 				</section>
 				<section>
 				<h5>Retractions</h5>
-				<p>Let $M\subseteq\mathbb{R}^n$ be a $k$-dimensional manifold.</p>
+				<div class="fragment">
+				<p >Let $M\subseteq\mathbb{R}^n$ be a $k$-dimensional manifold.</p>
 				<blockquote>A (first-order) <strong>retratcion</strong> is a smooth map $R:TM\to M$ such that
 				<ol>
 				<li>$R(x,0)=x$ for all $x\in M$</li>
 				<li>for every $x\in M$, let $R^x:T_xM\to M$ be given by $R^x(v)=R(x,v)$, then $DR^x_0[v]=v$ for all $v\in T_0(T_xM)=T_xM$.</li>
-				</ol></blockquote>
-				<p>For any $v\in T_xM$, the retraction allows us to define a curve $\gamma(t)=R(x,tv)$ from $\mathbb{R}$ to $M$ such that $\dot{\gamma}(0)=v$. The second request means that $R_x$ is locally a diffeomorphis from a neighborhood of $0\in T_xM$ to a neighborhood of $x\in M$.</p>
+				</ol></blockquote></div>
+				<p class="fragment">For any $v\in T_xM$, the retraction allows us to define a curve $\gamma(t)=R(x,tv)$ from $\mathbb{R}$ to $M$ such that $\dot{\gamma}(0)=v$. The second request means that $R_x$ is locally a diffeomorphis from a neighborhood of $0\in T_xM$ to a neighborhood of $x\in M$.</p>
 				
 				</section>
 				<section>
 				<h5>First-order approximations</h5>
 				
-				<p style="margin-bottom:1.5em"> For $(x,v)\in T_pM$, let  $\gamma(t)=R(x,t)$; then 
+				<p class="fragment" style="margin-bottom:1.5em"> For $(x,v)\in T_pM$, let  $\gamma(t)=R(x,t)$; then 
 				$$f\circ\gamma(t)=f(x)+t\langle \nabla^Mf_x,v\rangle+o(t)$$
 				</p>
-				<p style="margin-bottom:1em">The point of such an approximation is not to retrieve the actual values of the function (given $q\in M$, how do you find $v\in T_xM$ that "leads" you to $q$?), but to study the local behaviour of the function around $x$.</p>
+				<p class="fragment" style="margin-bottom:1em">The point of such an approximation is not to retrieve the actual values of the function (given $q\in M$, how do you find $v\in T_xM$ that "leads" you to $q$?), but to study the local behaviour of the function around $x$.</p>
 				</p>
-				<p>Points such that $\nabla^Mf_x=0$ are called <strong>critical</strong> or <strong>stationary</strong> points of $f$ on $M$.</p>
+				<p class="fragment">Points such that $\nabla^Mf_x=0$ are called <strong>critical</strong> or <strong>stationary</strong> points of $f$ on $M$.</p>
 				</section>
 				</section>
 				
 				<section>
 				<section>
 				<h4>First-order optimization</h4>
-				<p>Let $M$ be a $k$-dimensional submanifold of $\mathbb{R}^n$ and $f:M\to\mathbb{R}$ a smooth function. We want to solve the problem
+				<p class="fragment">Let $M$ be a $k$-dimensional submanifold of $\mathbb{R}^n$ and $f:M\to\mathbb{R}$ a smooth function. We want to solve the problem
 				$$\min_{x\in M}f(x)\;.$$
 				The function $f$ is usually referred to as the <em>cost</em> or <em>objective</em> function.</p>
-				<p>A (global or local) minimizer, i.e. a  (global or local) optimizer for the given problem, will be found among the critical points of $f$.</p>
+				<p class="fragment">A (global or local) minimizer, i.e. a  (global or local) optimizer for the given problem, will be found among the critical points of $f$.</p>
 				
 				</section>
 				<section>
 				<h5>Riemannian gradient descent</h5>
 				<div class="row">
-				<div style="display: table-cell; vertical-align: middle">
-				<pre><code data-trim data-noescape class="python" style="font-size:0.9em">
+				<div style="display: table-cell; vertical-align: middle; width: 90%">
+				<pre class="fragment"><code data-trim data-noescape class="python" style="font-size:0.9em">
 				def RGD(retraction,x0,f):
 					x=[x0] 		# points
 					a=[]		# sizes of the step
 					s=[]		# displacement vector
 					k=0		# iteration counter
-					exit_condition=False
-					while exit_condition==False:
+					stop_cond=False
+					while stop_cond==False:
 						a.append(step_size(x,a,f)) # new step size
 						s.append(-a[k]*gradient(f,x[k])) # displacement vect
 						x.append(retraction(x[k],s[k])) # new point on M
-						exit_condition=check_exit(x, f) # checks if we made it!
+						stop_cond=check_exit(x, f) # checks if we made it!
 						k+=1
 						
 					return (x[k], f(x[k]))
 				</code></pre>
 				</div>
-				<div style="display:table-cell; margin-left: 1em; vertical-align: middle">
+				<div class="fragment" style="display:table-cell; vertical-align: middle; width: 12%">
 				<br>
 				<br>
-				<p><strong><em>To-Do List</em></strong></p>
+				<p><strong><em>ToDo List</em></strong></p>
 				<ul>
 				<li>step_size
 				<li>retraction
@@ -112,12 +113,13 @@
 				<h5>Assumptions</h5>
 				<div class="assump">
 				<ol>
-				<li>There exists $m\in\mathbb{R}$ such that $f(x)\geq m$ for all $x\in M$.</li>
-				<li> At each iteration there is <em>sufficient decrese</em>, i.e. $\exists c>0$ such that $$f(x_k)-f(x_{k+1})\geq c\|\nabla^Mf_{x_k}\|^2$$</li>
-				<li> For $S\subseteq TM$, we have $L>0$ such that for all $(x,v)\in S$ $$f(R(x,v))\leq f(x)+\langle \nabla^Mf_x, v\rangle + L\|v\|^2/2$$</li>
+				<li class="fragment">There exists $m\in\mathbb{R}$ such that $f(x)\geq m$ for all $x\in M$.</li>
+				<li class="fragment"> At each iteration there is <em>sufficient decrese</em>, i.e. $\exists c>0$ such that $$f(x_k)-f(x_{k+1})\geq c\|\nabla^Mf_{x_k}\|^2$$</li>
+				<li class="fragment"> There is $S\subseteq TM$ for which we have $L>0$ such that for all $(x,v)\in S$ $$f(R(x,v))\leq f(x)+\langle \nabla^Mf_x, v\rangle + L\|v\|^2/2$$</li>
 				</ol>
 				</div>
-				<p> Assumption 1 is just common sense. Assumption 2 is ensured by the function step_size. Assumption 3 is a substitute for the Lipschitz condition on the gradient.</p>
+				<p class="fragment"> Assumption 1 is just common sense. Assumption 2 is ensured by the function step_size. Assumption 3 is a substitute for the Lipschitz condition on the gradient.</p>
+				
 				
 				</section>
 								
@@ -125,18 +127,19 @@
 				<section>
 				<section>
 				<h4>Line-search algorithms</h4>
-				<p>The procedure to pick the step size is called <em>line-search</em> procedure and it can be formulated as minimising
+				<p class="fragment">The procedure to pick the step size is called <em>line-search</em> procedure and it can be formulated as finding a value of $t$ that minimizes
 				$$g(t)=f(R(x_k, -t\nabla^Mf_{x_k}))$$
 				approximately. Three most common strategies are
-				<ol>
-				<li> Fixed step-size: $a_k=a$ for all $k$.</li>
-				<li> Optimal step-size: $a_k$ minimizes $g(t)$ exactly.</li>
-				<li> Backtracking: guess $t_0$, iteratively improve it, until it's good enough.</li>
-				</ol>
+				<div id="personal" style="--testo:''; --fnts:1em; --hor:20px; --vert:30px; --barra:#b14; --sfondo:#433">
+				<ol >
+				<li class="fragment" > Fixed step-size: $a_k=a$ for all $k$.</li>
+				<li  class="fragment"> Optimal step-size: $a_k$ minimizes $g(t)$ exactly.</li>
+				<li class="fragment"> Backtracking: guess $t_0$, iteratively improve it, until it's good enough.</li>
+				</ol></div>
 				</section>
 				<section>
 				<h5>Backtracking algorithm</h5>
-				<pre><code data-trim data-noescape class="python" style="font-size:0.9em">
+				<pre class="fragment" style="width:100%"><code data-trim data-noescape class="python" style="font-size:0.9em; width:100%">
 				def BT(x0,t0,f,retraction,h,r):
 					t=t0
 					while f(x0)-f(retraction(x0,-t*gradient(f,x0)))< r*t*(gradient(f,x0).norm())^2:
@@ -144,17 +147,19 @@
 					return t
 					
 				</code></pre>
-				<p style="margin-bottom:0.5em">Usually, $h$ is chosen in $(0.5, 0.8)$; the condition checked for the while loop is called <em>Armijo-Goldstein</em>. Under A3 (the Lipschitz type condition), the backtracking algorithm produces sufficient decrease (i.e. ensures A2).</p>
-				<p>Under condition A3, we can also estimate how fast the gradient is going to $0$ and how many times we will be looping in the backtracking algorithm.</p>
+				<p class="fragment" style="margin-bottom:0.5em">Usually, $h$ is chosen in $(0.5, 0.8)$; the exit condition of the while loop is called <em>Armijo-Goldstein</em>:
+				$$f(x_0)-f(R(x,-t\nabla^M f_x))\geq rt\|\nabla^Mf_x\|^2\;.$$</p>
+				<p class="fragment">Under A3 (the Lipschitz type condition), the backtracking algorithm produces sufficient decrease (i.e. ensures A2).</p>
+				<p class="fragment">Under condition A3, we can also estimate how fast the gradient is going to $0$ and how many times we will be looping in the backtracking algorithm.</p>
 				</section>
 				</section>
 				<section>
 				<h4>Further remarks</h4>
 				<ul>
-				<li>How to choose $t_0$ in the backtracking algorithm?</li>
-				<li>Under some second order conditions, local convergence around critical point is granted and its convergence rate is linear.</li>
-				<li>A usual method to compute gradients is to compute directional derivatives and then write the expression as an inner product.</li>
-				<li>From the Taylor formula, we obtain a way to numerically check our gradient calculation.</li>
+				<li class="fragment">How to choose $t_0$ in the backtracking algorithm?</li>
+				<li class="fragment">Under some second order conditions, local convergence around critical point is granted and its convergence rate is linear.</li>
+				<li class="fragment">A usual method to compute gradients is to compute directional derivatives and then write the expression as an inner product.</li>
+				<li class="fragment">From the Taylor formula, we obtain a way to numerically check our gradient calculation.</li>
 				</ul>
 				</section>
 				
@@ -179,6 +184,10 @@
 				hash: true,
 				controls: false,
 				transition: 'convex',
+				/*width: 1200,
+				height: 850,
+				minScale: 0.5,
+				maxScale: 2.0,*/
 				math: {
 					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
 					config: 'TeX-AMS_CHTML-full',
@@ -188,24 +197,21 @@
 					"CommonHTML": { matchFontHeight: false, scale: 100 }
 				},
 				
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard, 
-				//RunInBrowser 
-				],
-				chalkboard: {
-					boardmarkerWidth: 3,
-					chalkWidth: 4,
-					grid: false,
-					toggleChalkboardButton: false,
-					toggleNotesButton: false,
-				},
-				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L03/DGA2021L03.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
 			});
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
 		</script>
-		<script type="text/x-mathjax-config"> 
-    MathJax.Hub.Config({ 
-        "CommonHTML": { scale: 80 }, 
-        });
-</script>
 		
 	</body>
 </html>

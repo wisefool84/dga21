@@ -33,6 +33,98 @@
 				<h4 class="fragment", align="center">Lecture 04</h4>
 				
 				</section>
+				<section>
+				<section>
+				<h4>3d reconstruction from projections</h4>
+				<p>We have a set of points $p_{1},\ldots, p_N$ in $\mathbb{R}^3$, which we do not know; what we know are some projections of these points on some $2d$ planes. Let us say that we have $M$ projections, so we have the points $d_{j1},\ldots, d_{jN}\in\mathbb{R}^2$ which are the $j$-th projections of $p_1,\ldots, p_N$, for $j=1,\ldots, M$.</p>
+				<div class="r-stack">
+				<img class="fragment fade-in-then-out" data-fragment-index:"0" src="L04/cameras.png" style="width:70%; height:auto"></span>
+				<p class="fragment" data-fragment-index:"0" style="position: relative; top:-40px">In general, we can write 
+				$$d_{ji}=A_j(R_jp_{ji}+t_j)$$
+				with $A_j, R_j$ square $3\times 3$ matrices and $t_j\in\mathbb{R}^3$. $A_j$ is a matrix accounting for the internal parameters of the camera taking a picture (focal distance, skweness, etc.), $R_j$ is a rotation (i.e. $RR^t=I$ and $\det(R)=1$) and $t_j$ is a translation, both with respect to the original coordinates in $\mathbb{R}^3$.</p>
+				</div>
+				<div class="problem" >
+				<blockquote class="fragment" data-fragment-index:"1" style="position: relative; top:-110px"><strong>Problem:</strong> Find $p_i$, $R_j$, $A_j$, $t_j$, given $d_{ij}$.</blockquote></div>
+				
+				</section>
+				<section>
+				<h5>Workflow</h5>
+				<div class="step"><ol>
+				<li class="fragment">For every image we detect relevant features (i.e. gradients, shapes, etc), e.g. via SIFT feature extraction and we try to match corresponding features in pairs of images, labeling two images as overlapping if they share at least some minimal number of features.</li>
+				<li class="fragment">We determine the fundamental matrices relating pairs of overlapping images, with a RANSAC algorithm to find the fundamental matrix between each pair.</li>
+				<li class="fragment">We select a minimal set, in order to obtain most of the information from this, via a skeletal set algorithm, in order to incrementally apply the next step.
+				<li class="fragment">We solve the problem by minimizing the distance between the data and the reprojected points.
+				</ol>
+				</div>
+				</section>
+				<section>
+				<h5>Absolute rotations</h5>
+				<p class="fragment">A particular case of the minimization that appears in step 4 is the following: suppose we are given the relative rotation $R_{jk}$ between every two images $D_k$ and $D_j$ (i.e. after getting rid of translations and internal camera parameters, we have matched the features between the two images and hence found the rotation that brings one camera orientation to the other).</p>
+				<p class="fragment">We want to express the camera orientation for all images not as relative rotation one with respect to the other, but all in reference to a fixed coordinate system.</p>
+				<p class="fragment">That is, given a collection of rotations $R_{jk}\in SO(3)$, we want to find $R_j\in SO(3)$ such that $R_{jk}=R_jR_k^{-1}$. Notice that, for $N$ pictures, we have $N(N-1)/2$ relative rotations and we want to express them as compositions of $N$ absolute rotations.</p>
+				<div class="problem">
+				<blockquote class="fragment" style="width: 90%; text-align:justify;"> Given $R_{jk}\in SO(3)$ for $j\neq k$ in $\{1,\ldots, N\}$, we want to minimize the function
+				$$f(R_1,\ldots, R_N)=\sum_{jk}\|R_j-R_{jk}R_k\|^2$$
+				on the manifold $SO(3)^N$.</blockquote>
+				</div>
+				</section>
+				<section>
+				<h5>The result (from Building Rome in a day)</h5>
+				<p class="fragment">Although this was not obtain employing a manifold optimization, it is worth watching.</p>
+				<iframe class="fragment"  width="878" height="507" src="https://www.youtube.com/embed/kxtQqYLRaSQ?autoplay=1&loop=1&playlist=kxtQqYLRaSQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; loop" allowfullscreen></iframe>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>The special orthogonal group</h4>
+				<p class="fragment">The manifold $SO(3)$ is a $3$-dimensional submanifold of $M_{3,3}(\mathbb{R})\cong\mathbb{R}^9$ given by
+				$$SO(3)=\{X\in M_{3,3}(\mathbb{R})\ :\ XX^t=I,\ \det X=1\}\;.$$</p>
+				<ul>
+				<li class="fragment">For every $X, X'\in SO(3)$ there exists a diffeomorphism $F:SO(3)\to SO(3)$ such that $F(X)=X'$.
+				<li class="fragment">For $X\in SO(3)$, $T_XSO(3)=\{XY\ :\ Y\in M_{3,3}(\mathbb{R}),\ Y+Y^t=0\}$
+				<li class="fragment">For $X\in SO(3)$, $\mathrm{Pr}_X(U)=X(X^tU-U^tX)/2$
+				<li class="fragment">For $X\in SO(3)$ and $XY\in T_XSO(3)$, $R(X,XY)=Q$, where $X+XY=QR$ is the $QR$ decomposition, is a retraction.
+				</ul>
+				
+				</section>
+				<section>
+				<h5>Smoothing for video stabilization</h5>
+				<p class="fragment">Given a hand-held camera, the video recording is frequently disturbed by unwanted jitter, caused by small (unwanted) rotations of the camera.</p>
+				<p class="fragment">If our camera has a decently accurate gyroscope (as many smartphones and tablets have), we can estimate the camera rotation $S_j$ at every frame of our video.</p>
+				<p class="fragment">A smoothing is a sequence of rotations $R_j$ which minimizes
+				$$\sum_{j}\frac{1}{2}d(R_j, S_j)^2+\alpha\sum_j\frac{1}{2}d(R_j, R_{j+1})^2$$
+				where $d$ is a suitable distance on $SO(3)$; as a consequence the successive rotations $R_j$ are not too far from each other, but also not too far from the original ones.</p>
+				</section>
+				<section>
+				<h5>SLAM and other localization problems</h5>
+				<p class="fragment">Simultaneous Localization and Mapping is the problem of determining the path followed by a mobile robot without a device to detect its absolute position/orientation in space, together with a map of the places it travelled through.</p>
+				<p class="fragment">Part of this task is again formulated as writing relative rotation in terms of absolute ones and takes the form of the first problem we saw.</p>
+				<p class="fragment">The space of "configurations" of a robotic device is, at its simplest, of the form $\mathbb{R}^k\times SO(d)$.</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>An old classic</h4>
+				<p class="fragment">Let $A\in M_{n,n}(\mathbb{R})$ be a symmetric matrix. We consider the following problem.
+				<div class="problem">
+				<blockquote class="fragment" style="width: 50%; text-align:justify">
+				Let $\mathbb{S}^{n-1}$ be the unit sphere, we want to find 
+				$$\min_{x\in\mathbb{S}^{n-1}} x^tAx\;.$$
+				</blockquote>
+				</div>
+				<p class="fragment">The critical points of this functional on $\mathbb{S}^{n-1}$ are the unit eigenvectors of $A$.</p>
+				</section>
+				<section>
+				<h5>The unit sphere and the Rayleigh quotient</h5>
+				<p class="fragment">Let $\mathbb{S}^{n-1}=\{x\in\mathbb{R}^n\ :\ x^tx=1\}$ and let $r(x)=x^tAx$.</p>
+				<ul>
+				<li class="fragment">For $x\in\mathbb{S}^{n-1}$, $T_x\mathbb{S}^{n-1}=\{y\in\mathbb{R}^n\ :\ y^tx=0\}$.
+				<li class="fragment">The orthogonal projection $\mathrm{Pr}_x(v)$ is given by $(I-xx^t)v$.
+				<li class="fragment">We have $\nabla r_x=2Ax$, so $\nabla^{\mathbb{S}^{n-1}}r_x=\mathrm{Pr}_x(2Ax)=2(Ax-r(x)x)$
+				<li class="fragment">A retraction for $\mathbb{S}^{n-1}$ is given by $R(x,v)=(x+v)/\|x+v\|$.
+				</ul>
+				</section>
+				</section>
 				
 				
 				</div>
@@ -64,23 +156,21 @@
 					// jax: ["input/TeX","output/CommonHTML"],
 					"CommonHTML": { matchFontHeight: false, scale: 100 }
 				},
-
 				
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard, 
-				//RunInBrowser 
-				],
-				chalkboard: {
-					boardmarkerWidth: 3,
-					chalkWidth: 4,
-					grid: false,
-					toggleChalkboardButton: false,
-					toggleNotesButton: false,
-				},
-				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L04/DGA2021L04.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
 			});
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
 		</script>
-		<script type="text/x-mathjax-config"> 
-    MathJax.Hub.Config({ 
-        "CommonHTML": { scale: 80 }, 
-        });
-</script>
+		</body>
+</html>
