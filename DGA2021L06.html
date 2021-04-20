@@ -152,9 +152,7 @@
 				</p>
 				</section>
 				</section>
-				<section>
-				<a href="https://wisefool84.github.io/dga21/index.html" data-preview-link=true>Hakim El Hattab</a>
-				</section>
+				
 				
 				
 				</div>
@@ -178,29 +176,29 @@
 				hash: true,
 				controls: false,
 				transition: 'convex',
-				previewLinks: true,
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard, 
-				//RunInBrowser 
-				],
 				math: {
 					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
 					config: 'TeX-AMS_CHTML-full',
 					// pass other options into MathJax.Hub.Config()
-					// TeX: { Macros: { RR: "{\bf R}" } , equationNumbers: { autoNumber: "AMS" }},
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
 					// jax: ["input/TeX","output/CommonHTML"],
 					"CommonHTML": { matchFontHeight: false, scale: 100 }
 				},
 				
-				
-				chalkboard: {
-					boardmarkerWidth: 3,
-					chalkWidth: 4,
-					grid: false,
-					toggleChalkboardButton: false,
-					toggleNotesButton: false,
-				},
-				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L06/DGA2021L06.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
 			});
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
 		</script>
 	</body>
 </html>
