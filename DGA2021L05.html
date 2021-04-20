@@ -36,23 +36,33 @@
 				<section>
 				<section>
 				<h4>Abstract manifolds</h4>
-				<p>We already saw as $k$-dimensional submanifolds of $\mathbb{R}^n$ can be characterized as subsets that are locally diffeomorphic to $\mathbb{R}^k$. </p>
-				<p>This makes sense in $\mathbb{R}^n$ because we already have a notion of smooth map. Now, let $M$ be a generic set. </p>
-				<blockquote>A <em>coordinate chart</em> for $M$ is the pair $(U,\phi)$ where $U\subset M$ and $\phi$ is a bijection between $U$ and an open set $V$ of $\mathbb{R}^k$.</blockquote>
-				<p>Two charts $(U_1,\phi_1)$ and $(U_2,\phi_2)$ for $M$ are <em>compatible</em> if either $U_1\cap U_2=\emptyset$ or</p> 
+				<p class="fragment">We already saw as $k$-dimensional submanifolds of $\mathbb{R}^n$ can be characterized as subsets that are locally diffeomorphic to $\mathbb{R}^k$. </p>
+				<p class="fragment">This makes sense in $\mathbb{R}^n$ because we already have a notion of smooth map. Now, let $M$ be a generic set. </p>
+				<blockquote class="definition fragment">A <em>coordinate chart</em> for $M$ is the pair $(U,\phi)$ where $U\subset M$ and $\phi$ is a bijection between $U$ and an open set $V$ of $\mathbb{R}^k$.</blockquote>
+				<p class="fragment">Two charts $(U_1,\phi_1)$ and $(U_2,\phi_2)$ for $M$ are <em>compatible</em> if</p>
+				<div class="row">
+				<div class="columnP fragment">
+				<p style="text-align:inherit; vertical-align:inherit">$U_1\cap U_2=\emptyset$</p> 
+				</div>
+				<div class="columnS fragment">
+				
+				<p style="text-align:left; vertical-align:middle"><br>or</p> </div>
+				<div class="columnD">
+				<p class="fragment" style="text-align:inherit">$U_1\cap U_2\neq\emptyset$ and</p>
+				<div id="personal" style="--testo:''; --fnts:1em; --hor:20px; --vert:30px; --barra:#1b4; --sfondo:#343">
 				<ol>
-				<li>$U_1\cap U_2\neq\emptyset$
-				<li>$\phi_1(U_1\cap U_2)$ and $\phi_2(U_1\cap U_2)$ are open sets in $\mathbb{R}^k$
-				<li>$\phi_2\circ\phi_1^{-1}:\phi_1(U_1\cap U_2)\to\phi_2(U_1\cap U_2)$ is a diffeomorphism.
-				</ol>
+				<li class="fragment">$\phi_1(U_1\cap U_2)$ and $\phi_2(U_1\cap U_2)$ are open sets in $\mathbb{R}^k$
+				<li class="fragment">$\phi_2\circ\phi_1^{-1}:\phi_1(U_1\cap U_2)\to\phi_2(U_1\cap U_2)$ is a diffeomorphism.
+				</ol></div></div>
+				</div>
 				
 				
 				</section>
 				<section>
 				<h5>Smooth structure</h5>
-				<p>An <em>atlas</em> for $M$ is a collection of compatible charts $\{(U_j, \phi_j)\}_{j\in J}$ such that the sets $U_j$ cover all of $M$ for $j\in J$. Two atlases are compatible if their union is again an atlas</p>
-				<p style="margin-bottom:1em">A <em>smooth structure</em> on $M$ is a maximal atlas. A smooth $k$-dimensional manifold is a set $M$ endowed with a smooth structure whose charts take values in $\mathbb{R}^k$.</p>
-				<blockquote>Given two manifolds $M$, $N$, a map $F:M\to N$ is smooth if, for any $p\in M$ and any two charts $(U,\phi)$ and $(W,\psi)$ on $M$ and $N$ respectively, such that $p\in U$ and $F(p)\in W$, the map
+				<p class="fragment">An <em>atlas</em> for $M$ is a collection of compatible charts $\{(U_j, \phi_j)\}_{j\in J}$ such that the sets $U_j$ cover all of $M$ for $j\in J$. Two atlases are compatible if their union is again an atlas</p>
+				<p style="margin-bottom:1em" class="fragment">A <em>smooth structure</em> on $M$ is a maximal atlas. A smooth $k$-dimensional manifold is a set $M$ endowed with a smooth structure whose charts take values in $\mathbb{R}^k$.</p>
+				<blockquote class="definition fragment">Given two manifolds $M$, $N$, a map $F:M\to N$ is smooth if, for any $p\in M$ and any two charts $(U,\phi)$ and $(W,\psi)$ on $M$ and $N$ respectively, such that $p\in U$ and $F(p)\in W$, the map
 				$$\psi\circ F\circ \phi^{-1}:\phi(U)\to \psi(W)$$
 				is smooth as a map between open sets in the Euclidean space.</blockquote>
 				
@@ -60,10 +70,10 @@
 				<section>
 				<h5>Technicalities</h5>
 				<ul>
-				<li>On $\mathbb{R}^n$ there are infinitely many smooth structures (how many?).
-				<li>All these structures are diffeomorphic, if $n\neq 4$.
-				<li>On $\mathbb{R}^4$ there are smooth structures which are not diffeomorphic...
-				<li>A smooth structure on a set $M$ gives also a topology on it, which is the unique topology such that, if $(U,\phi)$ is a chart, then $U$ is open in $M$ and $\phi$ is continuous.
+				<li class="fragment">On $\mathbb{R}^n$ there are infinitely many smooth structures (how many?).
+				<li class="fragment">All these structures are diffeomorphic, if $n\neq 4$.
+				<li class="fragment">On $\mathbb{R}^4$ there are smooth structures which are not diffeomorphic...
+				<li class="fragment">A smooth structure on a set $M$ gives also a topology on it, which is the unique topology such that, if $(U,\phi)$ is a chart, then $U$ is open in $M$ and $\phi$ is continuous.
 				</ul>
 				</section>
 				
@@ -71,59 +81,100 @@
 				<section>
 				<section>
 				<h4>Tangent vectors</h4>
-				<p>We draw inspiration from the parallel between tangent vectors and directional derivatives for submanifolds of $\mathbb{R}^n$. Let $M$ be a smooth manifold and $p\in M$ a point; we denote by $\mathcal{C}^\infty(M)$ the ring of smooth maps from $M$ to $\mathbb{R}$.</p>
-				<blockquote> A <strong>tangent vector</strong> to $M$ at $p$ is a linear functional $X_p:\mathcal{C}^\infty(M)\to\mathbb{R}$ such that
+				<p class="fragment">We draw inspiration from the parallel between tangent vectors and directional derivatives for submanifolds of $\mathbb{R}^n$. Let $M$ be a smooth manifold and $p\in M$ a point; we denote by $\mathcal{C}^\infty(M)$ the ring of smooth maps from $M$ to $\mathbb{R}$.</p>
+				<blockquote class="definition fragment"> A <strong>tangent vector</strong> to $M$ at $p$ is a linear functional $X_p:\mathcal{C}^\infty(M)\to\mathbb{R}$ such that
 				$$X_p(fg)=f(p)X_p(g)+g(p)X_p(f)\;.$$
 				Such a functional is usually called a <em>derivation</em> on $\mathcal{C}^\infty(M)$ at $p$.</blockquote>
-				<p>We denote by $T_pM$ the vector space of all the tangent vectors to $M$ at $p$.</p>
+				<p class="fragment">We denote by $T_pM$ the vector space of all the tangent vectors to $M$ at $p$.</p>
 				</section>
 				<section>
 				<h5>What happens in a chart?</h5>
-				<p>Let $(U,\phi)$ be a chart around $p$, with $\phi(p)=0\in\mathbb{R}^k$. Given $u\in\mathcal{C}^\infty(M)$, we define
+				<p><span class="fragment">Let $(U,\phi)$ be a chart around $p$, with $\phi(p)=0\in\mathbb{R}^k$. Given $u\in\mathcal{C}^\infty(M)$, we define
 				$$(\phi_*X_p)(u)=X_p(\phi^*u)=X_p(u\circ\phi)$$
-				and we obtain a derivation on $\mathcal{C}^\infty(\mathbb{R}^k)$ at $0$. Therefore
-				$$(\phi_*X_p)(u)=\frac{\partial u}{\partial v}(0)$$
-				for some $v\in\mathbb{R}^k$.</p>
-				<p>It is easy to check that $\phi_*$ gives an isomorphism between $T_pM$ and $\mathbb{R}^k$.</p>
+				and we obtain a derivation on $\mathcal{C}^\infty(\mathbb{R}^k)$ at $0$. </span>
+				<span class="fragment">Therefore
+				$$(\phi_*X_p)(u)=\frac{\partial u}{\partial v}(0)=(v^1\partial_1 u+\ldots+v^k\partial_k u)(0)$$
+				for some $v\in\mathbb{R}^k$.</span></p>
+				<p class="fragment">On $\R^k$, the global vector-fields given by the $k$ partial derivatives are a basis of $T_x\R^k$ for each $x$; they are called a <em>global frame</em>.</p>
+				<p class="fragment">It is easy to check that $\phi_*$ gives an isomorphism between $T_pM$ and $\mathbb{R}^k$.</p>
 				</section>
 				<section>
 				<h5>The tangent bundle</h5>
-				<p>The set
+				<p class="fragment">The set
 				$$TM=\{(p,X_p)\ :\ p\in M,\ X_p\in T_pM\}$$
 				can be given a natural smooth structure with charts of the form $(U\times\mathbb{R}^k, (\phi,\phi_*))$, where $(U,\phi)$ is a chart for $M$. The projection $\pi:TM\to M$ is a smooth map (a submersion).</p>
-				<blockquote>A <strong>tangent vector-field</strong> on $M$ is a smooth section for $\pi$, i.e. a smooth map $X:M\to TM$ such that $X(p)=X_p\in T_pM$ for all $p\in M$.</blockquote>
-				<p>Given a smooth map $F:M\to N$ between manifolds, we define $d_pF:T_pM\to T_pN$ as
-				$$(F_*X_p)(f)=(X_p\circ F^*)(f)=X_p(f\circ F)$$
+				<blockquote class="definition fragment">A <strong>tangent vector-field</strong> on $M$ is a smooth section for $\pi$, i.e. a smooth map $X:M\to TM$ such that $X(p)=X_p\in T_pM$ for all $p\in M$.</blockquote>
+				<p class="fragment">Given a smooth map $F:M\to N$ between manifolds, we define $d_pF:T_pM\to T_{F(p)}N$ as
+				$$dF_p(X_p)=(F_*X_p)(f)=(X_p\circ F^*)(f)=X_p(f\circ F)$$
 				for all $f\in\mathcal{C}^\infty(N)$. The map $dF:TM\to TN$ (also denoted by $F_*$) is smooth and it is called <em>differential of $F$</em> (or tangent map or pushforward).</p>
 				</section>
 				</section>
 				<section>
 				<section>
+				<h4>Vector-fields in coordinates</h4>
+				<p class="fragment">Let $M$ be a $k$-dimensional manifold. We denote the set of vector-fields on $M$ by $\mathfrak{X}(M)$ or by $\Gamma(M,TM)$ (i.e. sections of $TM$ defined on $M$).</p>
+				<p class="fragment">If $(U,\phi)$ is a chart for $M$, we denote by $x^1,\ldots, x^k$ the components of $\phi$ (it takes values in $\R^k$). Then we consider on $M$ the vector-fields $\partial_1,\ldots, \partial_k$ such that $\partial_j(x^i)=\delta_j^i$. For $f\in\mathcal{C}^\infty(\R^k)$, $\phi_*(\partial_j)f=\partial_jf$ (where the RHS is the usual partial derivative).</p>
+				<p class="fragment">Every $X\in\Gamma(U,TM)$ can be written as $X^1(p)\partial_1+\ldots+X^k(p)\partial_k$ or, compactly, as $X^j\partial_j$; $\{\partial_1,\ldots,\partial_k\}$ give a basis of $T_pM$ for $p\in U$. They are called a <strong>local frame</strong>.</p>
+				<!--
+				<p>Let $M$ be a $k$-dimensional manifold. We denote the set of vector-fields on $M$ by $\mathfrak{X}(M)$ or by $\Gamma(M,TM)$ (i.e. sections of $TM$ defined on $M$).
+				</p>
+				<p>As we noticed, tangent vectors can be written as
+				$$A=A^1(p)\partial_1+A^2(p)\partial_2+\ldots+A^k(p)\partial_k$$
+				where the components $A^j:\mathbb{R}^k\to\mathbb{R}$ are smooth functions and $\partial_j$ is the partial derivative with respect to the $j$-th coordinate. The set $\{\partial_1,\ldots, \partial_k\}$	gives, at every point, a basis for $T_p\mathbb{R}^k$; it is called a <em>global frame</em>.</p>
+				<p>If $(U,\phi)$ is a chart for $M$, then $(TM\vert_U,(\phi,\phi_*))$ is a chart for $TM$; the functions $e_j^t\phi$ give coordinates on $U$, usually denoted by $x^j$ and the vector-fields $\partial_j\in \Gamma(U,TM)$, such that $\partial_j(x^h)=\delta_j^h$ give at each point of $U$ a basis of $T_pM$.</p>
+				<p>The vector-fields $\partial_1,\ldots, \partial_k$, sections of $TM$ on $U$, are a <strong>local frame</strong>.</p>
+				-->
+				</section>
+				<section>
+				<h5>Local computations</h5>
+				<p class="fragment">Once we have a local frame, we can perform local computations. If we are dealing with the "right" quantities, results will be independent of the local frame we chose, so we optimistically omit it.</p>
+				<p class="fragment">Therefore, the vector-field $A=A^j\partial_j$ (<em>Einstein summation:</em> repeated index means sum over that index) is denoted simpy by its components $A^1,\ldots, A^k$. We have that $A(f)=A^j \partial_jf$.</p>
+				<h6 class="fragment">Some more confusing notation</h6>
+				<ul>
+				<li class="fragment">The index for coordinates of vector-fields is a superscript.
+				<li class="fragment">The index for the vector-fields of the local frame is a subscript.
+				<li class="fragment">Sometimes, given local coordinates, $X^j_{,h}$ or $X^j_{;h}$ or $\partial_hX^j$ denotes the partial derivative of the function $X^j$ with respect to the local coordinate $x^h$. This is NOT invariant with respect to a change of coordinates.
+				</ul>
+				</section>
+				<section>
+				<h5>Push-forward in coordinates</h5>
+				<p class="fragment">Given $F:M\to N$ and a vector-field $X$ on $M$, we know that $Y=F_*X$ is a vector-field on $N$, such that, for every $f\in\mathcal{C}^\infty(M)$, $Yf=F_*Xf=X(f\circ F)$.
+				Now, given local coordinates $x^1,\ldots, x^k$ on $M$ and $y^1,\ldots, y^h$ on $N$, we have local frames $\partial_{x^i}$, $i=1,\ldots, k$ and $\partial_{y^j}$, $j=1,\ldots, h$ for $TM$ and $TN$ resp.</p>
+				<p class="fragment"> By definition , $Y=Y(y^j)\partial_{y^j}=X(y^j\circ F)\partial_{y^j}=X^i\partial_{x^i}y^j\circ F\partial_{y^j}$, so, writing
+				$y^j=F^j(x^1,\ldots, x^k)$ (the expression of $F$ in local coordinates), we have
+				$$Y^j=(\partial_iF^j)X^i$$
+				where $(\partial_iF^j)$ gives the Jacobian matrix of the expression of $F$ in local coordinates.</p>
+				
+				</section>
+				
+				</section>
+				<section>
+				<section>
 				<h4>The differential of a scalar function</h4>
-				<p>Let $f\in\mathcal{C}^\infty(M)$, then $df_p$ is a linear functional from $T_pM$ to $\mathbb{R}$, i.e. an element of the dual space $T_p^*M$, which is called <em>cotangent space</em>; its elements are called <em>cotangent vectors</em>. The collection of cotangent spaces is $$T^*M=\{(p, \alpha_p)\ :\ p\in M,\ \alpha_p\in T^*_pM\}$$
-				it is called <em>cotangent bundle</em>, with the natural projection $\pi:T^*M\to M$.</p>
-				<blockquote>A <strong>differential $1$-form</strong> on $M$ is a section of the cotangent bundle, i.e. a smooth map $\alpha:M\to T^*M$ such that $\alpha(p)=\alpha_p\in T_p^*M$ for all $p\in M$.</blockquote>
+				<p><span class="fragment">Let $f\in\mathcal{C}^\infty(M)$, then $df_p$ is a linear functional from $T_pM$ to $\mathbb{R}$, i.e. an element of the dual space $T_p^*M$, which is called <em>cotangent space</em>; its elements are called <em>cotangent vectors</em>.</span><span class="fragment"> The collection of cotangent spaces is $$T^*M=\{(p, \alpha_p)\ :\ p\in M,\ \alpha_p\in T^*_pM\}$$
+				it is called <em>cotangent bundle</em>, with the natural projection $\pi:T^*M\to M$.</span></p>
+				<blockquote class="definition fragment">A <strong>differential $1$-form</strong> on $M$ is a section of the cotangent bundle, i.e. a smooth map $\alpha:M\to T^*M$ such that $\alpha(p)=\alpha_p\in T_p^*M$ for all $p\in M$.</blockquote>
 				
 				</section>
 				<section>
 				<h5>Pullback</h5>
-				<p>Given a smooth map $F:M\to N$ between manifolds, we define the pullback
+				<p><span class="fragment">Given a smooth map $F:M\to N$ between manifolds, we define the pullback
 				$$F^*:T^*_{F(p)}N\to T^*_pM$$
-				as the dual of the pushforward $F_*$, so, given $\alpha_{F(p)}\in T^*_{F(p)}N$,
+				as the dual of the pushforward $F_*$</span><span class="fragment">, so, given $\alpha_{F(p)}\in T^*_{F(p)}N$,
 				$$F^*(\alpha_{F(p)})(X_p)=\alpha_{F(p)}(F_*X_p)$$
-				for every $X_p\in T_pM$.</p>
-				<p>If $\alpha$ is a differential $1$-form on $N$, then $F^*\alpha$ is the differential $1$-form on $M$ defined by
+				for every $X_p\in T_pM$.</span></p>
+				<p class="fragment">If $\alpha$ is a differential $1$-form on $N$, then $F^*\alpha$ is the differential $1$-form on $M$ defined by
 				$$(F^*\alpha)_p=F^*(\alpha_{F(p)})\;.$$
 				</p>
 				
 				</section>
 				<section>
 				<h5>Integration on curves</h5>
-				<p>Let $I=[0,1]$ and $\gamma:I\to M$ be a smooth map. Given $\alpha$ a differential $1$-form on $M$, we define
-				$$\int_\gamma \alpha=\int_{0}^1\gamma^*\alpha=\int_0^1\alpha(\dot{\gamma}(t))dt\;.$$
-				We note that, if $u$ is another coordinate on $[0,1]$ (i.e. $u(t)$ is a reparametrization of $\gamma$), then the integral above is equal to
-				$$\int_0^1\alpha(\dot{\gamma}(u))du\;.$$
-				In particular, 
+				<p class="fragment">Let $I=[0,1]$ and $\gamma:I\to M$ be a smooth map. Given $\alpha$ a differential $1$-form on $M$, we define
+				$$\int_\gamma \alpha=\int_{0}^1\gamma^*\alpha=\int_0^1\alpha(\dot{\gamma}(t))dt\;.$$</p>
+				<p class="fragment">We note that, if $u$ is another coordinate on $[0,1]$ (i.e. $u(t)$ is a reparametrization of $\gamma$), then the integral above is equal to
+				$$\int_0^1\alpha(\dot{\gamma}(u))du\;.$$</p>
+				<p class="fragment">In particular, 
 				$$\int_\gamma df=f(\gamma(1))-f(\gamma(0))\;.$$
 				</p>
 				
@@ -151,28 +202,29 @@
 				hash: true,
 				controls: false,
 				transition: 'convex',
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard, 
-				//RunInBrowser 
-				],
 				math: {
 					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
 					config: 'TeX-AMS_CHTML-full',
 					// pass other options into MathJax.Hub.Config()
-					// TeX: { Macros: { RR: "{\bf R}" } , equationNumbers: { autoNumber: "AMS" }},
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
 					// jax: ["input/TeX","output/CommonHTML"],
 					"CommonHTML": { matchFontHeight: false, scale: 100 }
 				},
 				
-				
-				chalkboard: {
-					boardmarkerWidth: 3,
-					chalkWidth: 4,
-					grid: false,
-					toggleChalkboardButton: false,
-					toggleNotesButton: false,
-				},
-				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L05/DGA2021L05.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
 			});
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
 		</script>
 	</body>
 </html>	

@@ -35,138 +35,127 @@
 				</section>
 				<section>
 				<section>
-				<h4>Vector-fields</h4>
-				<p>Let $M$ be a $k$-dimensional manifold. We denote the set of vector-fields on $M$ by $\mathfrak{X}(M)$ or by $\Gamma(M,TM)$ (i.e. sections of $TM$ defined on $M$).
-				</p>
-				<p>As we noticed, tangent vectors on $\mathbb{R}^k$ correspond to directional derivatives, therefore they can be written as
-				$$A=A^1(p)\partial_1+A^2(p)\partial_2+\ldots+A^k(p)\partial_k$$
-				where the components $A^j:\mathbb{R}^k\to\mathbb{R}$ are smooth functions and $\partial_j$ is the partial derivative with respect to the $j$-th coordinate. The set
-				$$\{\partial_1,\ldots, \partial_k\}$$
-				gives, at every point, a basis for $T_p\mathbb{R}^k$; it is called a <em>global frame</em>.</p>
-				<p>If $(U,\phi)$ is a chart for $M$, then $(TM\vert_U,(\phi,\phi_*))$ is a chart for $TM$; the functions $\phi^*x^j=x^j\circ\phi$ give coordinates on $U$ and the vector-fields $X_j\in \Gamma(U,TM)$, such that $\phi_*X_j(x^h)=\delta_j^h$ give at each point of $U$ a basis of $T_pM$.</p>
-				<p>The vector-fields $X_1,\ldots, X_k$, sections of $TM$ on $U$, are a <strong>local frame</strong>.</p>
 				
+				<!--
 				</section>
 				<section>
-				<h5>Local computations</h5>
-				<p>Once we have a local frame, we can perform local computations. If we are dealing with the "right" quantities, results will be independent of the local frame we chose, so we optimistically omit it.</p>
-				<p>Therefore, the vector-field $A=A^j\partial_j$ (<em>Einstein summation:</em> repeated index means sum over that index) is denoted simpy by its components $A^1,\ldots, A^k$. We have that $A(f)=A^j \partial_jf$.</p>
-				<h6>Some more confusing notation</h6>
-				<ul>
-				<li>The index for coordinates of vector-fields is a superscript.
-				<li>The index for the vector-fields of the local frame is a subscript.
-				<li>Sometimes, given local coordinates, $X^j_{,h}$ or $X^j_{;h}$ or $\partial_hX^j$ denotes the partial derivative of the function $X^j$ with respect to the local coordinate $x^h$. This is NOT invariant with respect to a change of coordinates.
-				</ul>
-				</section>
-				<section>
-				<h5>Commutator of two vector-fields</h5>
-				<p>Given $X,Y\in\mathfrak{X}(M)$, their commutator (or Lie bracket) is denoted by $[X,Y]$ and is a vector-field defined by
-				$$[X,Y](f)=X(Y(f))-Y(X(f))\;.$$
-				If $X=X^j\partial_j$ and $Y=Y^j\partial_j$, then 
-				$$[X,Y]^j\partial_jf=X^h\partial_h(Y^j\partial_jf)-Y^h\partial_h(X^j\partial_jf)=X^h(\partial_h Y^j)\partial_jf-Y^h(\partial_hX^j)\partial_jf$$
-				so $[X,Y]^j=X^h\partial_hY^j - Y^h\partial_h X^j$.
-				</p>
-				<p>The Lie bracket has a number	of reasonable properties, among which the Jacobi idenitity
-				$$[X,[Y,Z]]+[Z,[X,Y]]+[Y,[Z,X]]=0\quad \forall\,X,Y,Z\in\mathfrak{X}(M)\;.$$
-				The Lie bracket turns the real vector space $\mathfrak{X}(M)$ into a (real) Lie algebra (whatever that means).</p>
-				
-				</section>
-				</section>
-				<section>
-				<section>
+				<section>-->
 				<h4>Flow of a vector-field</h4>
-				<p>Let $X\in \mathcal{X}(M)$ be a vector-field; given an interval $I\subset\mathbb{R}$, a curve $\gamma:I\to M$ is an <em>integral curve</em> for $X$ if
+				<p class="fragment">Let $X\in \mathcal{X}(M)$ be a vector-field; given an interval $I\subset\mathbb{R}$, a curve $\gamma:I\to M$ is an <em>integral curve</em> for $X$ if
 				$$X_{\gamma(t)}=\dot{\gamma}(t)\quad \forall\,t\in I\;.$$
 				</p>
-				<blockquote>Given $V\subseteq M$ and $I\subseteq\mathbb{R}$, a map $\Phi:I\times V \to M$ is called <strong>local flow</strong> of $X$ if
+				<blockquote class="definition fragment">Given $V\subseteq M$ and $I\subseteq\mathbb{R}$, a map $\Phi:I\times V \to M$ is called <strong>local flow</strong> of $X$ if<br>
+				
 				<ul>
-				<li>$\Phi(0,p)=p$ for $p\in V$
-				<li>$\phi_p:I\to M$ given by $\phi_p(t)=\Phi(t,p)$ is an integral curve for $X$ for all $p\in V$.
+				<li class="fragment">$\Phi(0,p)=p$ for $p\in V$
+				<li class="fragment">$\phi_p:I\to M$ given by $\phi_p(t)=\Phi(t,p)$ is an integral curve for $X$ for all $p\in V$.
 				</ul></blockquote>
 				
 				</section>
 				<section>
 				<h5>Flows and ODEs</h5>
-				<p>Let $X$ be a vector-field and suppose we fixed a local frame (as we will always be doing). If $\gamma$ is an integral curve for $X$, then
-				$X_{\gamma(t)}=\cdot{\gamma}(t)$, which means that $X_{\gamma(t)}(f)=(f\circ \gamma)'(t)$; if we take $f$ as a coordinate function $x^j$, then
-				$$X^j_{\gamma(t)}=X_{\gamma(t)}(x^j)=(x^j\circ\gamma)'(t)\;.$$
-				If we express $\gamma$ in local coordinates, then $x^j\circ\gamma$ is just the $j$-th component of $\gamma$, so we end up with $k$ ODEs of the form
-				$$X^j(\gamma_1,\ldots, \gamma_k)=(\gamma_j)'$$
+				<p class="fragment">If $\gamma$ is an integral curve for $X$, then
+				$X_{\gamma(t)}=\dot{\gamma}(t)$, which means that $X_{\gamma(t)}(f)=(f\circ \gamma)'(t)$; if we take $f$ as a coordinate function $x^j$, then
+				$$X^j_{\gamma(t)}=X_{\gamma(t)}(x^j)=(x^j\circ\gamma)'(t)\;.$$</p>
+				<p class="fragment">If we express $\gamma$ in local coordinates,  we end up with $k$ ODEs of the form $X^j(\gamma_1,\ldots, \gamma_k)=(\gamma_j)'$
 				where $X^j$ are smooth functions from an open set of $\mathbb{R}^k$ to $\mathbb{R}$.</p>
 				
-				<img src="L06/ODE.png" style="width:70%; heigth:auto">
+				<img src="L06/ODE.png" style="width:70%; heigth:auto" class="fragment">
 				
 				</section>
 				<section>
 				<h5>One-parameter groups</h5>
-				<p>If we fix the variable $t$ instead, we obtain $\phi^{(t)}:V\to M$ given by $\phi^{(t)}(p)=\Phi(t,p)$; notice that, if $t,s,t+s\in I$ and if $\phi^{(s)}(p)\in V$, then
+				<p class="fragment">If we fix the variable $t$ instead, we obtain $\phi^{(t)}:V\to M$ given by $\phi^{(t)}(p)=\Phi(t,p)$; notice that, if $t,s,t+s\in I$ and if $\phi^{(s)}(p)\in V$, then
 				$$\phi^{(t)}\circ\phi^{(s)}(p)=\phi^{(t+s)}(p)\;.$$</p>
-				<blockquote>A <strong>one-parameter group</strong> of diffeomorphisms is a collection of diffeomorphisms $\phi^{(t)}:M\to M$ for $t\in\mathbb{R}$ such that <br>
-				<ol>
-				<li>$\phi^{(t)}\circ\phi^{(s)}=\phi^{(t+s)}$ for all $t,s\in\mathbb{R}$</li>
-				<li>$\phi^{(0)}(p)=p$ for all $p\in M$</li>
-				<li>$(t,p)\mapsto \phi^{(t)}(p)$ is smooth from $\mathbb{R}\times M$ to $M$.</li></ol>
+				<blockquote class="definition fragment">A <strong>one-parameter group</strong> of diffeomorphisms is a collection of diffeomorphisms $\phi^{(t)}:M\to M$ for $t\in\mathbb{R}$ such that <br>
+				<div id="personal" style="--testo:''; --fnts:1em; --hor:20px; --vert:30px; --barra:#111; --sfondo:#142">
+				<ol style="padding-left:80px">
+				<li class="fragment" style="font-size:1em">$\phi^{(t)}\circ\phi^{(s)}=\phi^{(t+s)}$ for all $t,s\in\mathbb{R}$</li>
+				<li class="fragment" style="font-size:1em">$\phi^{(0)}(p)=p$ for all $p\in M$</li>
+				<li class="fragment" style="font-size:1em">$(t,p)\mapsto \phi^{(t)}(p)$ is smooth from $\mathbb{R}\times M$ to $M$.</li></ol></div>
 				</blockquote>
-				<p>Given a one-parameter group of diffeomorphisms $\{\phi^{(t)}\}_t$, consider the curve $\gamma_p(t)=\phi^{(t)}(p)$; the vector-field  $X_p=\dot{\gamma}_p(0)$ is called <em> infinitesimal generator</em> of the one-parameter groupd.</p>
-				<p>A <em>global flow</em> of a vector-field $X$ is a local flow defined on $\mathbb{R}\times M$.</p>
-				<p>Every one-parameter group of diffeomorphisms is given by the global flow of its infinitesimal generator.</p>
+				</section>
+				<section>
+				<h5>Flows and one-parameter groups</h5>
+				<p class="fragment">Given a one-parameter group of diffeomorphisms $\{\phi^{(t)}\}_t$, consider the curve $\gamma_p(t)=\phi^{(t)}(p)$; the vector-field  $X_p=\dot{\gamma}_p(0)$ is called <em> infinitesimal generator</em> of the one-parameter group.</p>
+				<p class="fragment">A <em>global flow</em> of a vector-field $X$ is a local flow defined on $\mathbb{R}\times M$.</p>
+				<p class="fragment">Every one-parameter group of diffeomorphisms is given by the global flow of its infinitesimal generator.</p>
 				</section>
 				</section>
+				
 				<section>
 				<section>
 				<h4>Lie derivative</h4>
-				<p>Let $X$ be a vector-field on $M$ and $f$ a smooth function; denote by $\Phi$ a local flow of $X$ near $p\in M$ and by $\phi^{(t)}$ the diffeomorphisms obtained by fixing $t$.</p>
-				<blockquote>The <strong>Lie derivative</strong> of $f$ along $X$ is
+				<p class="fragment">Let $X$ be a vector-field on $M$ and $f$ a smooth function; denote by $\Phi$ a local flow of $X$ near $p\in M$ and by $\phi^{(t)}$ the diffeomorphisms obtained by fixing $t$.</p>
+				<blockquote class="definition fragment">The <strong>Lie derivative</strong> of $f$ along $X$ is
 				$$(\mathcal{L}_Xf)(p)=\frac{d}{d t} {\bigg\vert}_{t=0} ((\phi^{(t)})^*f)(p)=\lim_{t\to 0}\frac{((\phi^{(t)})^*f)(p)-f(p)}{t}\;.$$
 				</blockquote>
-				<p>Unravelling the definitions, $\mathcal{L}_Xf=Xf$.
+				<p class="fragment">Unravelling the definitions, $\mathcal{L}_Xf=Xf$.
 				</section>
 				<section><h5>Lie derivative of a vector-field</h5>
-				<p>If $Y$ is another vector-field on $M$, we define its Lie derivative in the same way:
-				$$\left(\mathcal{L}_XY\right)_p=\frac{d}{d t} {\bigg\vert}_{t=0} ((\phi^{(t)})^*Y)_p$$
-				however, it is more convenient to use a pushforward, as we are dealing with a vector-field, so we notice that for a diffeomorphism $\psi^*=(\psi^{-1})_*$ and $(\phi^{(t)})^{-1}=\phi^{(-t)}$, so
-				$$\left(\mathcal{L}_XY\right)_p=\frac{d}{d t} {\bigg\vert}_{t=0} ((\phi^{(-t)})_*Y)_p$$
-				which gives $\mathcal{L}_XY=[X,Y]$.</p>
+				<p class="fragment">If $Y$ is another vector-field on $M$, we define its Lie derivative in the same way:
+				$$\left(\mathcal{L}_XY\right)_p=\frac{d}{d t} {\bigg\vert}_{t=0} ((\phi^{(t)})^*Y)_p$$</p>
+				<p class="fragment">however, it is more convenient to use a pushforward, as we are dealing with a vector-field, so we notice that for a diffeomorphism $\psi^*=(\psi^{-1})_*$ and $(\phi^{(t)})^{-1}=\phi^{(-t)}$, so
+				$$\left(\mathcal{L}_XY\right)_p=\frac{d}{d t} {\bigg\vert}_{t=0} ((\phi^{(-t)})_*Y)_p$$</p>
+				<p class="fragment">which gives $(\mathcal{L}_XY)f=X(Y(f))-Y(X(f))$.</p>
 				</section>
+				<section>
+				<h5>Commutator of two vector-fields</h5>
+				<p class="fragment">Given $X,Y\in\mathfrak{X}(M)$, their commutator (or Lie bracket) is denoted by $[X,Y]$ and is a vector-field defined by
+				$$[X,Y](f)=X(Y(f))-Y(X(f))\;.$$</p>
+				<p class="fragment">If $X=X^j\partial_j$ and $Y=Y^j\partial_j$, then 
+				$$[X,Y]^j\partial_jf=X^h\partial_h(Y^j\partial_jf)-Y^h\partial_h(X^j\partial_jf)=X^h(\partial_h Y^j)\partial_jf-Y^h(\partial_hX^j)\partial_jf$$
+				so $[X,Y]^j=X^h\partial_hY^j - Y^h\partial_h X^j$.
+				</p>
+				<p class="fragment">The Lie bracket has a number	of reasonable properties, among which the Jacobi idenitity
+				$$[X,[Y,Z]]+[Z,[X,Y]]+[Y,[Z,X]]=0\quad \forall\,X,Y,Z\in\mathfrak{X}(M)\;.$$
+				The Lie bracket turns the real vector space $\mathfrak{X}(M)$ into a (real) Lie algebra (whatever that means).</p>
+				
+				</section>
+				
 				<section>
 				<h5>Some properties</h5>
 				<ul>
-				<li>The Lie derivative is a derivation on $\mathcal{C}^\infty(M)$
-				<li>The Lie derivative is a derivation on $\mathfrak{X}(M)$ (as a $\mathcal{C}^\infty(M)$-module), i.e. $\mathcal{L}_X(fY)=(\mathcal{L}_Xf)Y+f\mathcal{L}_XY$
-				<li>It is compatible with the Lie bracket: $\mathcal{L}_X[Y,Z]=[\mathcal{L}_XY,Z]+[Y,\mathcal{L}_XZ]$
-				<li>It is compatible with the differential: $\mathcal{L}_Xdf=d(\mathcal{L}_Xf)$
+				<li class="fragment">The Lie derivative is a derivation on $\mathcal{C}^\infty(M)$
+				<li class="fragment">The Lie derivative is a derivation on $\mathfrak{X}(M)$ (as a $\mathcal{C}^\infty(M)$-module), i.e. $\mathcal{L}_X(fY)=(\mathcal{L}_Xf)Y+f\mathcal{L}_XY$
+				<li class="fragment">It is compatible with the Lie bracket: $\mathcal{L}_X[Y,Z]=[\mathcal{L}_XY,Z]+[Y,\mathcal{L}_XZ]$
+				<li class="fragment">It is compatible with the differential: $\mathcal{L}_Xdf=d(\mathcal{L}_Xf)$
 				</ul>
 				</section>
 				</section>
 				<section>
 				<section>
 				<h4>Differential $1$-forms</h4>
-				<p>The set of differential $1$-forms on $M$ is $\Gamma(M, T^*M)$ and it is sometimes denoted by $\Omega^1(M)$. In $\mathbb{R}^k$, we write a differential $1$-form as
+				<p class="fragment">The set of differential $1$-forms on $M$ is $\Gamma(M, T^*M)$ and it is sometimes denoted by $\Omega^1(M)$. In $\mathbb{R}^k$, we write a differential $1$-form as
 				$$\alpha=\alpha_1(p)dx^1+\ldots+\alpha_k(p)dx^k=\alpha_jdx^j$$
 				where $dx^1,\ldots, dx^k$ is the dual basis of $\partial_1,\ldots, \partial_k$. Therefore, given a (local or global) frame, we obtain a corresponding basis for $T_p^*M$, called a (local or global) <em>coframe</em>.</p>
-				<p>Given $X\in\mathfrak{X}(M)$ and $\alpha\in\Omega^1(M)$, once we fix a local frame and take components with respect to it, we have that
+				<p class="fragment">Given $X\in\mathfrak{X}(M)$ and $\alpha\in\Omega^1(M)$, once we fix a local frame and take components with respect to it, we have that
 				$$\alpha(X)=\alpha_jX^j\;.$$
 				</p>
 				</section>
 				<section>
 				<h5>Pullback</h5>
-				<p>Given $\alpha\in\Omega^1(M)$ and $\phi:N\to M$ a smooth map, $\phi^*\alpha$ is a $1$-form on $N$; if $p\in N$, $q\in M$ are such that $\phi(p)=q$ and we take local coordinates $x^1,\ldots, x^h$ around $p$ and $y^1,\ldots, y^k$ around $q$, then we can write $phi$ as $y^j=\phi^j(x^1,\ldots,x^h)$ for $j=1,\ldots, h$. Therefore, 
+				<p class="fragment">Given $\alpha\in\Omega^1(M)$ and $\phi:N\to M$ a smooth map, $\phi^*\alpha$ is a $1$-form on $N$; if $p\in N$, $q\in M$ are such that $\phi(p)=q$ and we take local coordinates $x^1,\ldots, x^h$ around $p$ and $y^1,\ldots, y^k$ around $q$, then we can write $phi$ as $y^j=\phi^j(x^1,\ldots,x^h)$ for $j=1,\ldots, h$. Therefore, 
 				$$(\phi^*\alpha)_j=\alpha_i\circ\phi(\partial_j\phi^i)$$
 				where $(\partial_j\phi^i)$ is the Jacobian matrix of $\phi$ (note: we are multiplying it by the "row vector" $\alpha_i$).</p>
-				<p>In contrast, we recall that, if $X_p\in T_pN$, then $\phi_*X_p$ is given by $(\partial_j\phi^i)X^j_p$, i.e. we are multiplying the Jacobian matrix by the "column vector" $X^j$.</p>
+				<p class="fragment">In contrast, we recall that, if $X_p\in T_pN$, then $\phi_*X_p$ is given by $(\partial_j\phi^i)X^j_p$, i.e. we are multiplying the Jacobian matrix by the "column vector" $X^j$.</p>
 				</section>
 				<section>
 				<h5>Lie derivative of a differential $1$-form</h5>
-				<p>Given a vector-field $X\in\mathfrak{X}(M)$ and a differential $1$-form $\alpha\in\Omega^1(M)$, the Lie derivative of $\alpha$ along $X$ is given by
+				<p class="fragment">Given a vector-field $X\in\mathfrak{X}(M)$ and a differential $1$-form $\alpha\in\Omega^1(M)$, the Lie derivative of $\alpha$ along $X$ is given by
 				$$\mathcal{L}_X\alpha=\frac{d}{dt}(\phi^{(t)})^*\alpha\bigg\vert_{t=0}$$
 				where $\phi^{(t)}(p)=\Phi(t,p)$ is the one parameter group of diffeomorphisms induced by the flow of $X$.</p>
-				<p>We have that
+				<p class="fragment">We have that
 				$$(\mathcal{L}_X\alpha)_j=\alpha_i\partial_jX^i+X^j\partial_j\alpha^i\quad\Rightarrow\quad\mathcal{L}_X\alpha=\alpha_jdX^j+X(\alpha_i)dx^i$$
 				and
 				$$(\mathcal{L}_X\alpha)(Y)=X(\alpha(Y))-\alpha([X,Y])=\mathcal{L}_X(\alpha(Y))-\alpha([X,Y])$$
 				</p>
 				</section>
 				</section>
+				<section>
+				<a href="https://wisefool84.github.io/dga21/index.html" data-preview-link=true>Hakim El Hattab</a>
+				</section>
+				
 				
 				</div>
 		</div>
@@ -189,6 +178,7 @@
 				hash: true,
 				controls: false,
 				transition: 'convex',
+				previewLinks: true,
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard, 
 				//RunInBrowser 
 				],
