@@ -176,8 +176,6 @@
 				hash: true,
 				controls: false,
 				transition: 'convex',
-				width: 1280,
-				height: 800,
 				math: {
 					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
 					config: 'TeX-AMS_CHTML-full',
@@ -198,7 +196,10 @@
 		toggleNotesButton: false,
 	},
 			});
-		
+		var stringa=window.location.search.substring(1);
+		if (stringa.includes('print-pdf')) {
+			Reveal.configure({width: 1280, height: 800,});
+		}
 		Reveal.configure({ pdfSeparateFragments: false });
 		
 		</script>
