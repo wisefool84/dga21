@@ -41,7 +41,7 @@
 				<section>
 				<section>-->
 				<h4>Flow of a vector-field</h4>
-				<p class="fragment">Let $X\in \mathcal{X}(M)$ be a vector-field; given an interval $I\subset\mathbb{R}$, a curve $\gamma:I\to M$ is an <em>integral curve</em> for $X$ if
+				<p class="fragment">Let $X\in \mathfrak{X}(M)$ be a vector-field; given an interval $I\subset\mathbb{R}$, a curve $\gamma:I\to M$ is an <em>integral curve</em> for $X$ if
 				$$X_{\gamma(t)}=\dot{\gamma}(t)\quad \forall\,t\in I\;.$$
 				</p>
 				<blockquote class="definition fragment">Given $V\subseteq M$ and $I\subseteq\mathbb{R}$, a map $\Phi:I\times V \to M$ is called <strong>local flow</strong> of $X$ if<br>
@@ -135,7 +135,7 @@
 				</section>
 				<section>
 				<h5>Pullback</h5>
-				<p class="fragment">Given $\alpha\in\Omega^1(M)$ and $\phi:N\to M$ a smooth map, $\phi^*\alpha$ is a $1$-form on $N$; if $p\in N$, $q\in M$ are such that $\phi(p)=q$ and we take local coordinates $x^1,\ldots, x^h$ around $p$ and $y^1,\ldots, y^k$ around $q$, then we can write $phi$ as $y^j=\phi^j(x^1,\ldots,x^h)$ for $j=1,\ldots, h$. Therefore, 
+				<p class="fragment">Given $\alpha\in\Omega^1(M)$ and $\phi:N\to M$ a smooth map, $\phi^*\alpha$ is a $1$-form on $N$; if $p\in N$, $q\in M$ are such that $\phi(p)=q$ and we take local coordinates $x^1,\ldots, x^h$ around $p$ and $y^1,\ldots, y^k$ around $q$, then we can write $\phi$ as $y^j=\phi^j(x^1,\ldots,x^h)$ for $j=1,\ldots, h$. Therefore, 
 				$$(\phi^*\alpha)_j=\alpha_i\circ\phi(\partial_j\phi^i)$$
 				where $(\partial_j\phi^i)$ is the Jacobian matrix of $\phi$ (note: we are multiplying it by the "row vector" $\alpha_i$).</p>
 				<p class="fragment">In contrast, we recall that, if $X_p\in T_pN$, then $\phi_*X_p$ is given by $(\partial_j\phi^i)X^j_p$, i.e. we are multiplying the Jacobian matrix by the "column vector" $X^j$.</p>
@@ -176,6 +176,8 @@
 				hash: true,
 				controls: false,
 				transition: 'convex',
+				width: 1280,
+				height: 800,
 				math: {
 					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
 					config: 'TeX-AMS_CHTML-full',
