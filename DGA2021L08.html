@@ -1,0 +1,225 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL08</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+		
+		
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L01/Lecture1.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 08</h4>
+				</section>
+				
+				<section>
+				<section>
+				<h4>Directional derivative of a vector-field</h4>
+				<p class="fragment">Given a vector-field $X\in\mathfrak{X}(M)$, we would like to give a meaning to its directional derivative at $p$ in the direction $Y_p\in T_pM$.</p>
+				<p class="fragment">A reason for this is the classical definition of the Hessian: in $\R^k$, $v^t\cdot\nabla^2 f_x$ is the directional derivative of $\nabla f_x$ along $v$.</p>
+				<p class="fragment">What is the problem with the naive definition?
+				$$\frac{\partial}{\partial Y_p} X=\lim_{t\to 0}\frac{X_{\gamma(t)}-X_{\gamma(0)}}{t}$$
+				with $\gamma$ a curve such that $\gamma(0)=p$ and $\dot{\gamma}(0)=Y_p$ ?</p>
+				<p class="fragment">The difference $X_{\gamma(t)}-X_{\gamma(0)}$ makes <strong>no sense</strong>, because, in an abstract manifold, $X_{\gamma(t)}$ and $X_{\gamma(0)}$ live in different (abstract) vector spaces, so their difference is not defined.</p>
+				
+				
+				</section>
+				<section>
+				<h5>The problem with the Lie derivative</h5>
+				<p class="fragment">The Lie derivative seems to offer a solution: $\mathcal{L}_YX$ is a modification of the naive definition (using the local flow of $Y$ to "move" $X_{\gamma(t)}$ in $T_pM$ so we can subtract $X_p$ to it).</p>
+				<p class="fragment">However, there are some problems:</p>
+				<div id="personal" style="--testo:'Pb '; --fnts:0.9em; --hor:40px; --vert:30px; --barra:#1b4; --sfondo:#343">
+				<ol>
+				<li class="fragment">$Y_p$ is not enough: we need another vector-field $Y$
+				<li class="fragment">the local expression involves also derivatives of the coefficients of $Y$
+				<li class="fragment">it does <strong style="color:#1b4">not</strong> depend only on the values of $Y$ along its integral curve through $p$.
+				</ol></div>
+				<p class="fragment">Example: in $\R^2$, take $X=\partial_1$ and $X'=\partial_1+y\partial_2$ - the integral curve through $(0,0)$ for both is $\gamma(t)=(t,0)$ and $X_{(t,0)}=X'_{(t,0)}=\partial_1$ for all $t\in\R$. However</p>
+				<p class="fragment">$$\mathcal{L}_X(\partial_2)_{(t,0)}=0\qquad \mathcal{L}_{X'}(\partial_2)_{(t,0)}=-\partial_2\;.$$</p>
+
+				</section>
+				<section>
+				<h5>Analogue of $df$</h5>
+				<p class="fragment">For each $f\in\mathcal{C}^\infty(M)$, there is a section of $T^*M$, called $df$, such that for each $p\in M$ and each $X_p\in T_pM$,
+				$$X_pf=df_p(X_p)\;.$$
+				</p>
+				<p class="fragment">This works because $f:M\to\R$ implies $df:TM\to T\R=\R$, so $df_p$ is a linear functional on $T_pM$, i.e. it assigns a real number to each tangent vector at $p$.</p>
+				<p class="fragment">However, $X\in\mathfrak{X}(M)$ is a function $X:M\to TM$, so its differential $dX$ is a linear map from $TM$ to $TTM$ (the tangent bunlde of the tangent bundle).</p>
+				<p class="fragment">Or, if we fix $p\in M$, $(dX)_p:T_pM\to T_{X(p)}TM$. This will not do. The directional derivative of a tangent vector-field should be another vector-field, in order to be able to write a first order expansion.</p>
+				
+				</section>
+				</section>
+				
+				<section>
+				<section>
+				<h4>A splitting of $TTM$</h4>
+				<p class="fragment">We start with an example: if $U$ is an open set of $\R^k$, then $TU=U\times \R^k$ (in a <strong>natural</strong> way). Given $X\in\mathfrak{X}(U)$, we write $X=X^i\partial_i$, so, $X(p)=(p,(X^1(p),\ldots, X^k(p)))\in U\times\R^k$. We take the differential and obtain</p>
+				<p class="fragment">$$dX=DX=\left(\begin{array}{c|c}\begin{matrix}1&0&\cdots&0\cdots&\\0&1&\cdots&\cdots&0\\\vdots&\vdots&\ddots&&\vdots\\\vdots&\vdots&&\ddots&\vdots\\0&0&\cdots&\cdots&1\end{matrix}&\begin{matrix}\partial_1X^1&\partial_2X^1&\cdots&\cdots&\partial_nX^1\\\partial_1X^2&\partial_2X^2&\cdots&\cdots&\partial_nX^2\\\vdots&\vdots&\ddots&&\vdots\\\vdots&\vdots&&\ddots&\vdots\\\partial_1X^n&\partial_2X^n&\cdots&\cdots&\partial_nX^n\end{matrix}\end{array}\right)$$</p>
+				<p class="fragment">Now, we have the projection $\pi:TU\to U$ which is the obvious $\pi:U\times\R^k\to U$; its differential is $d\pi:TTU\to TU$ and, as $TTU=TU\times\R^k\times \R^k$ (again, naturally), $d\pi_(e):T_(p,X_p)TU\to T_pU$ is simply the projection on the first $\R^k$ factor of $T_(p,X_p)TU=\R^k\times\R^k$. </p>
+				<p class="fragment">We can also <strong>naturally</strong> construct the other projection $v:TTU\to U\times\R^k$ and  $v(dX_p)$ is the matrix on the right, which is what we would like to call the differential of $X$.</p>
+				<p class="fragment">Finally, given $Y_p\in T_pM$, we have $\nabla_{Y_p}X=\partial_jX^iY_p^j$ (the directional derivative of $X$ along $Y_p$).</p>
+				
+				</section>
+				<section>
+				<h5>The horizontal subspaces</h5>
+				<p class="fragment">In general, we have that $TM$ is only locally $U\times\R^k$, with $(U,\phi)$ a coordinate chart of $M$; however, if we change chart, the splitting as a product changes! What does not change is the so called "vertical distribution".</p>
+				<blockquote class="definition fragment">Given $\pi:TM\to M$, we consider $d\pi:TTM\to TM$ and defined
+				$$VTM=\{(e,Z_e)\ :\ e\in TM,\ Z_e\in\ker d\pi_e\subseteq T_eTM\}$$
+				which is called <strong>vertical distribution.</strong>
+				</blockquote>
+				<p class="fragment">(In the example, it was the $\R^k$ part.) To be able to reproduce what we did in the previous slide, we need something to be the kernel of $v$.</p>
+				<blockquote class="definition fragment">A <strong>horizontal subspace</strong> at $e\in TM$ is a subspace $H_e\subseteq T_eTM$ such that $H_e\oplus V_eTM=T_eTM$.</blockquote>
+				</section>
+				<section>
+				<h5>Connection à la Ehresmann</h5>
+				<blockquote class="definition fragment">An <strong>Ehresmann connection</strong> on $TM$ is a smooth choice of a horizontal subspace for each $e\in TM$; this is also called a horizontal distribution, $HTM$.</blockquote>
+				<p class="fragment">We notice that $e\in TM$ is always of the form $(p,X_p)$; an Ehresmann connection is called <em>linear (or affine)</em> if $H_e=H_{p,X_p}$ varies linearly with $X_p$, when $p\in M$ is fixed. </p>
+				<p class="fragment">An Ehresmann connection gives a well defined $v:TTM\to VTM$, which is a projection, so $v\circ v=v$, $v(HTM)=0$ and $v_e:T_eTM\to V_eTM$ is linear for all $e\in TM$.</p>
+				
+				</section>
+				</section>
+				
+				<section>
+				<section>
+				<h4>Covariant derivative of a vector-field</h4>
+				<p class="fragment">Given $X\in\mathfrak{X}(M)$ and given a connection on $TM$, we define
+				$$\nabla X=\mathrm{pr}_2\circ v\circ dX\;.$$
+				So, $v\circ dX:TM\to VTM$; however, $VTM$ is isomorphic to $TM\oplus TM$, so, upon projecting on the second factor, we have $\mathrm{pr}_2\circ v\circ dX:TM\to TM$.</p>
+				<p class="fragment">The directional derivative of $X$ along $X_p$ is the tangent vector 
+				$$\nabla_{Y_p}X=(\nabla X)_p(Y_p)=\mathrm{pr}_2\circ v\circ (dX)_p(Y_p)\;.$$
+				</p>
+				<p class="fragment">The covariant derivative is linear and, if the connection is linear (which we will always assume), then $\nabla(fX)=f\nabla X + df\otimes X$ (in fact, $T^*M\otimes TM$ is the space of endomorphisms of $TM$).</p>
+				</section>
+				<section>
+				<h5>In local coordinates</h5>
+				<p class="fragment">Given a local frame $\partial_1,\ldots, \partial_k$, we have that
+				$$\nabla X=\nabla (X^j\partial_j)=X^j\nabla \partial_j + dX^j\otimes \partial_j=X^j\nabla \partial_j + \partial_iX^jdx^i\otimes\partial_j\;.$$</p>
+				<p class="fragment">So, one part of this formula depends on the covariant derivative of the local frame; we set
+				$$\nabla \partial_j=\Gamma^i_{kj}dx^k\otimes \partial_i$$
+				and we call the quantities $\Gamma^i_{kj}$ <strong>Christoffel symbols</strong> of the covariant derivative.</p>
+				<p class="fragment">If we change chart (and consequently local frame), they describe how the local expression of the covariant derivative changes.</p>
+				
+				</section>
+				<section>
+				<h5>Parallel transport</h5>
+				<p class="fragment">We turn back to our original problem: compare tangent vectors at different points.</p>
+				<p class="fragment">Given $\gamma:I\to M$, a <strong>horizontal lift</strong> of $\gamma$ is a curve $\gamma^H:I\to TM$ such that</p>
+				<ul>
+				<li class="fragment">$\pi\circ\gamma^H=\gamma$
+				<li class="fragment">$\dot{\gamma}^H(t)\in H_{\gamma^H(t)}TM$ for all $t\in I$.
+				</ul>
+				<p class="fragment">By standard linear algebra and ODEs techniques, the horizontal lift is unique once we fix $\gamma^H(0)$ and then it always exists at least for small times.</p>
+				<p class="fragment">Now, consider $p,q\in M$ and a curve $\gamma:I\to M$ such that $\gamma(0)=p$ and $\gamma(1)=q$; given $X_p\in T_pM$, we take the horizontal lift of $\gamma$ such that $\gamma^H(0)=(p,X_p)\in TM$. Supposing that $\gamma^H$ is defined until $t=1$, the parallel transport of $X_p$ along $\gamma$ at $q$ is $X_q$ such that $\gamma^H(1)=(q,X_q)$.</p>
+				
+				</section>
+				</section>
+				
+				<section>
+				<section>
+				<h4>Metrics and connections</h4>
+				<p class="fragment">Let $(M,g)$ be a Riemannian manifold. Consider a connection on $TM$ and let $\tau^\gamma_{p,q}$ be the parallel transport from $T_pM$ to $T_qM$ along $\gamma$; the connection is said to be <strong>compatible with $g$ </strong> if every map $\tau^\gamma_{p,q}$ is an isometry between tangent spaces.</p>
+				<p class="fragment">It is a matter of computation to show that 
+				$$Xg(Y,Z)=g(\nabla_XY,Z)+g(Y,\nabla_XZ)$$
+				for all $X,Y,Z\in\mathfrak{X}(M)$.</p>
+				
+				
+				</section>
+				<section>
+				<h5>Levi-Civita connection</h5>
+				<p class="fragment">The torsion of a connection is
+				$$T(X,Y)=\nabla_XY-\nabla_YX-[X,Y]\;.$$
+				</p>
+				<blockquote class="definition fragment">The <strong>Levi-Civita connection</strong> of $(M,g)$ is the unique connection such that
+				<div id="personal" style="--testo:'LC '; --fnts:1em; --hor:60px; --vert:30px; --barra:#1b4; --sfondo:#343">
+				<ol style="padding-left:80px">
+				<li class="fragment" style="font-size:1em">$Xg(Y,Z)=g(\nabla_XY,Z)+g(Y,\nabla_XZ)$
+				<li class="fragment" style="font-size:1em">$\nabla_XY-\nabla_YX=[X,Y]$
+				</ol></div>
+				<span class="fragment">for all $X,Y,Z\in\mathfrak{X}(M)$.</span></blockquote>
+				
+				<p class="fragment">For the Levi-Civita connection, the Christoffel symbols are given by
+				$$\Gamma^i_{jk}=\frac{1}{2}g^{ih}(\partial_kg_{hj}+\partial_j g_{hk}-\partial_hg_{jk})$$
+				and the second property implies $\Gamma^i_{jk}=\Gamma^i_{kj}$.</p>
+				</section>
+				</section>
+				
+				
+				</div>
+		</div>
+
+		
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<script src="plugin/pdfexport/pdfexport.js"></script>
+		<script src="plugin/audio-slideshow/plugin.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L08/DGA2021L08.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+	</body>
+</html>

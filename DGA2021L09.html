@@ -1,0 +1,185 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL09</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+		
+		
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L09/Lecture09.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 09</h4>
+				</section>
+				
+				<section>
+				<section>
+				<h4>Statistical manifolds</h4>
+				<p class="fragment">Let $M$ be a $k$-dimensional manifold.</p>
+				<blockquote class="definition2 fragment">The manifold $M$ is called a <strong>statistical manifold</strong> if we use it to parametrize a set of probability distributions over some domain $X$. Therefore, to every $\theta\in M$, we will have a corresponding probability distribution on $X$, $p_{\theta}(x)$.</blockquote>
+				<p class="fragment">Practically, $M$ is identified with the space of probability distributions, however different parametrization give different charts. For example, consider the space of one-dimensional normal distributions; we can parametrize it in various ways, for example by associating to every probability distribution mean and standard deviation, or mean and variance, or mean and precision.</p>
+				</section>
+				<section>
+				<h5>Distinguishing probability distributions</h5>
+				<p class="fragment">Suppose we draw $N$ samples from a discrete probability distribution; we can estimates the probabilities $p_j$ with the observed frequences $f_j$. The probability for the frequencies is given by a multinomial distribution, which, for $N$ large, is proportional to a gaussian</p>
+				<p class="fragment">$$\exp\left(-(N/2)\frac{(f_j-p_j)^2}{p_j}\right)\;.$$
+				A nearby probability distribution can be reliably distinguished from ours if
+				$$\exp\left(-(N/2)\frac{(\overline{p}_j-p_j)^2}{p_j}\right)$$
+				is very small.</p>
+				<p class="fragment">We are led to consider the quadratic form
+				$$\frac{(\overline{p}_j-p_j)^2}{p_j}$$
+				as a "distinguishability distance" between probability distributions.</p>
+			
+				
+				</section>
+				<section>
+				<h5>The Fisher metric</h5>
+				<p class="fragment">Passing to the continuous case and denoting explicitly the dependence on the point of $M$, we end up with
+				$$\Delta=\frac{(p_{\theta}(x)-p_{\theta'}(x))}{p_{\theta'}(x)}$$
+				its limit for $\theta'\to\theta$ has zero expected value.<span class="fragment"> If we consider the variance, it gives us the metric
+				$$g_{ij}=\int_Xdxp_{\theta}(x)\frac{\partial \log p_\theta(x)}{\partial \theta^i}\frac{\partial \log p_\theta(x)}{\partial \theta^j}$$
+				which is called <strong>Fisher information metric</strong>.</span></p>
+				
+				</section>
+				<section>
+				<h5>Relative entropy</h5>
+				<p class="fragment">The relative entropy between two distributions is 
+				$$D(\theta', \theta)=-\int_Xdxp_{\theta'}(x)\log\frac{p_\theta(x)}{p_{\theta'}(x)}$$
+				and it measures the information lost if we replace $p_{\theta'}$ with $p_{\theta}$.</p>
+				<p class="fragment">In other terms, it is the expected number of extra bits needed to encode samples from $p_{\theta'}(x)$ using the optimal code for $p_{\theta}(x)$ (instead of the optimal code for $p_{\theta'}(x)$).</p>
+				<p class="fragment">$D(\theta',\theta)\geq 0$ and is zero iff $\theta=\theta'$, therefore its Taylor expansion at $\theta=\theta'$ begins with the second order terms:</p>
+				<p class="fragment">$$\frac{1}{2}\frac{\partial^2 D(\theta+\eta,\theta)}{\partial\eta^i\partial\eta^j}\bigg\vert_{\eta=0}=\frac{1}{2}\int_Xdxp_{\theta}(x)\frac{\partial \log p_\theta(x)}{\partial \theta^i}\frac{\partial \log p_\theta(x)}{\partial \theta^j}\;.$$</p>
+				</section>
+				<section>
+				<h5>Uniqueness</h5>
+				<p class="fragment">Consider a reasonable $f:X\to X$, then, if $\mathcal{D}$ is any 	way of measuring difference (or distance, or divergence) between two probability distributions, the principle of information monotonicity says that
+				$$\mathcal{D}(p_\theta(x),p_{\theta'}(x))\geq \mathcal{D}(p_\theta(f(x)),p_{\theta'}(f(x)))\;.$$
+				</p>
+				<p class="fragment">Any measure of divergence that obeys information monotonicity principle gives rise to a multiple of the Fisher metric.</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>RGD on statistical manifolds</h4>
+				<p class="fragment">Given a statistical manifold with a Riemannian metric $(M,g)$, where $g$ is the Fisher metric, we can implement on it the algorithm of Riemannian Gradient Descent, once we define a suitable retraction. If $J:M\to\R$ is the functional to minimize, the update rule is
+				$$\theta_{k+1}=\theta_k-s_k\nabla J=\theta_k-s_k(dJ)^\sharp$$</p>
+				<p class="fragment">in coordinates, $((dJ)^\sharp)^i=g^{ij}\partial_j J$. So we have $-s_k F^{-1} dJ$, where $F$ is the matrix of the Fisher information metric.</p>
+				<p class="fragment">A common application is to find (or approximate) the choice of parameters that maximize the likelihood of some data.</p>
+				</section>
+				<section>
+				<h5>Combinatorial optimization</h5>
+				<p class="fragment">Suppose we have a finite set $X$ and a function $f:X\to\R$, which we want to minimize. This problem does not allow for analytic methods, as it is.</p>
+				<p class="fragment">We define a family of probabilities $p_\lambda(x)$ on $X$, parametrized continuously by $\lambda\in\R^k$, which we call search distributions. Intuitively, each corresponds to a different way to search for the minimm, focusing on a different part of $X$. </p><p  class="fragment">Therefore, we define, on $\R^k$, the functional
+				$$J(\lambda)=\mathbb{E}_{p_{\lambda}}[f(x)]\;.$$
+				</p><p class="fragment">Our problem becomes to minimize $J$ on $\R^k$ (or an open set).</p>
+				<p class="fragment">Both the gradient of $J$ and the Fisher information matrix can be approximated empirically.</p>
+				
+				</section>
+				<section>
+				<h5>Compiler optimization</h5>
+				<p class="fragment">As an example, consider some code $X$ which has to be compiled; we can apply transformation to keep the same input-output but change the running time.</p>
+				<p class="fragment">Let $S(X)$ be the set of admissible transformations and let $f(X,s)$ be the running time of $X$ transformed with $s\in S(X)$. We would like to find the minimizing transformation
+				$$s^*(X)=\arg\,\min_{s\in S(x)}f(X,s)\;.$$
+				</p>
+				<p class="fragment">Being given a set of solutions for some $X_1,\ldots, X_N$, we would like to "learn" how to find good solutions; a way is to find a probability distribution $q(s\vert X)$ on good solutions, in order to give high probability to $s^*(X)$. Learning $q$ is an optimization problem on a statistical manifold.</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Conjugate connections</h4>
+				<p class="fragment">Consider a statistical manifold $M$ with the Fisher information metric $g$.</p>
+				<blockquote class="definition2 fragment">Two connections are said conjugate if their covariant derivatives $\nabla$, $\nabla^*$ are torsion-free and satisfy
+				$$Xg(Y,Z)=g(\nabla_XY,Z)+g(Y,\nabla_X^*Z)$$
+				for all $X,Y,Z\in\mathfrak{X}(M)$.</blockquote>
+				<p class="fragment">Given a connection $\nabla$ on $(M,g)$, there exists a unique conjugate connection. The Levi-Civita connection is self-conjugate.</p>
+				</section>
+				<section>
+				<h5>Conjugate connections and divergence</h5>
+				<p class="fragment">Given a divergence measure $D$ on probability distributions parametrized by the points of $M$, we define a pair of conjugate connections by specifying their Christoffel symbols, thanks to the asymmetry of $D$.</p>
+				<p class="fragment">$$\Gamma^i_{jk}=-g^{ih}\partial_{jk}\partial'_iD(\theta,\theta')\bigg\vert_{\theta=\theta'}$$
+				$${\Gamma^i_{jk}}^*=-g^{ih}\partial'_{jk}\partial_iD(\theta,\theta')\bigg\vert_{\theta=\theta'}\;.$$
+				</p>
+				<p class="fragment">By interpolation we actually produce a family of pairs of conjugate connections.</p>
+				<p class="fragment">The properties of conjugate connections are one of the main subjects of study of information geometry.</p>
+				
+				</section>
+				</section>
+				</div>
+		</div>
+
+		
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<script src="plugin/pdfexport/pdfexport.js"></script>
+		<script src="plugin/audio-slideshow/plugin.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L09/DGA2021L09.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+	</body>
+</html>
