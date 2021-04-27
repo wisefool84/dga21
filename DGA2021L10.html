@@ -1,0 +1,232 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL10</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+		
+		
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L01/Lecture1.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 10</h4>
+				</section>
+				<section>
+				<section>
+				<h4>Minimal geodesics</h4>
+				<p class="fragment">Let us consider a Riemannian manifold $(M,g)$. We recall that we have a distance on $M$ given by
+				$$\mathrm{dist}_g(p,q)=\inf\{L_g(\gamma)\ :\ \gamma:[a,b]\to M,\ \gamma(a)=p,\ \gamma(b)=q\}\;.$$</p>
+				<blockquote class="definition fragment">A curve $\gamma:[a,b]\to M$ is a <strong>minimizing geodesic</strong> if
+				$$L_g(\gamma)=\mathrm{dist}_g(\gamma(a),\gamma(b))\;.$$
+				</blockquote>
+				<p class="fragment">It is not obivious at all that minimizing geodesics exsist.</p>
+				
+				</section>
+				<section>
+				<h5>Euler-Lagrange equation</h5>
+				<p class="fragment">We want to minimize the length of the curve $\gamma$ such that $\gamma(a)=p$, $\gamma(b)=q$, i.e. the functional
+				$$L_g(\gamma)=\int_{a}^b\sqrt{g_\gamma(\dot{\gamma},\dot{\gamma})}dt=\int_{a}^bS(\gamma,\dot{\gamma})dt\;.$$</p>
+				<p class="fragment">We work in local coordinates, which, as we are only interested in what happens along $\gamma$, will all be functions of the parameter $t$. We will write $x^j(t)$ instead of $x^j(\gamma(t))$, to simplify the notation.</p>
+				<p class="fragment">So $S(t,x,\dot{x})=\sqrt{g_{ij}\dot{x}^i\dot{x}^j}$. We have
+				$$\frac{\partial S}{\partial x^h}=\frac{1}{2S}\partial_hg_{ij}\dot{x}^i\dot{x}^j\qquad \frac{d}{dt}\frac{\partial S}{\partial\dot{x}^h}=\frac{d}{dt}\frac{1}{S}g_{ih}\dot{x}^i$$
+				<span class="fragment">and if $\gamma$ is parametrized wrt arc length, then
+				$$\frac{\partial S}{\partial x^h}=\frac{1}{2}\partial_hg_{ij}\dot{x}^i\dot{x}^j\qquad\frac{d}{dt}\frac{\partial S}{\partial\dot{x}^h}=\partial_pg_{ih}\dot{x}^p\dot{x}^i+g_{ih}\ddot{x}^i\;.$$</span></p>
+				</section>
+				<section>
+				<h5>Geodesics equation</h5>
+				<p class="fragment">The Euler-Lagrange equations for the critical points of $L_g(\gamma)$ are
+$$\ddot{x}^p=\frac{1}{2}g^{ph}\partial_hg_{ij}\dot{x}^i\dot{x}^j-g^{ph}\partial_jg_{ih}\dot{x}^i\dot{x}^j=-g^{ph}\frac{1}{2}\left(\partial_jg_{ih}+\partial_ig_{ih}-\partial_hg_{ij}\right)\dot{x}^i\dot{x}^j=-\Gamma^p_{ij}\dot{x}^i\dot{x}^j\;.$$</p>
+				<p class="fragment">We recognized (!) the Christoffel symbol of the Levi-Civita connection.</p>
+				<blockquote class="definition fragment">A curve $\gamma:I\to M$ is a <strong>geodesic</strong> if it satisfies the equations
+				$$\ddot{\gamma}^h=-\Gamma^h_{ij}\dot{\gamma}^i\dot{\gamma}^j\qquad h=1,\ldots, k\;,$$
+				where $\gamma^i=x^i\circ\gamma$ in local coordinates.</blockquote>
+				</section>
+				<section>
+				<h5>Existence of geodesics</h5>
+				<p class="fragment" style="border-left: 10px solid #131; padding-left:10px">For every $p\in M$ there exist a neighborhood $U$ and $\epsilon>0$ such that for all  $q\in U$ and $v\in T_qM$ with $|v|_g&lt;\epsilon$ there is a geodesic $\gamma:(-1,1)\to M$ such that $\gamma(0)=q$ and $\dot{\gamma}(0)=v$.</p>
+				<p  class="fragment" style="border-left: 10px solid #131; padding-left:10px">For every $p\in M$ there exist a neighborhood $U$ and $\epsilon>0$ such that for any $q,q'\in U$ there is a geodesic $\gamma$ from $q$ to $q'$ of length less than $\epsilon$. Moreover $L_g(\gamma)=\mathrm{dist}_g(q,q')$.</p>
+				<p class="fragment" style="border-left: 10px solid #131; padding-left:10px">If $\gamma:[a,b]\to M$ is parametrized wrt arc length and $L_g(\gamma)=\mathrm{dist}_g(\gamma(a),\gamma(b))$, then $\gamma$ is a geodesic (hence a minimizing geodesic).</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Covariant derivative along a curve</h4>
+				<p class="fragment">Given a connection $v:TTM\to VTM$, we can define a covariant derivative of a vector-field along a curve, which works exactly as the usual covariant derivative.</p>
+				<blockquote class="definition  fragment">Let $\gamma:I\to M$ be a curve; a vector-field along $\gamma$ is a map $X:I\to TM$ such that $\pi(X(t))=\gamma(t)$ for all $t\in I$.
+				<span class="fragment">
+				The <em>covariant derivative of $X$ along $\gamma$</em> is the vector-field along $\gamma$ given by
+				$$\frac{D}{dt}X=\mathrm{pr}_2\circ v\circ dX (d/dt)\;.$$</span>
+				</blockquote>
+				<p class="fragment">If $X$ can be extended to a neighborhood of $\gamma$ as a vector-field, then 
+				$$\frac{D}{dt}X(t)=\left(\nabla_{\dot{\gamma}(t)}X\right)_{\gamma(t)}\;.$$</p>
+				</section>
+				<section>
+				<h5>Some properties</h5>
+				<p class="fragment">This covariant derivative shares essentially the algebraic properties of the other one:</p>
+				<div id="personal" style="--testo:'Cov. '; --fnts:1em; --hor:60px; --vert:40px; --barra:#1b4; --sfondo:#131">
+				<ol>
+				<li class="fragment"> it is linear
+				<li class="fragment"> Leibniz rule holds: $\displaystyle{\frac{D}{dt}(fX)(t)=f(t)\frac{D}{dt}X(t)+f'(t)X(t)}$
+				<li class="fragment"> if $v$ is the Levi-Civita connection
+				$$\frac{d}{dt}g(X(t),Y(t))=g\left(\frac{D}{dt}X(t),Y(t)\right)+g\left(X(t),\frac{D}{dt}Y(t)\right)\;.$$
+				</ol>
+				<p class="fragment">A vector-field along $\gamma$ is a horizontal lift of $\gamma$ if and only if $\displaystyle\frac{D}{dt}X\equiv 0$; such a vector-field is said to be <em>parallel</em> along $\gamma$. A parallel vector-field is unique once we specify its value at one point. If $X$ is parallel, then $X_{\gamma(t)}$ is the parallel transport of $X_{\gamma(t_0)}$ along $\gamma$.</p>
+				
+				</div>
+				</section>
+				<section>
+				<h5>Geodesics - take 2</h5>
+				<p class="fragment">A curve is parametrized wrt arc length if and only if $g(\dot{\gamma},\dot{\gamma})\equiv 1$, so in particular the derivative in $t$ vanishes identically, so
+				$$g\left(\frac{D}{dt}\dot{\gamma}(t),\dot{\gamma}(t)\right)=0\;.$$</p>
+				<p class="fragment">In local coordinates,
+				$$\left(\frac{D}{dt}\dot{\gamma}\right)^j=\nabla^j_{\dot{\gamma}}\dot{\gamma}=\partial_i\dot{\gamma}^j\dot{\gamma}^i+\dot{\gamma}^i\Gamma^j_{ih}\dot{\gamma}^h=\ddot{\gamma}^j+\Gamma^j_{ih}\dot{\gamma}^i\dot{\gamma}^h\;.$$</p>
+				<p class="fragment">Therefore, $\gamma$ is a geodesic if and only if
+				$$\frac{D}{dt}\dot{\gamma}=0\qquad\textrm{or equivalently}\qquad\nabla_{\dot{\gamma}}\dot{\gamma}=0\;.$$</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Exponential map</h4>
+				<p class="fragment">For $p\in M$ and $v\in T_pM$, $\gamma_v$ is the maximal solution to the geodesic equation such that $\gamma_v(0)=p$, $\dot{\gamma}_v(0)=v$; we denote by $\Omega$ the set of $(p,v)\in TM$ for which $\gamma_v(1)$ exists. $\Omega\subseteq TM$ is open and contains $0_p\in T_pM$ for all $p\in M$.</p>
+				<blockquote class="definition fragment">The <strong>exponential map</strong> $\exp:\Omega\to M$ is defined by $\exp(p,v)=\gamma_v(1)$, with $\gamma_v(0)=p$. We denote by $\exp_p$ the restriction of $\exp$ to $\Omega\cap T_pM$.</blockquote>
+				<p class="fragment">If $M$ is an open set in $\mathrm{GL}_n(\R)$, then $\exp:TM\to M$ is the matrix exponential. This holds also when $M$ is an open set of a linear subspace (e.g. the symmetric matrices) or is closed under multiplication and inverse (e.g. orthogonal matrices).</p>
+				</section>
+				<section>
+				<h5>Properties and consequences</h5>
+				<p class="fragment">The map $\exp$ is smooth and $\exp_p$ is a local diffeomorphism from a neighborhood of $0_p\in T_pM$ to a neighborhood of $p\in M$. In particular, $(d\exp_p)_{0_p}=I$.</p>
+				<p class="fragment">Therefore, $\exp$ is a <em>first-order retraction</em>.</p>
+				<p class="fragment">Given $V_p$ neighborhood of $0_p$ in $T_pM$ and $U_p=\exp_p(V_p)$ neighborhood of $p$ in $M$, such that $\exp_p:V_p\to U_p$ is a diffeomorphism, then $(U_p, \exp_p^{-1})$ is a chart for $M$. In its local coordinates, called <strong>normal coordinates</strong>,
+				<div id="personal" style="--testo:'Norm. '; --fnts:1em; --hor:70px; --vert:40px; --barra:#1b4; --sfondo:#131">
+				<ol>
+				<li class="fragment">geodesics from $p$ are just $\gamma_v(t)=tv$
+				<li class="fragment">$g_{ij}(0)=\delta_{ij}$
+				<li class="fragment">$\Gamma^k_{ij}(0)=0$
+				<li class="fragment">$\partial_kg_{ij}(0)=0$.
+				</ol></div></p>
+				</section>
+				<section>
+				<h5>Completeness</h5>
+				<p class="fragment">The following are equivalent 
+				<ul>
+				<li class="fragment">$\exp_p$ can be defined on all of $T_p$M for some $p\in M$
+				<li class="fragment">there is a minimzing geodesic between any two points of $M$
+				<li class="fragment">every geodesic can be extended to $\R$
+				<li class="fragment">$\exp$ is defined on all of $TM$
+				<li class="fragment">$(M,\mathrm{dist}_g)$ is (metrically) complete.
+				</ul></p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Taylor expansion along geodesics</h4>
+				<p class="fragment">Let $\gamma:(-1,1)\to M$ be a geodesic and let $f\in\mathcal{C}^\infty(M)$. We consider the function $h:(-1,1)\to\R$ given by $h(t)=f(\gamma(t))$. We already know that
+				$$h(t)=h(0)+tg_{\gamma(0)}(\mathrm{grad} f_{\gamma(0)}, \dot{\gamma}(0))+o(t)\;.$$
+				<span class="fragment">To proceed further, we need to compute
+				$$h''(t)=\frac{d}{dt}h'(t)=\frac{d}{dt}g_{\gamma(t)}(\mathrm{grad} f_{\gamma(t)}, \dot{\gamma}(t))=g\left(\frac{D}{dt}\mathrm{grad}f,\dot{\gamma}\right)+g\left(\mathrm{grad} f,\frac{D}{dt}\dot{\gamma}\right)$$</span><span class="fragment">
+				but if $\gamma$ is a geodesic, the last term vanishes, so 
+				$$h''(t)=g\left(\frac{D}{dt}\mathrm{grad} f,\dot{\gamma}\right)=g(\nabla_{\dot{\gamma}} \mathrm{grad} f, \dot{\gamma})\;.$$</span></p>
+				</section>
+				<section>
+				<h5>Hessian of a function</h5>
+				<p class="fragment">The bilinear form  on $T_pM$ given by $(X_p,Y_p)\mapsto g(\nabla_{X_p} \mathrm{grad}f, Y_p)$ is known as Hessian of $f$ and denoted by $\nabla^2f$.</p>
+				<p class="fragment">Therefore, on a geodesic $\gamma$, with $\gamma(0)=p$ and $\dot{\gamma}(0)=v$,
+				$$f\circ \gamma(t)=f(p)+tg_p(\mathrm{grad} f_p,v)+\frac{t^2}{2}\nabla^2 f_p(v,v)+o(t^2)=f(p)+tdf_p(v)+\frac{t^2}{2}\nabla^2 f_p(v,v)+o(t^2)\;,$$
+				<span class="fragment">which is why the covariant derivative of a function is usually defined to be its differential: $\nabla f=df$. So that
+				$$f(\gamma(t))=f(p)+t\nabla f_p(v)+\frac{t^2}{2}\nabla^2 f_p(v,v)+o(t^2)\;.$$</span>
+				</p>
+				</section>
+				<section>
+				<h5>In local coordinates</h5>
+				<p class="fragment">We compute, 
+				$$\nabla^2 f(X,Y)=g(\nabla_X\mathrm{grad} f, Y)=X(g(\mathrm{grad}f, Y))-g(\mathrm{grad}f, \nabla_XY)=$$
+				<span class="fragment">$$\phantom{AA..}=X^j\partial_j(g_{pq}g^{pi}\partial_ifY^q)-g_{pq}g^{pi}\partial_i f(\partial_hY^q+\Gamma^q_{hj}Y^j)X^h$$</span><span class="fragment">
+				and we note that $g^{pq}g_{pi}=g^q_i=\delta^q_i$ so we obtain
+				$$X^j\partial_j(\partial_ifY^i)-\partial_i f(\partial_hY^i+\Gamma^i_{hj}Y^j)X^h=\partial_i\partial_j f Y^iX^j-\partial_if\Gamma^i_{hj}X^hY^j\;.$$</span>
+				<span class="fragment">Therefore, $\nabla^2 f= h_{ij}dx^i\otimes dx^j$ with 
+				$$h_{ij}=\partial_i\partial_jf- \Gamma^h_{ij}\partial_h f\;.$$</span>
+				</p>
+				
+				</section>
+				</section>
+				
+				
+				
+				</div>
+		</div>
+
+		
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<script src="plugin/pdfexport/pdfexport.js"></script>
+		<script src="plugin/audio-slideshow/plugin.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L10/DGA2021L10.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+	</body>
+</html>

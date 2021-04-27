@@ -213,6 +213,8 @@ blockquote.definition2 {
 	padding: 10px 20px 10px 20px;
 	
 }
+
+
 	
 .problem blockquote {
 	background: #334;
@@ -261,7 +263,7 @@ blockquote.definition2 {
 #personal ol {
 	list-style: none;
   counter-reset: my-awesome-counter;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   max-width: 80%;
 }
@@ -292,6 +294,29 @@ blockquote.definition2 {
   position: absolute;
   left: calc(-1 * var(--hor) - 30px);
 }
+#personal ol li ol {
+	list-style: none;
+  counter-reset: my-awesome-counter2;
+  margin: 0;
+  padding: 0;
+  max-width: 80%;
+}
+
+#personal ol li ol li{
+  counter-increment: my-awesome-counter2;
+  font-size: 1em;
+  margin-bottom: 0.6em;
+  margin-top: 0.6em;
+  position: relative;
+  text-align:justify;
+}
+#personal ol li ol li::before {
+  content: var(--testo) " " counter(my-awesome-counter) "." counter(my-awesome-counter2);
+  width:calc(7px + var(--hor));
+  left: calc(-1 * var(--hor) - 30px - 7px);
+}
+
+
 .personal.ol {
 	list-style: none;
   counter-reset: my-awesome-counter;

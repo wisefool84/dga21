@@ -1,0 +1,205 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL11</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L03/Lecture03.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 11</h4>
+				
+				</section>
+				<section>
+				<section>
+				<h4>Manifold learning</h4>
+				<p class="fragment">The <em>manifold hypothesis</em> postulates that data collected from a given phenomenon are often intrinsecally low dimensional (i.e. they depend on a small number of parameters) even if they "live" in a high-dimensional (usually Euclidean) space.</p>
+				<h6 class="fragment">Examples</h6>
+				<ul>
+				<li class="fragment">Written digit "2"</li>
+				<li class="fragment">Hand movements</li>
+				<li class="fragment">Head movements</li>
+				<li class="fragment">Complex molecules</li>
+				<li class="fragment">...</li>
+				</ul>
+				<blockquote class="definition2 fragment"><strong>Problem:</strong>  How do we find a low-dimensional representation of such a manifold?</blockquote>
+				</section>
+				<section>
+				<h5>Interesting features</h5>
+				<p class="fragment">We will be interested in low-dimensional representation that preserve some information from the original manifold.</p>
+				<div id="personal" style="--testo:'Feat. '; --fnts:1em; --hor:70px; --vert:40px; --barra:#b14; --sfondo:#433">
+				<ol>
+				<li class="fragment">Neighborhoods of points (i.e. "begin close" or "being far").
+				<li class="fragment">Distances between points (also between faraway points).
+				<li class="fragment">Local geometry of angles (conformal geometry).
+				<li class="fragment">Riemannian metric.
+				<li class="fragment">Covariant derivatives.
+				</ol>
+				</div>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Neighborhood graphs</h4>
+				<p class="fragment">Suppose we are given $n$ points in $\R^N$, which, we believe, belong to a submanifold $M\subseteq\R^N$ of dimension $k$. One first step towards our goal would be to organize such points in a data structure that takes the metric into account.</p>
+				<p class="fragment">We create a <em>graph</em> with nodes our $n$ points $p_1,\ldots, p_n$. In order to decide what edges to include, we calculate all the distanced $d_{ij}=\mathrm{dist}(p_j,p_j)$, with respect to the Euclidean metric of $\R^N$. Now, we would like to connect with an edge those points which are "close enough" one to the other.</p>
+				<div style="width:85%; margin-left:130px;">
+				<p class="fragment"><span  style="border: 0; display:inline-flex; align-items:center; height:40px; width:85px; justify-content: center; border-left: 10px solid #b14; font-weight: bold; margin-right: 0.5rem; padding-left: 0.2rem; font-family: 'agency fb', arial;line-height: 1; background-color: #433;">$\epsilon$-Neigh.</span> We connect all the points such that $d_{ij}&lt;\epsilon$.</p>
+				<p class="fragment"><span style="border: 0; display:inline-flex; height:40px; width:85px;align-items:center; justify-content: center; border-left: 10px solid #b14; font-weight: bold; margin-right: 0.5rem; padding-left: 0.2rem; font-family: 'agency fb', arial;line-height: 1; background-color: #433;">$K$NN</span> We connect to a point its $K$ nearest neighbors.</p></div>
+				<p class="fragment">We then add a weight to each edge which corresponds to $d_{ij}$.</p>
+				</section>
+				<section>
+				<h5>Laplacian of a graph</h5>
+				<p class="fragment">If we believe that our graph is a model of the manifold structure we would like to capture, the problem now becomes to embedd our graph in $\R^m$ in a way that approximates $d_{ij}$ with the distance in $\R^m$ between the nodes, while trying to keep apart nodes that are not connected by an edge.</p>
+				<p class="fragment">If $W$ is the weights matrix and $D=\mathrm{diag}(d_1,\ldots, d_n)$ with $d_j=\sum_{j}W_{ij}$ is the degree matrix, then an embedding as required is found by diagonalizing $L=D-W$, which has eigenvalues $0&lt;\lambda_1\leq\ldots\leq \lambda_{n-1}$ (if our graph is connected) with eigenvectors $u_0,\ldots, u_n$. <span class="fragment">Given $k$, the set of points in $\R^k$
+				$$x_j=(u_1^te_j,\ldots, u_k^te_j)$$
+				seems a good choice.</span><span class="fragment"> A variant is
+				$$x_j=\left(\frac{u_1^te_j}{\sqrt{\lambda_1}},\ldots, \frac{u_k^te_j}{\sqrt{\lambda_k}}\right)\;.$$</span>
+				</p>
+				</section>
+				<section>
+				<h5>Completing the distance matrix</h5>
+				<p class="fragment">The distances on $M$ are approximated by the distances in $\R^N$ only in small neighborhoods of points of $M$; that is why we restricted to neighbors, in some way.</p>
+				<p class="fragment">If we want to compute the distance on $M$ between $p_i$ and $p_j$, supposing they are not neighbors, we need to "travel" on the graph, to find the minimal path between $p_i$ and $p_j$.<span class="fragment"> A naive way to do that is to set $d_{ij}=+\infty$ is $p_i$ and $p_j$ are not connected and then recursively replace $d_{ij}$ with $\min\{d_{ij}, d_{ik}+d_{kj}\}$ for all $k$. </span><span class="fragment">In the end we will obtain a symmetric matrix $A$ with all the distances computed along the graphs, which are intuitively a good approximation of the distances between the corresponding points of $M$ with respect to its Riemannian metric as a submanifold of $\R^N$.</span></p>
+				<p class="fragment">Depending on the kind of algorithm we are implementing, we could also apply some function to $A$, element-wise.</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>ISOMAP</h4>
+				<p class="fragment">The IsoMap algorithm tries to give a low-dimensional representation of a set of data lying in the high-dimensional Euclidean space while preserving the geodesic distance between points.</p>
+				<h6 class="fragment">Workflow</h6>
+				<div id="personal" style="--testo:'Step '; --fnts:1em; --hor:70px; --vert:40px; --barra:#b14; --sfondo:#433; max-width:90%">
+				<ol>
+				<li class="fragment">Compute the neighborhood graph (KNN)</li>
+				<li class="fragment">Compute the distance matrix</li>
+				<li class="fragment">Apply MDS to the distance matrix
+				<ol style="max-width:100%; width:100%">
+				<li class="fragment">Compute $B$ with $B_{ij}=A_{ij}^2$
+				<li class="fragment">Compute $X=-\frac{1}{2}JBJ$ where $J=I-\frac{1}{n}\mathbf{1}_n\mathbf{1}_n^t$
+				<li class="fragment">Find the eigenvalues and eigenvectors of $X$.
+				</ol></li>
+				</ol>
+				</section>
+				<section>
+				<h5>Results</h5>
+				<p class="fragment">We obtain a realization of our $n$ points $p_1,\ldots, p_n$ in $\R^k$, as $x_1,\ldots, x_n$, such that $\|x_j-x_i\|$ approximates $d_{ij}$.</p>
+				<p class="fragment">The "true" dimensionality of the data is estimated by checking the decrease of the error of such approximation when increasing the dimension.</p>
+				<p class="fragment">IsoMap works well with manifolds which are approximable by convex regions of the Euclidean space, in the asymptotic case when $n\to+\infty$</p>
+				<p class="fragment">The MDS algorithm is quite slow, so IsoMap is as well.</p>
+				<p class="fragment">By construction, $KNN$ gives a connected graph, which however makes the algorithm quite sensitive to ouliers.</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>LLE</h4>
+				<p class="fragment">Locally Linear Embedding algorithm tries to "flatten out" the manifold by preserving an approximate local structure: we approximate every point with a linear combination of its neighbors and we find a low-dimensional embedding which preserves this structure.</p>
+				<h6 class="fragment">Workflow</h6>
+				<div id="personal" style="--testo:'Step '; --fnts:1em; --hor:70px; --vert:40px; --barra:#b14; --sfondo:#433; max-width:90%">
+				<ol>
+				<li class="fragment">Compute the neighborhood graph (KNN)</li>
+				<li class="fragment">Minimize $\sum_i\|p_i-\sum_j w_{ij}p_j\|^2$ with $\sum_j w_{ij}=1$ and $w_{ij}=0$ if $p_i,\ p_j$ are not neighbors.
+				<li class="fragment">With the $w_{ij}$ from Step 2, find $x_i\in\R^k$ that minimize $\sum_i\|x_i-\sum_j w_{ij}x_j\|^2$, with $\sum x^i(x^i)^t=nI$, $\sum x^i=0$.
+				</ol></div>
+				</section>
+				<section>
+				<h5>Details</h5>
+				<p class="fragment">The optimization problem in step 2 could, in principle, explode; however, we have a closed form solution.</p>
+				<p class="fragment">The optimization problem in step 3 is solved by the first $k$ eigenvectors of a certain matrix.</p>
+				<p class="fragment">The only parameter of the algorithm is $K$, for the KNN part.</p>
+				<p class="fragment">The embedding dimension can be estimaed by a "reciprocal" cost function.</p>
+				<p class="fragment">The algorithm scales well with data dimension and it is incremental in the embedding dimension.</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>LTSA</h4>
+				<p class="fragment">The Local Tangent Space Alignment algorithms computes locally the tangent space at each point (using its neighbors) and then glues up local coordinates given by each tangent space in a global parametrization.</p>
+				<h6 class="fragment">Workflow</h6>
+				<div id="personal" style="--testo:'Step '; --fnts:1em; --hor:70px; --vert:40px; --barra:#b14; --sfondo:#433; max-width:90%">
+				<ol>
+				<li class="fragment">Compute the neighborhood graph (KNN)
+				<li class="fragment">Estimate the $k$-dimensional tangent space at each point
+				<li class="fragment">Find affine change of coordinates between the tangent space at one point and the tangent spaces at its neighbors
+				<li class="fragment">Compute the parametrization coordinates from the alignment matrix.
+				</ol></div>
+				</section>
+				</section>
+				</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L10/DGA2021L10.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+		
+	</body>
+</html>
