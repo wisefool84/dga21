@@ -1,0 +1,117 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL13</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+		
+		
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L01/Lecture1.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 13</h4>
+				</section>
+				
+				<section>
+				<section>
+				<h4>Curvature as non-commutativity of parallel transport</h4>
+				<p class="fragment">Once we have a connection on a manifold $M$, we define the parallel transport along a curve: <span class="fragment">if $\gamma:I\to M$ is such that $\gamma(a)=p$, $\gamma(p)=q$, for each $X_p\in T_pM$ we have a unique vector-field  $X$ along $\gamma$</span><span class="fragment">such that $X(a)=X_p$ and $dX/dt\in HTM$ at all points or, equivalently, $\nabla_{\dot{\gamma}}X\equiv 0$. </span><span class="fragment">Then
+				$$\tau_{pq}^\gamma X_p=X_{\gamma(b)}\;.$$
+				</span></p>
+				<p class="fragment">Now, consider two vector-fields $X,Y$ defined in a neighborhood of $p$; given $t,s>0$ very small, let 
+				<ul>
+				<li class="fragment">$\gamma_1$ be the integral curve of $X$ starting at $p$ defined on $[0,t]$
+				<li class="fragment">$\gamma_2$ be the integral curve of $Y$ starting at $\gamma_1(t)$ defined on $[0,s]$
+				<li class="fragment">$\gamma_3$ be the integral curve of $-X$ starting at $\gamma_2(s)$ defined on $[0,t]$
+				<li class="fragment">$\gamma_4$ be the integral curve of $-Y$ starting at $\gamma_3(t)$ defined on $[0,s]$.
+				</ul></p>
+				</section>
+				<section>
+				<h5>Vanishing of torsion</h5>
+				<p class="fragment">Note that the four curves do not necessarily close in a "parallelogram";<span class="fragment"> if we set up local coordinates where $p$ is the origin, the point $\gamma_4(s)$ is a function of $X$, $Y$, $t$, $s$ whose coordinates have the following Taylor expansion in $t,s$ is$</span></p>
+				<p class="fragment">$$x^j(t,s)=ts(\Gamma^{j}_{ih}X^iY^h-\Gamma^{j}_{ih}Y^iX^h)+o(t^2+s^2)=ts(\Gamma^j_{ih}-\Gamma^j_{hi})X^iY^h + o(t^2+s^2)\;.$$</p>
+				<p class="fragment">Therefore, the four curve "close" at second order if and only if $\Gamma^j_{ih}=\Gamma^j_{hi}$, so if and only if the covariant derivative of the connection is torsion free, i.e. $\nabla_XY-\nabla_YX-[X,Y]=0$.</p>
+				<img src="L13/torsion.png" style="max-height:200px">
+				</section>
+				</section>
+				
+				
+				</div>
+		</div>
+
+		
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<script src="plugin/pdfexport/pdfexport.js"></script>
+		<script src="plugin/audio-slideshow/plugin.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L13/DGA2021L13.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+	</body>
+</html>

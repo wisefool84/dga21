@@ -1,0 +1,202 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL13</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+		
+		
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L01/Lecture1.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 13</h4>
+				</section>
+				
+				<section>
+				<section>
+				<h4>Curvature as non-commutativity of parallel transport</h4>
+				<p class="fragment">Once we have a connection on a manifold $M$, we define the parallel transport along a curve: <span class="fragment">if $\gamma:I\to M$ is such that $\gamma(a)=p$, $\gamma(p)=q$, for each $X_p\in T_pM$ we have a unique vector-field  $X$ along $\gamma$</span><span class="fragment">such that $X(a)=X_p$ and $dX/dt\in HTM$ at all points or, equivalently, $\nabla_{\dot{\gamma}}X\equiv 0$. </span><span class="fragment">Then
+				$$\tau_{pq}^\gamma X_p=X_{\gamma(b)}\;.$$
+				</span></p>
+				<p class="fragment">Now, consider two vector-fields $X,Y$ defined in a neighborhood of $p$; given $t,s>0$ very small, let 
+				<ul>
+				<li class="fragment">$\gamma_1$ be the integral curve of $X$ starting at $p$ defined on $[0,t]$
+				<li class="fragment">$\gamma_2$ be the integral curve of $\tau^{\gamma_1}Y$ starting at $\gamma_1(t)$ defined on $[0,s]$
+				<li class="fragment">$\gamma_3$ be the integral curve of $-\tau^{\gamma_2}\tau^{\gamma_1}X$ starting at $\gamma_2(s)$ defined on $[0,t]$
+				<li class="fragment">$\gamma_4$ be the integral curve of $-\tau^{\gamma_3}\tau^{\gamma_2}\tau^{\gamma_1}Y$ starting at $\gamma_3(t)$ defined on $[0,s]$.
+				</ul></p>
+				</section>
+				<section>
+				<h5>Vanishing of torsion</h5>
+				<p class="fragment">Note that the four curves do not necessarily close in a "parallelogram";<span class="fragment"> if we set up local coordinates where $p$ is the origin, the point $\gamma_4(s)$ is a function of $X$, $Y$, $t$, $s$ whose coordinates have the following Taylor expansion in $t,s$ is$</span></p>
+				<p class="fragment">$$x^j(t,s)=ts(\Gamma^{j}_{ih}X^iY^h-\Gamma^{j}_{ih}Y^iX^h)+o(t^2+s^2)=ts(\Gamma^j_{ih}-\Gamma^j_{hi})X^iY^h + o(t^2+s^2)\;.$$</p>
+				<p class="fragment">Therefore, the four curve "close" at second order if and only if $\Gamma^j_{ih}=\Gamma^j_{hi}$, so if and only if the covariant derivative of the connection is torsion free, i.e. $\nabla_XY-\nabla_YX-[X,Y]=0$.</p>
+				<img src="L13/torsion.png" style="max-height:300px">
+				</section>
+				<section>
+				<h5>Defect of the parallel transport</h5>
+				<p class="fragment">Once we impose that the torsion vanishes, if we use the curve $\gamma$ (obtained by following the four sides from $p$ to  $q=\gamma_4(s)$) to operate a parallel transport from $T_{p}M$ to $T_qM$, the difference between $Z_q$ and $\tau^\gamma_{pq}Z_p$ depends, at the first non trivial order, only on $ts$:</p>
+		<p class="fragment"> $$Z^j_q-\tau^\gamma_{pq}Z^j_p=ts(\partial_m\Gamma^j_{ih}-\partial_i\Gamma^j_{mh}+\Gamma^l_{ih}\Gamma^j_{ml}-\Gamma^l_{mh}\Gamma^j_{il})Z^hX^mY^i+o(ts)$$</p>
+		<p class="fragment">which, surprinsingly, can be re-written as
+				$$Z_q-\tau^\gamma_{pq}Z_q=ts(\nabla_X\nabla_YZ-\nabla_Y\nabla_XZ-\nabla_{[X,Y]}Z)+o(ts)$$</p>
+				</section>
+				<section>
+				<h5>Curvature of a torsion-less connection</h5>
+				<p class="fragment">Given a connection $v:TTM\to VTM$, we saw that in the torsion-less case (i.e. when the associated covariant derivative satisfies $\nabla_XY-\nabla_YX=[X,Y]$), the non-commutativity of parallel transport depends, at the first non trivial term, from a global object.</p>
+				<blockquote class="definition fragment" style="max-width:90%; width:90%">The <strong>curvature</strong> of the connection $v$ (or of the covariant derivative $\nabla$) is the field of trilinear forms
+				$$R_p(\cdot,\cdot,)\cdot:T_pM\times T_pM\times T_pM\to T_pM$$
+				which, for $X,Y,Z\in\mathfrak{X}(U)$, $U$ a small neighborhood of $p$, is given by
+				$$R(X,Y)Z=\nabla_X\nabla_YZ-\nabla_Y\nabla_XZ-\nabla_{[X,Y]}Z\;.$$</blockquote>
+				<p class="fragment">In local coordinates, we write
+				$$R^{h}_{ijk}=(\partial_j\Gamma^h_{ki}-\partial_k\Gamma^h_{ij}+\Gamma^l_{ik}\Gamma^h_{jl}-\Gamma^l_{ij}\Gamma^h_{kl})$$
+				</p>
+				
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Curvature and second covariant derivative</h4>
+				<blockquote class="definition fragment">The second covariant derivative is the operator defined by
+				$$\nabla^2_{X,Y}Z=\nabla_X(\nabla_Y Z)-\nabla_{\nabla_XY}Z$$
+				for $X,Y,Z$ vector-fields.</blockquote>
+				<p class="fragment">
+				When applied to a function $f$ (as opposed to a vector-field $Z$), with the Levi-Civita connection, the expression above gives the Riemannian Hessian of $f$ and we know that it is symmetric in $X$, $Y$. <span class="fragment">In general, however, this symmetry does not hold and we have
+				$$R(X,Y)Z=\nabla^2_{X,Y}Z-\nabla^2_{Y,X}Z\;.$$</span></p>
+				
+				</section>
+				<section>
+				<h5>Properties of $R$</h5>
+				<p class="fragment">We lower the upper index of $R$, by defining $R(X,Y,Z,T)=g(R(X,Y)Z,T)$.</p>
+				<div id="personal" style="--testo:'Curv. '; --fnts:1em; --hor:70px; --vert:40px; --barra:#1b4; --sfondo:#131">
+				<ol>
+				<li class="fragment">$R(X,Y,Z,T)=-R(Y,X,Z,T)=-R(X,Y,T,Z)$
+				<li class="fragment">$R(X,Y,Z,T)+R(Y,Z,X,T)+R(Z,X,Y,T)=0$
+				<li class="fragment">$R(X,Y,Z,T)=R(Z,T,X,Y)$
+				<li class="fragment">$\nabla_WR(X,Y)+\nabla_XR(Y,W)+\nabla_YR(W,X)=0$
+				</ol>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Simpler curvatures</h4>
+				<p class="fragment">The Riemannian curvature is a complicated object. The first idea could be to look at it along curves, however, we need at least $2$ independent vector-fields to have a non trivial result (curves are flat!).</p>
+				<blockquote class="definition fragment">Let $P\subset T_pM$ be a two dimensional plane, then the <strong>sectional curvature</strong> of $M$ is the function $P\mapsto \kappa(P)$ where
+				$$\kappa(P)=g_p(R(X_p,Y_p)X_p,Y_p)$$
+				with $\{X_p, Y_p\}$ an orthonormal basis of $P$.</blockquote>
+				<p class="fragment">If we knew the function $\kappa(P)$ for all planes and all points of $M$, we could recover the curvature $R$.</p>
+				<p class="fragment">A Riemannian manifold $(M,g)$ is said to have <em>constant (or positive, or negative) curvature</em> if its sectional curvature is constant (or positive, or negative).</p>
+				<p class="fragment">If the curvature vanishes, the manifold is said to be <em>flat</em>.</p>
+				</section>
+				<section>
+				<h5>Ricci curvature</h5>
+				<p class="fragment">If we fix one of the two tangent vectors in the expression of the sectional curvature and consider a suitable mean on all the planes that contain such vector, we obtain a quadratic form in the other tangent vector; its polarization is a symmetric form which is called Ricci curvature.</p>
+				<blockquote class="definition fragment">The <strong>Ricci curvature</strong> at $p$, evaluated at $X_p, Y_p\in T_pM$ is denoted by $\mathrm{Ric}_p(X_p,Y_p)$ and it is the <em>trace</em> of the endomorphism of $T_pM$ given by $v\mapsto R_p(X_p,v)Y_p$.</blockquote>
+				<p class="fragment">If $E_1,\ldots, E_k$ is an orthonormal basis of $T_pM$, by definition of trace, we have
+				$$\mathrm{Ric}_(X_p,Y_p)=\sum_j g_p(R(X_p,E_j)Y_p, E_j)$$</p>
+				<p class="fragment"> And, in local cooridnates, $R_{ij}=\mathrm{Ric}(\partial_i,\partial_j)=R^k_{ijk}$.</p>
+				</section>
+				<section>
+				<h5>Scalar curvature</h5>
+				<p class="fragment">Again taking the mean on all the directions, we obtain the scalar curvature</p>
+				<blockquote class="definition fragment">The <strong>scalar curvature</strong> at $p$ is the trace of the Ricci curvature as a symmetric bilinear form on $T_pM$.</blockquote>
+				<p class="fragment">With respect to an orthonormal basis of $T_pM$, we have
+				$$R(p)=\sum_{i\neq j}g_p(R_p(E_i,E_j)E_i, E_j)=\sum_{i\neq j}\kappa(P_{ij})$$
+				where $P_{ij}=\mathrm{Span}\{E_i, E_j\}$. In local coordinates, $R=g^{ij}R_{ij}=g^{ij}R^k_{ijk}\;.$</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Embedded submanifolds</h4>
+				<p class="fragment">Let $M$ be an embedded submanifold of $\overline{M}$. If we have a Riemannian metric $\bar{g}$ on $\overline{M}$, we can define a metric $g$ on $M$ just by restriction: if $X_p, Y_p\in T_pM$, then also $X_p, Y_p\in T_p\overline{M}$, so we set $g_p(X_p,Y_p)=\bar{g}_p(X_p,Y_p)$.</p>
+				<blockquote class="definition fragment">Given two connections on $\overline{M}$ and $M$ compatible with the metrics, with covariant derivatives $\bar{\nabla}$ and $\nabla$, the difference
+				$$h(U,V)=\bar{\nabla}_UV-\nabla_UV$$
+				is called <strong>vector-valued second fundamental form</strong> of $M$.</blockquote>
+				<p class="fragment">It can be showed that $h_p(X_p,Y_p)\in N_pM$, i.e. the second fundamental form takes values in the normal bundle of $M$.</p>
+				</section>
+				<section>
+				<h5>Gauss and  Codazzi equations</h5>
+				<p class="fragment">For the Levi-Civita connections, the following hold, for $X,Y,Z,W$ tangent vector-fields on $M$</p>
+				<p class="fragment">$$g(\bar{R}(X,Y)Z,W)=g(R(X,Y)Z,W)+g(h(X,W), h(Y,W))-g(h(X,Z), h(Y,W))$$</p>
+				<p class="fragment">$$(\bar{R}(X,Y)Z)^\perp=(\nabla_Xh)(Y,Z)-(\nabla_Yh)(X,Z)$$</p>
+				<p class="fragment">These equations allow to recover  the behaviour of the ambient curvature along $M$ from the curvature of $M$ itself and its second fundamental form.</p>
+				</section>
+				</section>
+				</div>
+		</div>
+
+		
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<script src="plugin/pdfexport/pdfexport.js"></script>
+		<script src="plugin/audio-slideshow/plugin.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L13/DGA2021L13.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+	</body>
+</html>

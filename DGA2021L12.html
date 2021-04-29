@@ -1,0 +1,203 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL12</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L03/Lecture03.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 12</h4>
+				
+				</section>
+				<section>
+				<section>
+				<h4>NLDR comparisons</h4>
+				<p class="fragment">We would like to compare the three methods for non-linear dimensionality reduction.</p>
+				<p class="fragment">As a dataset, we will use the classic Swiss Roll dataset; the implementation of all three methods is the one given in the python module sklearn.</p>
+				<p class="fragment">First of all, here is the Swiss Roll, in the original version and with normally disrtibuted  noise ($\mu=0$, $\sigma=0.5$)</p>
+				<img class="fragment" src='L12/SwissRollExc.png'><img class="fragment" src='L12/SwissRollNoiz.png'>
+				</section>
+				<section>
+				<h5>Basic comparison</h5>
+				<p class="fragment">Our Swiss Roll dataset is composed of 2000 points of $\R^3$.</p>
+				<p class="fragment">We apply IsoMap, LLE, LTSA  using the KNN algorithm to build the graph, with $K=12$.</p>
+				<p class="fragment">Execution times are definitely in favour of LLE, then LTSA (2x) and then IsoMap(5x)</p>
+				<img class="fragment" src='L12/SR_basecomp.png'>
+				</section>
+				<section>
+				<h5>Effect of $K$</h5>
+				<p class="fragment">We now vary the value of $K$, starting from $4$ up to $19$, using the noiseless data.</p>
+				<div class="r-stack">
+				<img class="fragment fade-in-then-out" src="L12/SR_K4.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K5.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K6.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K7.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K8.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K9.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K10.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K11.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K12.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K13.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K14.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K15.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K16.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K17.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_K18.png">
+				<img class="fragment fade-in" src="L12/SR_K19.png">
+				</div>
+				</section>
+				<section>
+				<h5>Noise in the data</h5>
+				<p class="fragment">We now fix $K=12$ and introduce noise in the data, sampling from a normal distribution with $\sigma$ varying from $0.0$ to $0.65$ and mean $0$.</p>
+				<div class="r-stack">
+				<img class="fragment fade-in-then-out" src="L12/SR_N0.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_N5.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_N10.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_N15.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_N20.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_N25.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_N30.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_N35.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_N40.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_N45.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_N50.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_N55.png">
+				<img class="fragment fade-in-then-out" src="L12/SR_N60.png">
+				<img class="fragment fade-in" src="L12/SR_N65.png">
+				</div>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>A real-life dataset</h4>
+				<p class="fragment">We now use the MNIST training dataset of handwritten digits, in particular, digit $2$; the dataset consist of $5959$ images of $28\times28$ pixels, in greyscale. Here we represent 15 randomly selected entries.</p>
+				<img class="fragment" src='L12/cifre2.png'>
+				</section>
+				<section>
+				<h5>Comparison</h5>
+				<p class="fragment">We ran our three algorithms, with $K=15$. Times of execution of IsoMap and LLE were comparable. LSTA was definitely faster, but didn't succeed in representing the data ina meaningful way.</p>
+				<div class="r-stack">
+				<img class="fragment fade-in-then-out" src='L12/cifra2Isomap.png' style="max-height:550px">
+				<img class="fragment fade-in-then-out" src='L12/cifra2lle.png' style="max-height:550px">
+				<img class="fragment fade-in-then-out" src='L12/cifra2ltsa.png'style="max-height:550px">
+				<img class="fragment fade-in-then-out" src='L12/cifra2ltsa_nolab.png'style="max-height:550px">
+				<img class="fragment fade-in" src='L12/cifra2Isomap.png' style="max-height:550px">
+				</div>
+				</section>
+				<section>
+				<h5>Digit classification</h5>
+				<p class="fragment">We can also apply our three algorithms to different digits. We randomly selected 5000 digits from the 60000 of the dataset and ran our algorithms with $K=9$.
+				<div class="r-stack">
+				<img class="fragment fade-in-then-out" src='L12/ISOdc.png' style="max-height:650px">
+				<img class="fragment fade-in-then-out" src='L12/LLEdc.png' style="max-height:650px">
+				<img class="fragment fade-in" src='L12/LTSAdc.png'style="max-height:650px">
+				</div>
+				</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Further comments</h4>
+				<p class="fragment">The $K$ parameter is particularly significant when the data are not dense enough; in such a case setting it either too low or too high could compromise the results. If the data are reasonably sampled, $K$ between $8$ and $12$ should do.</p>
+				<p class="fragment">The main problem of IsoMap is the presence of "holes" in the data, maybe also artificially caused by an unlucky choice of parameters.</p>
+				<p class="fragment">LLE and LTSA are quite sensitive to noise in the data and doesn't handle it well.</p>
+				<p class="fragment">For high-dimensional data, IsoMap is probably better, even if considerably slower.</p>
+				</section>
+				<section>
+				<h5>Other possible comparisons</h5>
+				<p class="fragment">It is instructive to devise other kinds of dataset to test the performances of the three algorithms.</p>
+				<ul>
+				<li class="fragment"> Surfaces with holes
+				<li class="fragment"> Corners
+				<li class="fragment"> High noise data
+				<li class="fragment"> Clustered data
+				<li class="fragment"> Poorly sampled data
+				<li class="fragment"> ...
+				</ul>
+				</section></section>
+				<section>
+				<h4>What about the metric?</h4>
+				<p class="fragment">In general, these algorithms do not produce isometries or approximate isometries from the data to the low-dimensional embedding. For example, IsoMap renders isometrically only a particular class of Riemannian manifolds (i.e. flat manifolds).</p>
+				<p class="fragment">A possible solution is the so called Metric Manifold Learning, where we augment the low-dimensional embedding by adding the information of the induced metric at every point.</p>
+				<p class="fragment">This was implemented and studied; the computational result is the module megaman for python, which also gives implementations of the NLDR algorithms with a good scalability.</p>
+				</section>
+				
+				</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L12/DGA2021L12.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+		
+	</body>
+</html>
