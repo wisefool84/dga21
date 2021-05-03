@@ -1,0 +1,210 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL14</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L03/Lecture03.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 14</h4>
+				
+				</section>
+				<section>
+				<section>
+				<h4>Taylor expansion along geodesics</h4>
+				<p class="fragment">Recall that, if $\gamma:(-1,1)\to M$ is a geodesic in the Riemannian manifold $(M,g)$, with $\gamma(0)=p$, $\dot{\gamma}(0)=v$, then, for $q=\gamma(t)$, we have
+				$$f(q)=f(p)+t\nabla f(v)+\frac{t^2}{2}\nabla^2f(v,v)+O(t^3)\;.$$</p>
+				<h6 class="fragment"> Notations</h6>
+				<p class="fragment" style="border-left: 10px solid #422; padding-left:10px"> Recall that $\nabla f$ is, in fact, $df$. The Riemannian gradient is $\mathrm{grad} f$ such that $df(X)=g(\mathrm{grad} f, X)$ (i.e. $df^\sharp$ - index raised through $g^{ij}$, the inverse metric).</p>
+				<p class="fragment" style="border-left: 10px solid #422; padding-left:10px">Likewise, $\nabla^2 f$ gives a symmetric $2$-form on $T_pM$ for each $p\in M$; using the metric, we can transform it in an endomorphism of $T_pM$: $\mathrm{Hess} f_p:T_pM\to T_pM$ such that $g(\mathrm{Hess} f_p[X], Y)=\nabla^2 f(X,Y)$. In local coordinates, $g^{ik}\nabla^2_{ij} f=(\mathrm{Hess} f_p)^k_j$.</p>
+				<p class="fragment" style="border-left: 10px solid #422; padding-left:10px">In the same way, we defined $R^{l}_{ijk}$ and $R_{ijkl}=g_{lm}R^m_{ijk}$.</p>
+				</section>
+				<section>
+				<h5>Second-order retractions</h5>
+				<p class="fragment">We would like to employ this expansion to obtain an analogue of the Newton algorithm on Riemannian manifolds.</p>
+				<blockquote class="definition2 fragment" style="width:80%; max-width:80%">A (second-order) <strong>retratcion</strong> is a smooth map $R:TM\to M$ such that<br>
+				<div id="personal" style="--testo:'Retr. '; --fnts:1em; --hor:70px; --vert:40px; --barra:#b14; --sfondo:#433">
+				<ol>
+				<li class="fragment" style="font-size:1em; margin-left:100px; width:90%">$R(x,0)=x$ for all $x\in M$</li>
+				<li class="fragment" style="font-size:1em; margin-left:100px; width:90%">for every $x\in M$, let $R^x:T_xM\to M$ be given by $R^x(v)=R(x,v)$, then $DR^x_0[v]=v$ for all $v\in T_0(T_xM)=T_xM$.</li>
+				<li class="fragment" style="font-size:1em; margin-left:100px; width:90%">for every $x\in M$ and $v\in T_xM$, let $\gamma(t)=R^x(tv)$, then $(\nabla_{\dot{\gamma}}\dot{\gamma})_x=0$.</li>
+				</ol></div></blockquote>
+				
+				</section>
+				<section>
+				<h5>Properties</h5>
+				<div id="personal" style="--testo:'Prp. '; --fnts:0.9em; --hor:60px; --vert:35px; --barra:#a14; --sfondo:#422">
+				<ol>
+				<li class="fragment">$f(R^x(tv))=f(x)+tg(\mathrm{grad}f_x, v)+\frac{t^2}{2}g(\mathrm{Hess}f_x[v], v)+O(t^3).$
+				<li class="fragment">$\mathrm{Hess} f_x=\mathrm{Hess}(f\circ R^x)_0$
+				<li class="fragment">if $x$ is a local minimum, $\mathrm{grad} f_x=0$ and $\mathrm{Hess}f_x\geq 0$.
+				</ol>
+				</div>
+				<p class="fragment">We note that property 1 holds true also for any first-order retraction if $x$ is a critical point.</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Second-order optimization</h4>
+				<p class="fragment">Given $f:M\to\R$ and $x_k\in M$, we find $x_{k+1}$ (hopefully closer to a minimum of $f$), by writing an approximated version of $f$ on $T_{x_k}M$ and solving for its minimum.<img src="L14/approx.png" align="left" width="50%" style="margin-left:-70px; margin-top:-20px"><span class="fragment"> This makes sense only if the approximated version can be easily minimized. </span><span class="fragment">The functions
+				$$\tilde{f}(s)=f(x_k)+g_{x_k}(s,\mathrm{grad} f_{x_k})+\frac{1}{2}g_{x_k}(\mathrm{Hess}f_{x_k}(s), s)$$
+				is quadratic, so it is easily minimized by $s$ such that 
+				$$\mathrm{Hess}f_{x_k}(s)=-\mathrm{grad}f_{x_k}\;.$$</span>
+				<span class="fragment">The existence of a global minimum is guaranteed by the sign of the Hessian.</span>
+				</p>
+				</section>
+				<section>
+				<h5>Wishful Riemannian Newton Method</h5>
+				<pre class="fragment"><code data-trim data-noescape class="python" style="font-size:0.9em">
+				def RNA(retraction,x0,f):
+					x=[x0] 		# points
+					s=[]		# displacement vector
+					k=0		# iteration counter
+					stop_cond=False
+					while stop_cond==False:
+						#we solve (somehow) the linear system Hess=-grad
+						soln=lin_solve(hess(f,x[k]),-grad(f,x[k]))
+						s.append(soln) #add the new vector
+						
+						x.append(retraction(x[k],s[k])) # new point on M
+						stop_cond=check_exit(x, f, k) # checks if we made it!
+						
+						k+=1
+					return (x[k], f(x[k]))
+				</code></pre>
+				</section>
+				<section>
+				<div class="row">
+				<div class="column">
+				<h5 class="fragment">Pros</h5>
+				<div id="personal" style="--testo:'&#x1f44d; '; --fnts:1em; --hor:60px; --vert:30px; --barra:#b14; --sfondo:#433">
+				<ol>
+				<li class="fragment"> if $x_0$ is a critical point where the Hessian is invertible, then the convergence is at least quadratic
+				<li class="fragment"> near a critical point, any first-order retraction is enough
+				</ol>
+				</div>
+				</div>
+				<div class="column">
+				<h5 class="fragment">Cons</h5>
+				<div id="personal" style="--testo:'&#x1F44E; '; --fnts:1em; --hor:60px; --vert:30px; --barra:#b14; --sfondo:#433">
+				<ol>
+				<li class="fragment"> it may not converge
+				<li class="fragment"> no assurances on the sign of the Hessian at the limit point
+				<li class="fragment"> quite often, we don't have the matrix form of $\mathrm{Hess} f$
+				</ol>
+				</div>
+				</div>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Realistic corrections</h4>
+				<p class="fragment"><strong>Conjugate gradients: </strong> a method from linear algebra to approximate the solution of $Ax=b$ by calculating the value of $Av$ for a finite number of vectors $v$ (at most $\dim T_pM$ iterations).</p>
+				<p class="fragment"><strong>Riemannian trust-region method: </strong> instead of solving each time the approximate problem (if $\mathrm{Hess}f_{x_k}$ is not positive definite, the minimum does not exist, in general), we minimize $\tilde{f}(s)$ in a small ball around the origin, called the <em>trust-region</em> at step $k$. We the accept or reject the guess based on the ration between the real improvement and the approximation improvement, which influences also the radius of the trust-region at step $k+1$.</p>
+				<p class="fragment"><strong>Hessian replacement: </strong> in the first steps of the algorithm, instead of the Hessian, we could use another operator (even non linear) which respects some estimates; when we get closer to the critical point, we need a second-order approximation, hence the Hessian.</p>
+				</section>
+				<section>
+				<h5>Regularity conditions</h5>
+				<p class="fragment">We have a number of assumptions to make in order for the Riemannian trust-region method to converge.</p>
+				<p class="fragment">In particular, we need Lipschitz-like estimates on $\mathrm{grad}f$ and on $\mathrm{Hess}(f\circ R^x)$; depending on the retraction chosen, the second term involves curvature parts, namely it usually depends on the <em>sectional curvature</em> of the manifold (and on the second derivatives of $f$, obviously!).</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>An infinite-dimensional application</h4>
+				<p class="fragment">A curve in the plane can be parametrized with $c_0\in\R^2$, $r\in\R$, $e,g:[0,1]\to\R$ by defining
+				$$\gamma(t)=c_0+\frac{e^r}{2}\int_0^t(e+ig)^2d\tau\;,$$</p>
+				<p class="fragment">upon identifying $\R^2$ with $\mathbb{C}$. If we impose that $\gamma$ is a closed curve and of length $e^r$, we obtain that
+				$$\int_0^1e^2d\tau=\int_0^1g^2d\tau=1\qquad\int_0^1egd\tau=0\;.$$</p>
+				<p class="fragment">They form an orthonormal pair in the space of $L^2$ functions; on the set of such pairs we can define a Riemannian metric, inspired by the one on the pairs of orthonormal vectors.</p>
+				<p class="fragment">An interesting feature of this metric is that there is a closed form for the exponential map.</p>
+				</section>
+				<section>
+				<h5>The application</h5>
+				<p class="fragment">Let $u:[0,1]^2\to\R$ be a grayscale image. Given a losed curve $\gamma$ and two gray values $u_1$, $u_2$, we consider the functional
+				$$f(\gamma)=a_1\int_{\mathrm{int}\gamma}(u_1-u)^2 dxdy + a_1\int_{\mathrm{ext}\gamma}(u_2-u)^2dxdy+a_2\rho(\gamma)\;.$$
+				where $\rho$ is a <em>regularization term</em>.</p>
+				<p class="fragment">This functional is minimized when $\gamma$ borders a region of mean color $u_1$ and leaves out a region of mean color $u_2$, with small variance.</p>
+				<p class="fragment">Minimizing $f$ means to perform an image segmentation in parts of given color.</p>
+				<img src="L14/contour.png" class="fragment">
+				</section>
+				</section>
+				</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L12/DGA2021L12.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: true });
+		
+		</script>
+		
+	</body>
+</html>
