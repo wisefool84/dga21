@@ -1,0 +1,226 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL16</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L03/Lecture03.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 16</h4>
+				
+				</section>
+				<section>
+				<section>
+				<h4>Eigenmaps</h4>
+				<p class="fragment">Given a (complete) Riemannian manifold $(M,g)$, we consider the Laplace-Beltrami operator $\Delta$; we find an orthonormal family $\{u_j\}_{j\in\mathbb{N}}$ of functions such that 
+				$$\Delta u_j=\lambda_j u_j$$
+				with $0=\lambda_0&le;\lambda_1\leq \lambda_2\leq \ldots$.</p>
+				<p class="fragment">For $m$ large enough, the functions
+				$$\Phi^m:M\to\R^m\qquad $\Phi^m(x)=(u_1(x),\ldots, u_m(x))$$
+				are embeddings.</p>
+				</section>
+				<section>
+				<h5>Laplacian of a graph</h5>
+				<p class="fragment">Given a graph $G=(V,E)$, let $A$ be its adjacency matrix, i.e. $A_{ij}$ is $0$ if the $(i,j)$ is not an edge and is otherwise the weight of the edge. The degree matrix is a diagonal matrix $D$ with elements $d_j=\sum_i A_{ij}$ on the diagonal.</p>
+				<p class="fragment">The Laplacian of $G$ is the matrix $L=D-A$; given a function $u:V\to\R$ (i.e. a vector $u\in\R^N$, with $N$ number of vertices), then
+				$$\sum_{ij}(u_i-u_j)^2w_{ij}=u^tLu$$
+				which is the reason for the name.</p>
+				<p class="fragment">The eigenvectors of $L$ give successive low dimensional embeddings of $G$.</p>
+				
+				</section>
+				<section>
+				<h5>Ingredients for a discrete approximation of $\Delta$</h5>
+				<div id="personal" style="--testo:'Approx. '; --fnts:1em; --hor:100px; --vert:30px; --barra:#a14; --sfondo:#433">
+				<ol>
+				<li class="fragment"> We pick an $\epsilon$-net in $M$, i.e. $\{x_j\}_{j=1}^N$ such that their distances are at least $\epsilon$ and that the distance of any other point of $M$ from them is at most $\epsilon$.
+				<li class="fragment"> We pick a volume approximation: a partition $\{V_j\}_{j=1}^N$ of $M$ in open sets such that $V_i$ lies within a distance of $\epsilon$ from $x_i$.
+				<li class="fragment"> We define a measure $\mu$ on $\{x_j\}$, by $\mu(x_i)=\mu_i=\mathrm{vol}(V_i)$.
+				<li class="fragment"> We define a graph $G=(V,E)$ with $V=\{x_j\}$ and $(i,j)\in E$ iff $\mathrm{dist}(x_i,x_j)&le;\rho$.
+				<li class="fragment"> We put weights $\mu_i$ on the vertices and $w_{ij}=2(N+2)\mu_i\mu_j/(\nu\rho^{N+2})$, with $\nu$ the volume of the unit ball in $\R^N$.
+				</ol>
+				</div>
+				</section>
+				<section>
+				<h5>The approximation</h5>
+				<p class="fragment">Given $u:M\to\R$, we define
+				$$\Delta_Gu(x_i)=\frac{1}{\mu_i}\sum_{j}w_{ij}(u(x_i)-u(x_j))$$
+				i.e. if we denote by $u$ also the vector $u(x_1),\ldots, u(x_N)$,<span> then
+				$$\Delta_G u=M(D-A)u$$
+				where $M$ is the diagonal matrix with elements $1/\mu_i$.</span></p>
+				<div align=center>
+				<p class="fragment" style="border-left: 10px solid #833;border-right: 10px solid #833; background-color: #211; padding: 20px; max-width:80%; ">If $\epsilon\ll\rho\ll 1$ and if we have some bounds on Ricci curvature, then $$\Delta_Gu\to \Delta u \quad\textrm{ when }\quad\rho\to 0$$ (and $\epsilon\to0$, $N\to+\infty$).</p></div>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Laplacian Eigenmaps Algorithm</h4>
+				<div id="personal" style="--testo:'Step '; --fnts:1em; --hor:100px; --vert:30px; --barra:#a14; --sfondo:#433">
+				<ol>
+				<li class="fragment"> We construct the graph from our data ($\rho$-neighbors or KNN)
+				<li class="fragment"> We put weights on our graph (either $1/0$ or more creative ones)
+				<li class="fragment"> We solve the e.v. problem $Lu=\lambda Du$ with $L=D-A$.
+				<li class="fragment"> An orthonormal set of solutions gives the embedding coordinates.
+				</ol>
+				</div>
+				<p class="fragment"> The $D$ on the rhs accounts for the differences in importance among vertices; with the KNN algorithm and $1/0$ weights, $D=kI$.</p>
+				
+				</section>
+				<section>
+				<div class="row">
+				<div class="column">
+				<h5 class="fragment">Pros</h5>
+				<div id="personal" style="--testo:'&#x1f44d; '; --fnts:1em; --hor:60px; --vert:30px; --barra:#b14; --sfondo:#433">
+				<ol>
+				<li class="fragment"> Preserves local geometry
+				<li class="fragment"> As fast as LLE (sparse e.v. problem)
+				<li class="fragment"> Links to clustering problems.
+				</ol>
+				</div>
+				</div>
+				<div class="column">
+				<h5 class="fragment">Cons</h5>
+				<div id="personal" style="--testo:'&#x1F44E; '; --fnts:1em; --hor:60px; --vert:30px; --barra:#b14; --sfondo:#433">
+				<ol>
+				<li class="fragment"> problems in handling boundaries
+				<li class="fragment"> problems with non convex regions
+				<li class="fragment"> problems with non uniform sampling
+				</ol>
+				</div>
+				</div>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>A variational problem</h4>
+				<p class="fragment">The problem of finding the eigenfunctions of $\Delta$ can be rewritten as the minimization of the functional
+				$$\mathcal{L}(f)=\frac{1}{\|f\|_{L^2}}\int_Mf\Delta fd\mathrm{vol}_g$$
+				analogue of the Rayleigh quotient on the sphere for eigenvalues of a symmetric matrix.</p>
+				<h6 class="fragment">Hessian eigenmaps</h6>
+				<p class="fragment">We define the functional
+				$$\mathcal{H}(f)=\int_M\|\mathrm{Hess}f\|dm$$
+				where $dm$ is a (nice) probablity measure on $M$ and $\|\cdot\|$ is the Froboenius norm on the endomorphisms of $T_pM$.</p>
+			
+				</section>
+				<section>
+				<h5>The kernel of $\mathcal{H}$</h5>
+				<p class="fragment">The kernel of $\mathcal{H}$ on a compact manifold is trivial (only constant functions); <span class="fragment">on the opposite end of the spectrum, if $M$ is the locally isometric image of an open set in $\R^k$, i.e. if we have an embedding $\phi:W\to\R^n$ which is a local isometry, then the coordinates given by the chart $\phi^{-1}$ are "affine function".</span></p>
+				<p class="fragment">This means that they are affine along geodesics, which happens if and only if their Hessian vanishes identically.</p>
+				<p class="fragment">Therefore, if $M$ is the locally isometric image of an open set in $\R^k$, $\ker\mathcal{H}$ has real dimension $k+1$ and contains constant functions and linear combinations of affine functions, among which we find locally isometric coordinates for $M$.</p>
+				</section>
+				<section>
+				<h5>Hessian LLE</h5>
+				<div id="personal" style="--testo:'Step '; --fnts:1em; --hor:100px; --vert:30px; --barra:#a14; --sfondo:#433">
+				<ol>
+				<li class="fragment">Graph from data (KNN) - $N_i$ set of neighbors of vertex $x_i$
+				<li class="fragment">Comute $\tilde{x}_i$ the average of $x_j\in N_i$, $X^i$ the matrix with rows $(x_j-\tilde{x}_i)^t$ for $j\in N_i$.
+				<li class="fragment">Apply compact SVD to $X^i=UDV^t$ - the first $d$ columns of $U$ parametrize $N_i$ with the tangent space of $x_i$.
+				<li class="fragment">For every $f:M\to\R$, represented as $v^i=(f(x_j))_{j\in N_i}$ near $x_i$, $H^i$ is a matrix such that $H^iv^i$ gives the matrix $\partial^2 f/\partial U^j\partial U^k$.
+				<li class="fragment">$\mathcal{H}_{ij}=\sum_p\sum_qH^p_{qi}H^p_{qj}$ is the matrix form of the functional $\mathcal{H}$.
+				<li class="fragment">Approximate kernel of $\mathcal{H}$: the $d$ smallest positive eigenvalues and their eigenspaces.
+				<li class="fragment">Extract a basis for the sum of the $d$ eigenspaces which gives o.n.b. in some neighborhood.
+				</ol>
+				</div>
+				</section>
+				<section>
+				<div class="row">
+				<div class="column">
+				<h5 class="fragment">Pros</h5>
+				<div id="personal" style="--testo:'&#x1f44d; '; --fnts:1em; --hor:60px; --vert:30px; --barra:#b14; --sfondo:#433">
+				<ol>
+				<li class="fragment"> Handles non convex domains
+				<li class="fragment"> Eigendecomposition is easy.
+				<li class="fragment"> Convergence guaranteed with testable hypotheses.
+				</ol>
+				</div>
+				</div>
+				<div class="column">
+				<h5 class="fragment">Cons</h5>
+				<div id="personal" style="--testo:'&#x1F44E; '; --fnts:1em; --hor:60px; --vert:30px; --barra:#b14; --sfondo:#433">
+				<ol>
+				<li class="fragment"> Needs second derivatives (noise!)
+				<li class="fragment"> Slow!
+				<li class="fragment"> Bad on sparse data.
+				</ol>
+				</div>
+				</div>
+				</section>
+				</section>
+				</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L16/DGA2021L16.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+		
+	</body>
+</html>

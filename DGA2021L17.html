@@ -1,0 +1,171 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL17</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+		
+		
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L01/Lecture1.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 17</h4>
+				</section>
+				
+				<section>
+				<section>
+				<h4>Geometric flows</h4>
+				<p class="fragment">With the name <em>flow</em> are denoted, in general, solutions to PDEs involving a temporal variable ($t\in\R$) and a spatial variable ($x\in M$, with $M$ a manifold).</p>
+				<p  class="fragment">An example which is separately linear in $t$ and $x$ is the flow associated to a vector-field, i.e. solutions to the differential equation
+				$$\frac{\partial}{\partial t} f(t,x)=X_{f(t,x)}f(t,x)\qquad f(0,x)=x\ \forall\,x\in M$$
+				where we understood $t\mapsto f(t,x)$ as a curve always tangent to the vector-field $X$.</p>
+				<p class="fragment">For example if $M$ is a Riemannian manifold, given $f:M\to\R$, we can look at the vector-field $-\mathrm{grad} f$ and its flow; the stationary points for that flow will be critical points for $f$ and following it will result  in curves that tend to one such point. This would be the continuous version of the gradient descent.</p>
+				<p class="fragment">Other types of flow are possible, not necessarily related to a vector-field on $M$, not necessarily involving real-valued functions on $M$</p>
+				</section>
+				<section>
+				<h5>Some examples</h5>
+				<p class="fragment">We can apply this concept to other objects than scala functions:</p>
+				<ul>
+				<li class="fragment"> to embeddings - given $f_0:M\to M'$ a smooth embedding, we define $F:\R\times M\to M'$ and ask that $F(0,x)=f_0(x)$ for all $x\in M$ and $\dot{F}$ is equal to the mean curvature vector of $F(t,M)$ at each point.
+				<li class="fragment"> to metrics - given $g^0$ a metric on $M$, we consider the solutions to 
+				$$\frac{\partial g^t}{\partial t} =-2\mathrm{Ric}_{g^t}$$
+				</ul>
+				</section>
+				<section>
+				<h5>Variational perspective</h5>
+				<p class="fragment"> In general, given a functional $\mathcal{F}$ that acts on
+				some space of maps (scalar maps, smooth maps between manifolds, sections of bunldes), that we want to minimize, we can write down the E-L equation.</p>
+				<p class="fragment">If we find something of the form $Lu$ with $L$ an (elliptic) second order operator,  we write down the (parabolic) PDE $u_t=Lu$.</p>
+				<p class="fragment"> This defines a flow. The previous examples can be interpreted this way.</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Minimizing the energy functional</h4>
+				<p class="fragment">The functional
+				$$E(f)=\int_M\|\mathrm{grad} f\|^2d\mathrm{vol}$$
+				is sometimes called <em>energy functional</em> and its associated Euler-Lagrange equation is $\Delta u=0$ or, more generally, to find eigenvalues and eigenfunctions of $\Delta$.</p>
+				<p class="fragment">Its associated flow is then 
+				$$\frac{\partial}{\partial t}u(t,x)=\Delta u(t,x)$$
+				which is called <strong>heat flow</strong>. </p>
+				<p class="fragment">If we have a solution to the Dirichlet eigenvalue problem $\Delta u_j=\lambda_j u_j$, then $\exp(\lambda_j t)u_j(x)$ is a solution to the heat flow.</p>
+				</section>
+				<section>
+				<h5>The heat kernel</h5>
+				<p class="fragment">By standard techniques in PDEs and Hilbert spaces, we know that there exist a <em>heat kernel</em> $K(t,x,y)$ such that, given $f_0:M\to\R$, the function
+				$$f(t,x)=\int_MK(t,x,y)f_0(y)d\mathrm{vol}(y)$$
+				is a solution to the heat flow.</p>
+				<p class="fragment">Eigenfunctions of $\Delta$ come into play:
+				$$K(t,x,y)=\sum_i \exp(-\lambda_it)u_i(x)u_i(y)\;.$$
+				</p>
+				<p class="fragment">In $\R^n$, with the standard Euclidean metric, the heat kernel is given by
+				$$K(t,x,y)=(4\pi t)^{-n/2}\exp\left(-\frac{\|x-y\|^2}{4t}\right)\;.$$</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>The heat semi-group</h4>
+				<p class="fragment">As $\Delta$ is positive definite and symmetric, it makes sense to define the operators $e^{-t\Delta}$, for $t>0$. They form what is known as <em>the heat semi-groups</em>.</p>
+				<p class="fragment">It can be showed that 
+				$$I-t\Delta+\frac{t^2\Delta^2}{2}-\frac{t^3\Delta^3}{6}+\ldots$$
+				converges,<span class="fragment"> by employing the fact that we have an orthonormal system of eigenfunctions for $\Delta$, for which $e^{-t\Delta}u_j=e^{-\lambda_jt}u_j$.</span></p>
+				<p class="fragment">In terms of the heat kernel, we have
+				$$e^{-t\Delta}f=\int_MK(t,x,y)f(y)d\mathrm{vol}(y)\;.$$
+				</p>
+				</section>
+				<section>
+				<h5>The heat kernel embedding</h5>
+				<p class="fragment">The map
+				$$x\mapsto K(t/2, x, \cdot)$$
+				embeds $M$ into $L^2(M)$. </p>
+				<p class="fragment"> If we compose it with the linear isometry from $L^2(M$) to $\ell^2$ given by the choice of an orthonormal basis (of e.v. for $\Delta$), we obtain another form of eigenmap, which however is related to the construction of the heat kernel.</p>
+				<p class="fragment"> Consider $\psi_t:M\to \ell^2$ given by
+				$$\psi_t(x)=c_nt^{(n+2)/4}\{\exp(-\lambda_it)u_i(x)\}_{i\geq 1}$$
+				where $n$ is the dimension of $n$ and $c_n$ is a constant (depending on $n$).</p>
+				<p class="fragment">This is an embedding of $M$ into the Hilbert space $\ell^2$ of the square-summable sequences of real numbers, when considered as a manifold with the standard Hilbert space metric.</p>
+				</section>
+				<section>
+				<h5>Hint at greater glory</h5>
+				<p class="fragment">Flows of the form $u_t=L_u$ are the deterministic counterpart of stochastic diffusion processes.</p>
+				<p class="fragment">As the only (maybe incomprehensible) example, the heat flow is the deterministic version of the Brownian motion (you may have recognized the Gaussian kernel).</p>
+</section>
+</section>				
+				</div>
+		</div>
+
+		
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<script src="plugin/pdfexport/pdfexport.js"></script>
+		<script src="plugin/audio-slideshow/plugin.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L17/DGA2021L17.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+	</body>
+</html>
