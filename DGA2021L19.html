@@ -1,0 +1,174 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL19</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+		
+		
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L09/Lecture09.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 19</h4>
+				</section>
+				
+				<section>
+				<section>
+				<h4>Content of images and videos</h4>
+				<p class="fragment">The first application of NLDR methods was the visualization of large image sets and the inherent classification problem.</p>
+				<p class="fragment">Already in the original papers on LLE and IsoMap, the main examples were the low-dimensional embeddings of handwritten digits or rendered faces with different inclination and exposition.</p>
+				<p class="fragment">In videos, frame classification was used to produce summaries or to compress data, employing the distances in the feature space instead of the frame number as significant parameter.</p>
+				
+				</section>
+				<section>
+				<h5>Face recognition</h5>
+				<p class="fragment">For example, LLE and IsoMap were succesfully applied to ORL and UMIST databases of faces (faces with different angles and expressions) as training methods in face recognition.</p>
+				<img class="fragment" src="L19/facesORL.png">
+				</section>
+				<section>
+				<h5>Nearest manifold algorithm</h5>
+				<div id="personal" style="--testo:'Step '; --fnts:1em; --hor:70px; --vert:40px; --barra:#116; --sfondo:#334">
+				<ol>
+				<li class="fragment">A variation of the $LLE$ method is used to find charts of the manifold in form of simplices in $\R^d$.
+				<li class="fragment">Given a new point $y$, the projection on each simplex is computed, in feature coordinates.
+				<li class="fragment">Depending on the coefficients of the projection, a distance is defined
+				<li class="fragment">The simplex realizing the smallest distance is selected.
+				</ol>
+				</div>
+				
+				
+				</section>
+				</section>
+				
+			<section>
+			<section>
+			<h4>Tracking and pose estimation</h4>
+			<p class="fragment">One example of succesful application of NLDR algorithms is object tracking.</p>
+			<p class="fragment">The basic approach is supervised learning, where latent variables are learned through dimensionality reduction and these latent variables are mapped to labeled (e.g. joint location, silhouettes, contours, ...) training images.</p>
+			<p class="fragment">For new images, the latent variables are learned and the label (tracking output) is estimated.</p>
+			<p class="fragment">This can apply to track objects in presence of large rotations and occlusions, or to recognize activities from silhouettes, reconstructing the 3d pose from the contour image.</p>
+			</section>
+			<section>
+			<h5>Activity manifolds</h5>
+			<p class="fragment">We consider the silhouettes of people walking, from different camera angles, obtaining different view manifolds, and apply NLDR to map them to latent variable spaces, to a more meaningful representation of such activity manifolds.</p>
+			<p class="fragment">Here part of the problem is to keep track of the parametrization map and its inverse.</p>
+			<img src="L19/walk.jpg" class="fragment">
+			</section>
+			<section>
+			<h5>Framework</h5>
+			<p class="fragment">The approach is based on learning, in order, three components.
+			<div id="personal" style="--testo:'Comp. '; --fnts:1em; --hor:70px; --vert:40px; --barra:#116; --sfondo:#334">
+				<ol>
+				<li class="fragment">Learning Manifold Representation: obtaining a low-dimensional embedding that preserves some geometric structure.
+				<li class="fragment">Mapping manifold-to-input: a non linear mapping from the embedding space to the visual input space.
+				<li class="fragment">Mapping manifold-to-pose: a non linear mapping from the embedding space to the 3d body pose space.
+				</ol>
+				</div>
+			</section>
+			</section>
+			<section>
+			<section>
+			<h4>Medical images analysis</h4>
+			<p class="fragment">The typical scenario in medical image acquisition is that of many image sets where the overall motion is periodic, there are only a small number of degrees of freedom, each cause of image change can lead to a complex image transformation (typically non rigid) and the latent space is close to uniformly sampled.</p>
+			<p class="fragment">Parametrizing images via a NLDR algorithm and using the learned parameters to reorder images leads to minimal motion between neighboring images, simplifying the point correspondence problem and allowing pairwise deformations to be estimated and extended into global deformations models.</p>
+			</section>
+			</section>
+			<section>
+			<section>
+			<h4>Text processing</h4>
+			<p class="fragment">Text classification is based on the single words and not on their order.</p>
+			<p class="fragment">Therefore, they are modeled as (possibly independent) draws from a fixed multinomial distribution.</p>
+			<p class="fragment">The statistical manifold of the $n$-multinomial family is obtained from an embedding of the $n$-simplex into the unit sphere, which is an isometry for the Fisher metric.</p>
+			<p class="fragment">Kernels are used to put weights on the Euclidean representation, in order to estabilish decision boundaries in our statistical manifold.</p>
+			</section>
+			<section>
+			<h5>The heat kernel</h5>
+			<p class="fragment">A particularly useful kernel here is the heat kernel on the statistical manifold.</p>
+			<div id="personal" style="--testo:'Adv. '; --fnts:1em; --hor:70px; --vert:40px; --barra:#116; --sfondo:#334">
+				<ol>
+				<li class="fragment">It is a natural generalization of the Euclidean Gaussian kernel.
+				<li class="fragment">It can be easily approximated via a parametrix construction.
+				<li class="fragment">We have bounds on the spectrum of the heat operator in terms of curvature bounds.
+				</ol>
+				</div>
+			</section>
+			</section>
+				</div>
+		</div>
+
+		
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<script src="plugin/pdfexport/pdfexport.js"></script>
+		<script src="plugin/audio-slideshow/plugin.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L19/DGA2021L19.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+	</body>
+</html>

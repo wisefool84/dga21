@@ -1,0 +1,201 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL18</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L03/Lecture03.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 18</h4>
+				</section>
+				<section>
+				<section>
+				<h4>Diffusion processes on graphs</h4>
+				<p class="fragment">Let $G=(V,E)$ be a graph; suppose we are given a measure $\mu$ on $V$ and a <em>kernel</em>, i.e. a function $k:V\times V\to\R$ such that</p>
+				<div id="personal", style="--sfondo:#722; text-align:left; padding-left:100px">
+				<ul>
+				<li class="fragment"> $k(v_i,v_j)=k(v_j,v_i)$ 
+				<li class="fragment"> $k(v_i,v_j)\geq 0$
+				</ul></div>
+				<p class="fragment">Define 
+				<div id="personal", style="--sfondo:#722; text-align:left; padding-left:100px">
+				<ul>
+				<li class="fragment">the diagonal matrix $D$ with $d_{i}=\sum_j k(v_i, v_j)\mu(v_j)$
+				<li class="fragment">the matrix $P$ with $P_{ij}=k(v_i,v_j)/d_i$
+				<li class="fragment">the diagonal matrix $M$ with $m_i=\mu(v_i)$.
+				</ul></div></p>
+				</section>
+				<section>
+				<h5>...continued...</h5>
+				<p class="fragment">If $u$ is the vector with all $1$s, then $PMu=u$; the linear map $f\mapsto PMf$ is called <em>diffusion operator</em>.</p>
+				<p class="fragment">The kernel gives a weight to every edge and $P_{ij}$ gives the probability of transitioning from $v_i$ to $v_j$ in one step, which is proportional to the weight $k(v_i, v_j)$.</p>
+				<p class="fragment">The probability of going from $v_i$ to $v_j$ in $t$ steps is the $(i,j)$ entry of $P^t$.</p>
+				<div class="r-stack">
+				<img class="fragment" src="L18/dataclust.png">
+				<img class="fragment" src="L18/diff2.png">
+				<img class="fragment" src="L18/diff4.png">
+				<img class="fragment" src="L18/diff50.png">
+				<img class="fragment" src="L18/diff100000.png">
+				<img class="fragment" src="L18/diff10000000000000.png">
+				</div>
+				</section>
+				<section>
+				<h5>Properties</h5>
+				<p class="fragment">Under some mild assumptions, we can show that $P$ has a basis of eigenvectors $u_1,\ldots, u_n$, with eigenvalues $1=\lambda_0\geq |\lambda_1\geq\ldots\geq |\lambda_n|$.</p>
+				<p class="fragment">The $j$-th <em>diffusion coordinate</em> is 
+				$$U_t^j(v_i)=|\lambda_j|^t\langle u_j, v_i\rangle$$
+				where the scalar product simply gives the $i$-th coordinate of the $j$-th eigenvector.</p>
+				<p class="fragment">If we want to use the coordinates $U_t^1,\ldots, U_t^k$ for a $k$-dimensional embedding, the time $t$ will dictate how good an approximation we obtain of the diffusion distance.</p>
+				<p class="fragment">The decay of the spectrum of $P^t$ is linked to the intrinsic dimension of data.</p>
+				</section>
+				<section>
+				<h5>A family of diffusion processes</h5>
+				<p class="fragment">Given $n$ data points on a compact submanifold $M$ in $\R^N$ and a kernel of the form $k(x,y)=h(\|x-y\|^2/\epsilon)$, we suppose known the density in $M$ of our data points $q=(q_1,\ldots, q_n)^t$.</p>
+				<p class="fragment">We define
+				$$q'_j=\sum_i k(v_i, v_j)q_i\qquad k_\alpha(v_i, v_j)=\frac{k(v_i, v_j)}{(q'_iq'_j)^\alpha}\;.$$</p>
+				<p class="fragment">Applying the previous construction to the kernel $k_\alpha$, we obtain a transition $P_\alpha$.</p>
+				<p><div id="personal" style="--sfondo:#722; text-align:left; padding-left:100px">
+				<ul>
+				<li class="fragment">for $\alpha=0$, we obtain the heat diffusion on the graph (with uniform density, on $M$)</li>
+				<li class="fragment">for $\alpha=1/2$, we obtain the so-called Fokker-Planck diffusion</li>
+				<li class="fragment">for $\alpha=1$, we obtain an approximation of the heat kernel on $M$.</li>
+				</ul>
+				</div></p>
+				
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Heat equation - recap</h4>
+				<p class="fragment">Given a manifold $M$, we consider the Laplace-Beltrami operator $\Delta$ (symmetric and positive definite on $L^2(M)$). The heat equation is
+				$$\frac{\partial}{\partial t}+\Delta=0\;.$$</p>
+				<p class="fragment">Given a function $f_0:M\to\R$, the function $F(t,x)=\exp(-t\Delta)f_0(x)$ is a solution to the heat flow such that $F(0,x)=f_0(x)$.</p>
+				<p class="fragment">Given an orthonormal system of eigenfunctions $\{u_j\}$ for $\Delta$ with eigenvalues $\{\lambda_j\}$,  we define the heat kernel as
+				$$K(t,x,y)=\sum_{k}e^{-t\lambda_k}u_j(x)u_j(y)\;.$$</p>
+				<p class="fragment">We have 
+				$$\exp(-t\Delta)f_0(x)=\int_MK(t,x,y)f_0(y)d\mathrm{vol}\;.$$</p>
+				</section>
+				<section>
+				<h5>Heat kernel embeddings</h5>
+				<p class="fragment">The map $x\mapsto K(t/2,x,\cdot)$ is an embedding of $M$ into the $L^2$ space on $M$.</p>
+				<p class="fragment">The map $x\mapsto \{c_n(t)e^{-t\lambda_k}u_k(x)\}$ is an embedding of $M$ into $\ell^2$.</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>The heat kernel on a graph</h4>
+				<p class="fragment">Given $G=(V,E)$, we consider its Laplacian $L=U^t\Lambda U$ and the heat kernel matrix is given by 
+				$$H(t)=\exp(-tL)=\exp(-tU^t\Lambda U)=U^t\exp(-t\Lambda)U$$</p>
+				<p class="fragment">The heat trace (also called partition function) is
+				$$\mathrm{tr}H(t)=\sum_k e^{-t\lambda_k}$$</p>
+				<p class="fragment">The <em>feature-space</em> coordinates are the components of $\phi:G\to\R^{n-1}$, such that
+				$$\exp(-t\Lambda/2)U=(\phi(v_1),\ldots, \phi(v_n))$$
+				</p>
+				<p class="fragment">The <em>heat kernel</em> is any component of $H(t)$, i.e. $h(t,i,j)=\langle \phi(v_i),\phi(v_j)\rangle\;.$</p>
+				
+				</section>
+				<section>
+				<h5>Auto-diffusion functions</h5>
+				<p class="fragment">Besides giving an algorithm for low-dimensional embeddings, the heat kernel encodes a number of geometric informations on the graph $G$</p>
+				<p class="fragment">The diagonal elements of $H(t)$ are called <em>auto-diffusion functions</em> and can be interpreted as norms in the feature-space:
+				$$h(t,i,i)=\|\phi(v_i)\|^2=\langle\phi(v_i),\phi(v_i)\rangle=\sum_ke^{-t\lambda_k}(u_i^k)^2\;.$$</p>
+				<p class="fragment">The local minima and maxima of the (shape descriptor) function $v_i\mapsto h(t,i,i)$ have been used to obtain feature-based representations of shapes.</p>
+				
+				</section>
+				<section>
+				<h5>Shape matching</h5>
+				<p class="fragment">Suppose we have two graphs that represent the same set of data before and after some transformation. Shape matching between these two graphs is equivalent to a matching of the embedded representations.</p>
+				<p class="fragment">A common technique is to project the representation on the unit sphere and use a rigid motion to match the shape descriptors.</p>
+				<p class="fragment">It is not clear (nor true) that the best result would be obtained by using the same time $t$ for both embeddings.</p>
+				<p class="fragment">How to select the time scales? How to produce a robust matching method?</p>
+				</section>
+				</section>
+				<section>
+				<section>
+				<h4>Local parametrization via heat kernel</h4>
+				<p class="fragment">Let $M$ be a $d$-dimensional manifold, then for every point in $M$ there is a ball where suitably chosen $d$ eigenfunctions of $\Delta$ give a parametrization of the ball; this parametrization acts like a rescaling of the ball, up to radius $1$.</p>
+				<p class="fragment">This parametrization has various problem, related to the fact that eigenfunctions are intrinsecally global objects.</p>
+				<p class="fragment">We can find point $y_1,\ldots, y_d$ such that 
+				$$x\mapsto(K(t,x,y_1),\ldots, K(t,x,y_d))$$
+				is a parametrization of a small ball.</p>
+				</section>
+				</section>
+				</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L18/DGA2021L18.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+		
+	</body>
+</html>

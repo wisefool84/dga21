@@ -317,37 +317,15 @@ blockquote.definition2 {
 }
 
 
-.personal.ol {
-	list-style: none;
-  counter-reset: my-awesome-counter;
-  margin: 0;
-  padding: 0;
-  max-width: 80%;
+#personal ul {
+  /*list-style: none; /* Remove default bullets */
 }
-.personal.ol.li {
-  counter-increment: my-awesome-counter;
-  font-size: 0.6em;
-  margin-bottom: 0.6em;
-  margin-top: 0.6em;
-  position: relative;
-  text-align:justify;
-}
-.personal.ol.li::before {
-  content: var(--testo) " " counter(my-awesome-counter);
-  font-size: var(--fnts);
-  border: 0;
-  display:inline-flex;
-  align-items:center;
-  justify-content: center;
-  width: var(--hor);
-  height: var(--vert);
-  border-left: 10px solid var(--barra);
-  font-weight: bold;
-  margin-right: 0.5rem;
-  padding-left: 0.5rem;
-  font-family: "agency fb", arial;
-  line-height: 1;
-  background-color: var(--sfondo);
-  position: absolute;
-  left: calc(-1 * var(--hor) - 30px);
+
+#personal ul li::marker {
+  /*content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+  color: var(--sfondo); /* Change the color */
+  /*font-weight: bold; /* If you want it to be bold */
+  /*display: inline-block; /* Needed to add space between the bullet and the text */
+  /*width: 2em; /* Also needed for space (tweak if needed) */
+  /*margin-left: -1em; /* Also needed for space (tweak if needed) */
 }
