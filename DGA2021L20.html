@@ -1,0 +1,171 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL20</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+		
+		
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L09/Lecture09.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 20</h4>
+				</section>
+				
+				<section>
+				<section>
+				<h4>Discretization</h4>
+				<p class="fragment">Discretization is the process of reducing the continous geometric information to some combinatorial structure (typically, graphs or multigraphs), which can then be fed to algorithms.</p>
+				<p class="fragment">The standard situation is the following: we are interested in some geometric quantity/quality on our manifold and we find a sequence of combinatorial structures with a discrete version of this quantity/quality that "converges" (in a suitable sense) to the object we want to study.</p>
+				<p class="fragment">Which structure to employ and how to produce it are aspects that depend on the object of our interest and on the data we can access.</p>
+				</section>
+				<section>
+				<h5>Example: surface area</h5>
+				<p class="fragment">Consider the following approximation of a cylinder with radius $r$ and height $h$ by triangles.</p>
+				<img src="L20/Schwarz.png" class="fragment" width=40% align="left">
+				<p class="fragment">We would like to say that, when the parameters tend to $+\infty$, the area of the triangulation tends to the area of the cylinder. <span class="fragment">However
+				$$\sup_{m,n} r\sin\frac{\pi}{2n}\left(\frac{h^2}{m^2}+r^2\left(1-\cos\frac{\pi}{2n}\right)^2\right)^{1/2}=+\infty\;.$$</span>
+				<span class="fragment"> In particular, if $m=n\to+\infty$, then the area tends to $2\pi rh$, but if $m=n^3\to+\infty$, the area diverges.</span></p>
+				</section>
+				<section>
+				<h5>Example: curvature</h5>
+				<p class="fragment">From the works of Cheeger and Petrunin, in $\mathrm{dim}\geq 3$, we know that approximation by polyhedral complexes (therefore, by spaces with locally constant curvature) is possible only when $M$ obeys strong curvature constraints.</p>
+				<p class="fragment">In practice, these constraints are expressed via the global positivity of some curvature-related quantities.</p>
+				</section>
+				<section>
+				<h5>Example: geodesics</h5>
+				<p class="fragment">Given a surface in $\R^3$ and random (but quite dense) points on it, we can build the associated graph, via KNN or $\epsilon$-neighbors algorithms, and compute distances between points using<img class="fragment" src="L20/hole.jpg" align="right" width=30%> Dijkstra algorithm to find the smallest path on the graph.</p>
+				<p class="fragment">This is what the Isomap algorithm does as a first step.</p>
+				
+				<p class="fragment">However, if the surface containes "holes", Dijkstra algorithm will overestimate the geodesic distance.</p>
+				<p class="fragment">Intuitively, the paths will have to go around the hole, which will cause a sensible increase of the length with respect to geodesic distance.</p>
+				</section>
+				<section>
+				<h5>Example: Laplace-Beltrami operator</h5>
+				<p class="fragment">If our points are not evenly distributed, the graph Laplacian and the Laplace-Beltrami operator will differ bt a term of the form $\Delta q/q$, where $q$ is the density of the data points with respect to the volume of $M$.</p>
+</section>
+</section>
+<section>
+<section>
+<h4>Discretization methods</h4>
+<p class="fragment">We have two main structures which can be used to approximate a manifold.</p>
+<ul>
+<li class="fragment">Graphs</li>
+<li class="fragment">Simplicial complexes</li>
+</ul>				
+<p class="fragment">As we already noticed, building a graph from a manifold entails two choices:</p>
+<p class="fragment" style="border-left: 10px solid #114; padding-left:40px"> how do we sample vertex points?</p>
+<p class="fragment" style="border-left: 10px solid #114; padding-left:40px"> how do we draw edges?</p>
+<p class="fragment">For the simplicial complexes, the main choice is how to map the standard simplex into $M$ with given vertices.</p>
+</section>
+<section>
+<h5>Karcher simplex</h5>
+<p class="fragment">One possible choice for the simplex map is the following. Let $S\subset\R^{n+1}$ be the standard $n$-simplex; given $p_0,\ldots, p_n\in M$ and $\lambda\in S$, define
+$$E_{\lambda}:M\to\R\qquad E_\lambda(a)=\sum \lambda^i\mathrm{dist}^2(a,p_i)\;.$$</p>
+<p class="fragment">If $M$ is nice enough, there is a radius such that if $p_0,\ldots, p_n\in B_r(x)$, then $E_\lambda$ has a global minimum in $B_r(x)$.</p>
+<p class="fragment">We define $x:S\to M$ by sending $\lambda$ to the global minimum of $E_\lambda$ in $B_r$. The image $x(S)$ is called <strong>Karcher simplex</strong>.</p>
+<p class="fragment">A complicated and unclear construction, which however offers good approximations for curvature, functions, connection, metric, ...</p>
+</section>
+<section>
+<h5>Geodesic triangulations</h5>
+<p class="fragment">Around a point $x\in M$, we can build a local triangulation (simplicial decomposition) by:</p>
+<ul>
+<li class="fragment">setting up a (affine) triangulation on $T_xM$
+<li class="fragment">sending it to $M$ via the exponential map</ul>
+<p class="fragment">The edges and faces of this triangulation will locally be given by geodesics; if the triangulation on the tangent space obeys some requirements, the local triangulation will allow a gluing procedure.</p>
+<p class="fragment">We obtain this way a global triangulation with controlled parameters, which is locally given by geodesics.</p>
+<p class="fragment">This is especially useful in estimating Laplace-Beltrami eigenvalues.</p>
+</section>
+</section>
+<section>
+<section>
+<h4>Sampling on manifolds</h4>
+<p class="fragment">Obviously, a uniform sampling on the parameter space of a parametrization (global or local) for a manifold does not offer any guarantee that the corresponding points on the manifold will be uniformly distributed (or even will present any kind of uniform distribution with regard to distances or volumes).</p>
+<p class="fragment">Sampling directly on the manifold is either impossible (when the manifold is just abstract) or impractical (when the manifold is embedded in a higher dimensional space).</p>
+<p class="fragment">The common solution is to sample from the parameter space with respect to the volume measure induced by the pullback metric.</p>
+</section>
+<section>
+<h5>A couple of practical points</h5>
+<p class="fragment"><strong>Rejection algorithm:</strong> one approach is to produce overabundant samples in the parameter space (with respect to the uniform distribution) and accept or reject them according to the distribution given by the jacobian determinant of the parametrization map.</p>
+<p class="fragment"><strong>Local vs global:</strong> quite commonly, sampling locally (with respect to the volume on a ball) and then gluing the results does not coincide with sampling globally; this can be seen by inspecting the associate Markov processes.</p>
+</section>
+</section>
+				</div>
+		</div>
+
+		
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<script src="plugin/pdfexport/pdfexport.js"></script>
+		<script src="plugin/audio-slideshow/plugin.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L20/DGA2021L20.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+	</body>
+</html>
