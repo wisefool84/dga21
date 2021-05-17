@@ -214,6 +214,16 @@ blockquote.definition2 {
 	
 }
 
+blockquote.definition3 {
+	border: 0;
+	border-left: 10px solid #114;
+	border-right: 10px solid #114;
+	font-size:0.6em;
+	text-align:justify;
+	padding: 10px 20px 10px 20px;
+	
+}
+
 
 	
 .problem blockquote {
@@ -320,6 +330,7 @@ blockquote.definition2 {
 #personal ul {
   /*list-style: none; /* Remove default bullets */
 }
+
 
 #personal ul li::marker {
   /*content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */

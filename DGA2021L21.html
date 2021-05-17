@@ -1,0 +1,180 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL21</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+		
+		
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L01/Lecture1.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 21</h4>
+				</section>
+				
+				<section>
+				<section>
+				<h4>Fiber derivative</h4>
+				<p class="fragment">We consider a manifold $M$ and a smooth function $\Lag:TM\to\R$ (think about the Lagrangian from physics, which takes, as an input, position and velocity).</p>
+				<blockquote class="definition fragment" >The fiber derivative of $\Lag$ is the map
+				$$D_F\Lag:TM\to T^*M$$
+				such that, for each $x\in M$, $D_F\Lag_x:T_xM\to T^*_xM$ sends $v\in T_xM$ to the differential of $\Lag_x$ at $v$.</blockquote>
+				<p class="fragment">In local coordinates, $x^1,\ldots, x^n$ on $M$ and $v^1,\ldots, v^n$ on $TM$,
+				$$D_F\Lag_x(v)=\partial_{v^j}\Lag_x(v) dx^j\;.$$</p>
+				</section>
+				<section>
+				<h5>Legendre transform</h5>
+				<p class="fragment">If $\Lag$ is
+				<ul>
+				<li class="fragment">convex (i.e. $\Lag_x$ is convex on $T_xM$ for all $x$ with uniform bounds on second derivatives)
+				<li class="fragment">superlinear (i.e. $\Lag(x,v)\geq A\|v\|-B$)
+				</ul>
+				<p class="fragment">then $D_F\Lag$ is a diffeomorphism.</p>
+				<blockquote class="definition fragment">The energy function of $\Lag$ is
+				$$E(x,v)=D_F\Lag(x,v)[v]-L(x,v)$$
+				and the Legendre transform of $\Lag$ is
+				$$\Lag^*=E\circ D_F\Lag^{-1}:T^*M\to\R\;.$$</blockquote>
+				
+</section>
+<section>
+<h5>In local coordinates</h5>
+<p class="fragment">We have that, for $x\in M$, $v,w\in T_xM$,
+$$D_F\Lag(x,v)[w]=\partial_{v_j}\Lag(x,v)w^j\;.$$</p>
+<p class="fragment">So, 
+$$E(x,v)=\frac{\partial \Lag(x,v)}{\partial v^j}v^j-\Lag(x,v)$$
+and, if $(x,\alpha)=D_F\Lag(x,v)$, then
+$$\Lag^*(x,\alpha)=\alpha_jv^j-\Lag(x,v)\;.$$</p>
+</section>
+</section>
+<section>
+<section>
+<h4>Hamiltonian equations</h4>
+<p class="fragment">If $\Lag$ is a convex and superlinear Lagrangian, its Legendre transform is denoted by $\Ham=\Lag^*$ and called <strong>Hamiltonian</strong>.</p>
+<p class="fragment">Euler-Lagrange equations give a geometric flow on $TM$ (Lagrangian dynamics):
+$$(\dot{x},\dot{v})=(v, X_\Lag)$$
+<span class="fragment">where, in local coordinates,
+$$X_\Lag=M^{ik}\partial_{x^i}\Lag-M^{ik}\partial_{v^i}\partial_{x^j}\Lag v^j$$
+with $M^{ik}$ the inverse of $\partial_{v^i}\partial_{v^k}\Lag$.</span></p>
+<p class="fragment">Via Legendre transform, these become
+$$(\dot{x},\dot{\alpha})=(\partial_\alpha\Ham, -\partial_x \Ham)=X_\Ham\;.$$</p>
+<p class="fragment">Equations of the Hamiltonian dynamics on $T^*M$.</p>
+</section>
+<section>
+<h5>Example: geodesic equation</h5>
+<p class="fragment">The Lagrangian for the geodesics is $\Lag=\frac{1}{2}g_{ij}v^iv^j$ ($\sim$ kinetic energy). So
+$$D_F\Lag(x,v)[w]=g_{ij}v^iw^j$$</p>
+<p class="fragment">Therefore, $(x,\alpha)=D_F\Lag(x,v)$ iff $\alpha_i=g_{ij}v^j$ and $\Ham(x,\alpha)=\frac{1}{2}g^{ij}\alpha_i\alpha_j$.</p>
+<p class="fragment">Hamiltonian equations become
+$$\left\{\begin{array}{rcl}\dot{x}^i&=&g^{ij}\alpha_j\\\dot{\alpha}_i&=&-\frac{1}{2}\partial_{x^i}(g^{kj}\alpha_j\alpha_k)\end{array}\right.$$
+</p>
+</section>
+<section>
+<h5>Some applications</h5>
+<p class="fragment">The expression of the geodesic equation in Hamiltonian terms has a number of interesting computational applications.</p>
+<ul>
+<li class="fragment">Computing geodesics by solving a first order differential equations (e.g. by Runge-Kutta methods)</li>
+<li class="fragment">Estimating (as a minimum energy path) the optimal deformation between two images.</li>
+<li class="fragment">Geodesic regression (substitute of linear regression on manifolds).</li>
+<li class="fragment">Hamiltonian Monte Carlo Method (more on this later on).</li>
+</ul>
+</section>	
+</section>
+<section>
+<section>
+<h4>Hamiltonian vector-field</h4>
+<p class="fragment">We expressed the Hamiltonian equations as a flow on $T^*M$ whose infinitesimal generator $X_\Ham$ has an expression involving derivatives of the scalar function $\Ham$.</p>
+<p class="fragment">It would be nice to obtain this vector-field $X_\Ham$ as a function of $d\Ham$.</p>
+<p class="fragment"> <strong>The usual problem</strong>: $X_\Ham$ lives in $T(T^*M)$ and $d\Ham$ in $T^*(T^*M)$.</p>
+<p class="fragment"><strong>The usual solution</strong>: we need an isomorphism between the tangent and the cotangent, i.e. we need a non-degerate bilinear form $\omega$ on either of them, let's say on $T(T^*M)$.</p>
+<p class="fragment">Note that $\omega(X_\Ham,X_\Ham)=d\Ham(X_\Ham)=0$, so our bilinear form cannot be symmetric (if we want it non-degereate); indeed, it will be a skew-symmetric bilinear form.</p>
+</section>
+<section>
+<h5>Local expression</h5>
+<p class="fragment">Given that $\ d\Ham=\partial_{x^j}\Ham dx^j + \partial_{\alpha_j}\Ham d\alpha_j\ $ and $\ X_\Ham=\partial_{\alpha_j}\Ham\partial_{x^j}-\partial_{x^j}\Ham \partial_{\alpha_j}\ $ we deduce that $\omega$ is given locally by the (standard symplectic) matrix
+$$J=\begin{pmatrix}0&I\\-I&0\end{pmatrix}\;.$$</p>
+<p class="fragment">We denote by $J$ also the (global) isomorphism between $T^*(T^*M)$ and $T(T^*M)$, so that Hamiltonian equations become
+$$(\dot{x},\dot{\alpha})=Jd\Ham(x,\alpha)\,.$$
+</p>
+<p class="fragment">The pair $(T^*M, \omega)$ is called <em>symplectic manifold</em>.</p>
+</section>
+</section>
+
+				</div>
+		</div>
+
+		
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<script src="plugin/pdfexport/pdfexport.js"></script>
+		<script src="plugin/audio-slideshow/plugin.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}", Lag: "{\\mathscr{L}}", Ham: "{\\mathscr{H}}"} },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L21/DGA2021L21.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+	</body>
+</html>

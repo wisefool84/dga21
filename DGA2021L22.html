@@ -1,0 +1,192 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL22</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+		
+		
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L09/Lecture09.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 22</h4>
+				</section>
+				
+				<section>
+				<section>
+				<h4>Families of geodesics</h4>
+				<p class="fragment">Let $(M,g)$ be a Riemannian manifold, $p\in M$ and consider the exponential map $\exp_p:T_pM\to M$; fix</p>
+<div id="personal" style="--sfondo:#116">
+<ul>
+<li class="fragment">$\pi\subseteq T_pM$ a $2$-plane with polar coordinates $(r,\theta)$  
+<li class="fragment">$v_\theta=(r_0\cos\theta,r_0\sin\theta)\in\pi$ with $r_0>0$
+<li class="fragment">$f:\R\times\mathbb S^1\to M$, $f(t,\theta)=\exp_p(tv_\theta)$
+</ul>
+<img class="fragment" src="L22/geodplane.png" style="width:70%">
+				</section>
+				<section>
+				<h5>Deformation direction</h5>
+				<p class="fragment">Consider now the vector-fields $\partial_t$, $\partial_\theta$ on $\R\times\mathbb S^1$: 
+				<div id="personal", style="--sfondo:#116">
+				<ul>
+				<li class="fragment">by the properties of the exponential map, $f_*\partial_t=X$ will be a vector-field tangent to the geodesics coming from $p$
+				<li class="fragment">likewise, $J=f_*\partial_\theta$ will be a vector-field that gives the variation of the geodesics in the family given by $\pi$.
+				</ul>
+				<p class="fragment">Note that:
+				$$\nabla_XX=0\qquad [X,J]=f_*[\partial_t,\partial_\theta]=0\;.$$
+				</p>
+				</section>
+				<section>
+				<h5>Differential equation for $J$</h5>
+				<p class="fragment">We notice that $[X,J]=0$ implies
+				$$\nabla_XJ-\nabla_JX=0\qquad R(X,J)X=\nabla_X\nabla_J X-\nabla_J\nabla_XX=\nabla_X\nabla_JX$$
+				so that, along a geodesic from $p$, 
+				$$\frac{D^2}{dt^2}J=\nabla_X\nabla_X J=\nabla_X\nabla_JX=R(X,J)X\;.$$
+				</p>
+				<blockquote class="fragment definition3">Given $\gamma:(-1,1)\to M$ a geodesic, a <strong>Jacobi vector-field</strong> along $\gamma$ is a vector-field $J(t)$ such that
+				$$J''+R(J,\dot{\gamma})\dot{\gamma}=0\;.$$
+				</blockquote>
+				</section>
+				<section>
+				<h5>Properties</h5>
+				<div id="personal" style="--testo:'JacVF '; --fnts:1em; --hor:70px; --vert:40px; --barra:#116; --sfondo:#334">
+				<ol>
+				<li class="fragment">The space of Jacobi v.f. along $\gamma$ has dimension $2n$
+				<li class="fragment">The variation vector fields are given by $J(0)=0$, $J'(0)=w\in T_pM$
+				<li class="fragment">$J(t)=d\exp_p(tv)[tw]$ with $v=\dot{\gamma}(0)$
+				<li class="fragment">$J(t)=tw+O(t^3)$
+				<li class="fragment">If $W$ is the parallel transport of $w\in T_pM$ along $\gamma$ (i.e. $\nabla_\dot{\gamma}W\equiv 0$), then 
+				$$W_{\gamma(t)}=\frac{J(t)}{t}+o(t)\;.$$
+				</ol>
+				</div>
+				</section>
+				
+				</section>
+				<section>
+				<section>
+				<h4>Approximation of parallel transport</h4>
+				<p class="fragment">If we want to apply the parallel transport to a vector $w\in T_pM$ along the geodesic starting from $p$ in the direction $v$, we can
+				<div id="personal" style="--testo:'PTapprox'; --fnts:1em; --hor:90px; --vert:40px; --barra:#116; --sfondo:#334">
+				<ol>
+				<li class="fragment">compute the geodesic $\gamma$ integrating Hamiltonian equations (1st order, e.g. via Runge-Kutta)
+				<li class="fragment">compute the geodesic $\gamma_1$ with  direction $v+\epsilon w$
+				<li class="fragment">approximate $J(t)$ with their difference over $\epsilon$ at time $t$
+				<li class="fragment">approximate the parallel transport of $w$ with $J(t)/t$.
+				</ol>
+				</section>
+				<section>
+				<h5>Equations involved</h5>
+				<p class="fragment">We want to integrate the geodesic equation in the Hamiltonian formulation:
+				$$\left\{\begin{array}{rcl}\dot{x}^i&=&g^{ij}\alpha_j\\\dot{\alpha}_i&=&-\frac{1}{2}\partial_{x^i}(g^{kj}\alpha_j\alpha_k)\end{array}\right.$$</p>
+				<p class="fragment">We can use an order 2 Runge-Kutta method, so that at $t=1/N$ we will get an error of $O(1/N^2)$, which will sum up nicely on $N$ steps to $O(1/N)$.</p>
+				<p class="fragment">We approximate $J(t+h)$ as
+				$$\frac{\exp_{\gamma(t)}(h(\dot{\gamma(t)}+\epsilon w))-\exp_{\gamma(t)}(h\dot{\gamma}(t))}{\epsilon}\;.$$
+				</p>
+				<p class="fragment">We approximate $\exp$ again by solving the previous system for geodesics.</p>
+				</section>
+				<section>
+				<h5>Algorithm</h5>
+				<p class="fragment"><strong style="color:#116">Starting point</strong> - we fix $N\in\mathbb N$, $x[0]$ a point , $v[0]$, $w[0]$ tangent vectors at $x[0]$.</p>
+				<div id="personal" style="--testo:''; --fnts:1em; --hor:30px; --vert:40px; --barra:#116; --sfondo:#334">
+				<ol>
+				<li class="fragment">$p_j[k]=g_{ij}(x[k])w^j[k]$
+				<li class="fragment">$x[k+1]$ next point along the main geodesic from $x[k]$ with direction $v[k]$
+				<li class="fragment">$y[k+1]$ next point along the auxiliary geodesic from $x[k]$ with direction $w[k]$
+				<li class="fragment">$\hat{w}[k+1]=(y[k+1]-x[k+1])/\epsilon$
+				<li class="fragment">$w[k+1]=\lambda[k]\hat{w}[k+1]+\mu[k]v[k+1]$
+				</ol>
+				
+				
+				</section>
+				
+				</section>
+				<section>
+				<section>
+				<h4>Application to images time series</h4>
+				<p class="fragment">Suppose we have images $V_i$ which constitute a time series, i.e. are images of the same object taken at successive times $t_1, t_2,\ldots$ (with equal or unequal time increments).</p>
+				<p class="fragment">We are interested in understanding changes from one image to the other: one way to do so is to find the "best" diffeomorphism that transforms one image into the next.</p>
+				<img class="fragment" src="L22/moving.jpg" width="500" align="left">
+				<p class="fragment">Quantifying the adjective "best" means giving a distance on the space of diffeomorphisms.</p><p class="fragment">This allows us to reproduce an evolution starting from a different image.</p>
+				
+				</section>
+				</section>
+			
+				</div>
+		</div>
+
+		
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<script src="plugin/pdfexport/pdfexport.js"></script>
+		<script src="plugin/audio-slideshow/plugin.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}", exp: "{\\mathrm{exp}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L22/DGA2021L22.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+	</body>
+</html>
