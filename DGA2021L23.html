@@ -1,0 +1,202 @@
+<!doctype html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		
+
+		<title>DGAL23</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/night.css" id="theme">
+		
+		
+		
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css" id="highlight-theme">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="my.css">
+		
+		
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+			
+				<section data-background-image="L09/Lecture09.jpg" data-background-opacity="0.5"><h3 align="left">DGA 20/21</h3>
+				<h3 align="left">Differential Geometry in Applications</h3> 
+				<br>
+				<h4 class="fragment", align="right">Manifold Learning, Optimization and Information Geometry</h4>
+				<br>
+				<br>
+				<h4 class="fragment", align="center">Lecture 23</h4>
+				</section>
+				<!--<div id="personal" style="--testo:'Adv. '; --fnts:1em; --hor:70px; --vert:40px; --barra:#116; --sfondo:#334">-->
+				<section>
+				<section>
+				<h4>Monte Carlo Method</h4>
+				<p class="fragment">Monte Carlo method is, at its bare core, a way to compute integrals/series, by drawing random samples from a suitable probability distribution.</p>
+				<p class="fragment">From the probabilistic/statistical viewpoint, integration is a mean to obtain estimates for probabilities, mean values, parameters of our distribution.</p>
+				<p class="fragment"><strong style="text-color:blue">Example</strong> - given a function $f:[0,1]\to\R$, given $N$ independent random draws $x_1,\ldots, x_N$ from the uniform distribution on $[0,1]$, then
+				$$\int_0^1f(x)dx\sim \frac{1}{N}\sum_{n} f(x_n)\;.$$
+				</p>
+				</section>
+				<section>
+				<h5>Problems</h5>
+				<p class="fragment">It is usually not easy to draw independent samples from a distribution.</p>
+				<p class="fragment">It is not always convenient to draw independent samples!</p>
+				<p class="fragment">One of the usual ways of approximating a distribution is via some acceptance-rejection method, which usually means that we draw samples from another (easy) distribution (uniform, normal,..) and accept or reject them according to the given distribution.</p>
+				</section>
+				<section>
+				<h5>Markov Chains</h5>
+				<p class="fragment">In approximately wrong terms, a Markov chain is a random walk.</p>
+				<p class="fragment">We are given a set of states (finite or infinite, for example, all real numbers) and a sequence of random variables taking values in the set of states $X_1,\ldots, $ such that 
+				$$\P[X_{n+1}|X_1,\ldots, X_m]=\P[X_{n+1}|X_n]$$
+				</p><p class="fragment">(technically, if the state space is not countable, this is not the right condition)</p>
+				<p class="fragment">If $f(x_2|x_1)$ is the conditional probability distribution (i.e. the transition distribution) and $g(x_1)$ is the (marginal) distribution of $X_1$, then
+				$$\tilde{g}(x_2)=\int f(x_2|x_1)g(x_1)dx_1\;.$$
+				<span class="fragment">If $\tilde{g}=g$, then $g$ is an invariant distribution for the Markov chain.</span><span class="fragment"> Under reasonable assumptions, Markov chains tend to their invariant distribution(s).</span></p>
+			</section>
+			</section>
+			<section>
+			<section>
+			<h4>Markov Chain Monte Carlo Method</h4>
+			<p class="fragment">In essence, MCMC is a Monte Carlo method where the successive draws from our distribution are not anymore independent, but are the steps of a Markov chain.</p>
+			<p class="fragment">This Markov chain should be suitable design so that its invariant disrtibution is (unique and is) the distribution we want to sample from.</p>
+			<p class="fragment">There will be a first part where the samples are not "useful" (a <em>burn in</em> stage) until they start being approximately samples from our target distribution.</p>
+			
+			</section>
+			<section>
+			<h5>Metropolis(-Hastings) Random Walk</h5>
+			<p class="fragment">Let $h$ be the (possibly unnormalized) density distribution we want to sample from
+			<div id="personal" style="--testo:'Step '; --fnts:1em; --hor:70px; --vert:40px; --barra:#116; --sfondo:#334">
+			<ol>
+		
+			<li class="fragment">Start at $x$ with $h(x)>0$
+			<li class="fragment">Generate $y\sim \mathcal{N}(0,\sigma^2)$
+			<li class="fragment">Compute $r=h(x+y)/h(x)$
+			<li class="fragment">Generate $u$ uniform on $[0,1]$, if $u\leq r$, $x=x+y$
+			<li class="fragment">Return $x$.
+			</ol>
+			</div>
+			</section>
+			<section>
+			<h5>Variations and features</h5>
+			<ul>
+			<li class="fragment">Hastings: using $y$ which is not normally distributed
+			<li class="fragment">$\sigma^2$ has to be tuned
+			<li class="fragment">Acceptance probability can be defined differently.
+			</ul>
+			</section>
+			</section>
+			<section>
+			<section>
+			<h4>Hamiltonian MC</h4>
+			<p class="fragment">Basic idea: use Hamiltonian dynamic to produce the next step in the Markov chain.</p>
+			<p class="fragment">Hamiltonian:
+			$$H(x,\alpha)=-\log h(x) + \frac{\sigma^2}{2}\|\alpha\|^2$$
+			</p>
+			<div id="personal" style="--testo:'Ham. '; --fnts:1em; --hor:70px; --vert:40px; --barra:#116; --sfondo:#334">
+			<ol>
+			<li class="fragment">Draw a random sample from $\mathcal{N}(0,\sigma^2)$ to update $\alpha$ to $\alpha^*$
+			<li class="fragment">Simulate the Hamiltonian dynamics from there to obtain the update for $x$.
+			<li class="fragment">Accept or reject  with probablity
+			$$\beta=\min\left\{1, \frac{e^{-H(x',\alpha')}}{e^{-H(x,\alpha^*)}}\right\}$$
+			</ol>
+			</div>
+			</section>
+			<section>
+			<h5>Features of Hamiltonian dynamics</h5>
+			<div id="personal" style="--testo:'Feat '; --fnts:1em; --hor:70px; --vert:40px; --barra:#116; --sfondo:#334">
+			<ol>
+		
+			<li class="fragment">Reversability
+			<li class="fragment">$H$ preservation
+			<li class="fragment">Volume preservation
+			<li class="fragment">Symplecticness
+			<li class="fragment">Ergodicity
+			</ol>
+			</div>
+			</section>
+			<section>
+			<h5>Leapfrog algorithm</h5>
+			<p class="fragment">To integrate Hamiltonian equations we have to use a particular algorithm, in order to preserve the features we just listed.</p>
+			<div id="personal" style="--testo:'Leap. '; --fnts:1em; --hor:70px; --vert:40px; --barra:#116; --sfondo:#334">
+			<ol>
+		
+			<li class="fragment">$\alpha(t+\epsilon/2)=\alpha(t)-\frac{\epsilon}{2}\partial_x H$
+			<li class="fragment">$x(t+\epsilon)=x(t)+\epsilon\partial_\alpha H(\alpha(t+\epsilon/2))$
+			<li class="fragment">$\alpha(t+\epsilon)=\alpha(t+\epsilon/2)-\frac{\epsilon}{2}\partial_x H(x(t+\epsilon))$
+			</ol>
+			</div>
+			</section>
+			</section>
+			<section>
+			<section>
+			<h4>Riemannian Monte Carlo</h4>
+			<p class="fragment">In Bayesian statistics, the object we want to estimate is usually a parameter, therefore our $x$ moves in a statistical manifold, with its Fisher metric.</p>
+			<p class="fragment">The kynetic energy part of the Hamiltonian may be written using the (inverse) Fisher metric.</p>
+			<p class="fragment">
+			$$H(x,\alpha)=-\log h(x) + \frac{1}{2}G^{ij}(x)\alpha_i\alpha_j + \frac{1}{2}\log(C\det G(x))\;.$$
+</p>
+<p class="fragment">For this we need to modify the interpolation algorithm.</p>
+<p class="fragment">There is now a close relationship with geodesics in the Riemannian manifold of probability distributions, which makes the algorithm more efficient in simulating the target distribution on parameters.</p>
+				</div>
+		</div>
+
+		
+		<!--<script src="node_modules/reveal.js-run-in-browser/dist/revealjs-run-in-browser"></script>-->
+<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/zoom/zoom.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="plugin/chalkboard/plugin.js"></script>
+		<script src="plugin/pdfexport/pdfexport.js"></script>
+		<script src="plugin/audio-slideshow/plugin.js"></script>
+
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			
+			Reveal.initialize({
+				hash: true,
+				controls: false,
+				transition: 'convex',
+				
+				math: {
+					mathjax: 'https://cdn.mathjax.org/mathjax/latest/MathJax.js',
+					config: 'TeX-AMS_CHTML-full',
+					// pass other options into MathJax.Hub.Config()
+					TeX: { Macros: { R: "{\\mathbb{R}}", P: "{\\mathbb{P}}" } },
+					// jax: ["input/TeX","output/CommonHTML"],
+					"CommonHTML": { matchFontHeight: false, scale: 100 }
+				},
+				
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom, RevealMath, RevealChalkboard ],
+				 chalkboard: {
+				 src: "L23/DGA2021L23.json",
+		boardmarkerWidth: 3,
+		chalkWidth: 3,
+		chalkEffect: 0.2,
+		grid: false,
+		toggleChalkboardButton: false,
+		toggleNotesButton: false,
+	},
+			});
+			var stringa=window.location.search.substring(1);
+			if (stringa.includes('print-pdf')) {
+				Reveal.configure({width: 1280,
+				height: 800,});
+			}
+		
+		Reveal.configure({ pdfSeparateFragments: false });
+		
+		</script>
+	</body>
+</html>
